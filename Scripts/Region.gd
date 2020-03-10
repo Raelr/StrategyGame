@@ -1,14 +1,15 @@
 tool
 extends Node2D
-
 export (Texture) var region_details
+export (Texture) var region_outline
+export (Texture) var region_overlay
 export (bool) var ui_update
 export (Color) var occupied_color
 export (float) var change_duration
 var elapsed = 0.0
 
 func _ready():
-	$Details.texture = region_details
+	change_region_sprite()
 
 func _input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
@@ -17,14 +18,19 @@ func _input_event(viewport, event, shape_idx):
 			if Input.is_action_pressed("lmb"):
 				occupied_color = Color(1, 0, 0, 0.4)
 			elif Input.is_action_pressed("rmb"):
-				occupied_color = Color(1, 1, 1, 0)
+				occupied_color = Color(0, 0, 0, 0)
 
 func _process(delta):
 	if ui_update:
 		if Engine.editor_hint:
-			$Details.texture = region_details
+			change_region_sprite()
 			set_occupied(occupied_color)
 		transition_color(delta, occupied_color)
+
+func change_region_sprite():
+	$Details.texture = region_details
+	$Details/Outline.texture = region_outline
+	$Details/Overlay.texture = region_overlay
 
 func transition_color(delta, color):
 	if elapsed < change_duration:
@@ -37,3 +43,4 @@ func transition_color(delta, color):
 
 func set_occupied(color): 
 	$Details/Overlay.modulate = color
+	$Details/Outline.modulate = Color(color.r,color.g,color.b, 1)
