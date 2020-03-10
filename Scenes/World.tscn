@@ -12,5 +12,5 @@ position = Vector2( 55.4896, 285.469 )
 region_details = ExtResource( 2 )
 region_outline = ExtResource( 3 )
 region_overlay = ExtResource( 4 )
-occupied_color = Color( 1, 0.996078, 0.996078, 0 )
+occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 3.0
