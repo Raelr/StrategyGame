@@ -14,7 +14,7 @@
 [node name="World" type="Node2D"]
 
 [node name="WestRegion" parent="." instance=ExtResource( 1 )]
-position = Vector2( 55.4896, 285.469 )
+position = Vector2( 484.155, 285.467 )
 region_details = ExtResource( 2 )
 region_outline = ExtResource( 3 )
 region_overlay = ExtResource( 4 )
@@ -25,10 +25,11 @@ change_duration = 2.0
 texture = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" parent="WestRegion" index="1"]
+visible = false
 polygon = PoolVector2Array( -7.00462, 29.067, 12.8902, 29.0157, 15.095, 27.0416, 20.079, 21.0066, 20.2071, 15.1099, 17.0301, 11.0833, 17.105, -0.867432, 20.7302, -3.05783, 21.0326, -18.9111, 11.0596, -27.0125, 10.957, -28.961, -4.91264, -29.0123, -11.0913, -23.0131, -10.9478, -16.7833, -14.9882, -12.9631, -14.9669, -7.15353, -20.9105, -0.959564, -20.9823, 14.9563 )
 
 [node name="SouthRegion" parent="." instance=ExtResource( 1 )]
-position = Vector2( 87.4426, 295.465 )
+position = Vector2( 516.138, 295.467 )
 region_details = ExtResource( 6 )
 region_outline = ExtResource( 5 )
 region_overlay = ExtResource( 7 )
@@ -45,10 +46,11 @@ texture = ExtResource( 7 )
 texture = ExtResource( 5 )
 
 [node name="CollisionPolygon2D" parent="SouthRegion" index="1"]
+visible = false
 polygon = PoolVector2Array( -16.8567, 16.9549, -16.8567, 15.054, -14.9931, 14.9049, -14.9186, 12.9667, -13.0549, 12.9667, -12.9058, 11.1403, -11.7877, 10.9761, -11.6758, 4.99033, -12.8686, 4.9158, -12.9804, 3.01489, -14.844, 2.82852, -15.0305, 1.50885, -14.9186, -10.903, -12.9431, -12.0807, -13.0177, -12.938, -11.1317, -13.1244, -6.99445, -18.7898, -1.14263, -18.9016, 9.07008, -9.06168, 12.7601, -8.94986, 16.9719, -4.99896, 17.0464, 4.8783, 11.0083, 10.9687, 11.0456, 14.8451, 6.94557, 18.9823, -14.9335, 19.0196 )
 
 [node name="NorthRegion" parent="." instance=ExtResource( 1 )]
-position = Vector2( 87.4847, 270.534 )
+position = Vector2( 516.472, 268.592 )
 region_details = ExtResource( 9 )
 region_outline = ExtResource( 8 )
 region_overlay = ExtResource( 10 )
@@ -56,16 +58,24 @@ occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 
 [node name="Details" parent="NorthRegion" index="0"]
+position = Vector2( -0.339638, -0.123505 )
 texture = ExtResource( 9 )
 
 [node name="Overlay" parent="NorthRegion/Details" index="0"]
+modulate = Color( 0, 0, 0, 0 )
 texture = ExtResource( 10 )
 
 [node name="Outline" parent="NorthRegion/Details" index="1"]
 texture = ExtResource( 8 )
 
 [node name="CollisionPolygon2D" parent="NorthRegion" index="1"]
+visible = false
 polygon = PoolVector2Array( -11.0775, 11.6199, -11.0775, -3.8866, -20.6172, -11.9257, -18.8379, -11.9757, -14.872, -16.0845, -7.04726, -16.0845, -5.97539, -14.0837, -2.86694, -17.9782, -1.2234, -17.9782, 7.20868, -9.93912, 11.0317, -9.93912, 19.035, -1.9715, 18.985, 10.0479, 16.9842, 12.1559, 14.8404, 12.0487, 11.0174, 15.9789, 9.01659, 16.0146, 9.01659, 17.9083, 7.05148, 17.9083, 7.01575, 16.0861, 5.01492, 15.9074, 4.97919, 14.121, 3.04982, 13.9066, 3.01408, 12.1559, 1.04898, 11.9415, 0.977524, 10.0836, -0.916122, 9.97641, -1.02332, 8.15421, -6.99008, 8.01129, -6.99008, 9.97641, -8.95519, 10.0836, -8.95519, 11.7628 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 499.237, 284.756 )
+current = true
+zoom = Vector2( 0.2, 0.2 )
 
 [editable path="WestRegion"]
 
