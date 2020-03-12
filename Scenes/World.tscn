@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/Region.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Region1Details.png" type="Texture" id=2]
@@ -10,8 +10,13 @@
 [ext_resource path="res://Sprites/Region3Outline.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/Region3Details.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/Region3Overlay.png" type="Texture" id=10]
+[ext_resource path="res://Scenes/Water.tscn" type="PackedScene" id=11]
 
 [node name="World" type="Node2D"]
+
+[node name="Water" parent="." instance=ExtResource( 11 )]
+position = Vector2( 534.142, 296.509 )
+scale = Vector2( 1.15851, 1.11793 )
 
 [node name="WestRegion" parent="." instance=ExtResource( 1 )]
 position = Vector2( 484.155, 285.467 )
