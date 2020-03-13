@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scenes/Region.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Region1Details.png" type="Texture" id=2]
@@ -18,11 +18,13 @@
 [ext_resource path="res://Sprites/Region5Overlay.png" type="Texture" id=16]
 [ext_resource path="res://Sprites/Region5Details.png" type="Texture" id=17]
 [ext_resource path="res://Sprites/Region5Outline.png" type="Texture" id=18]
+[ext_resource path="res://Sprites/Region6Overlay.png" type="Texture" id=19]
+[ext_resource path="res://Sprites/Region6Outline.png" type="Texture" id=20]
+[ext_resource path="res://Sprites/Region6Details.png" type="Texture" id=21]
 
 [node name="World" type="Node2D"]
 
 [node name="Water" parent="." instance=ExtResource( 11 )]
-modulate = Color( 0, 1, 0.929412, 1 )
 position = Vector2( 522.07, 295.284 )
 scale = Vector2( 1.06179, 0.943695 )
 z_index = -1
@@ -37,6 +39,9 @@ change_duration = 2.0
 
 [node name="Details" parent="WestRegion" index="0"]
 texture = ExtResource( 2 )
+
+[node name="Area2D" parent="WestRegion/Details" index="2" instance=ExtResource( 1 )]
+position = Vector2( 109.551, 28.056 )
 
 [node name="CollisionPolygon2D" parent="WestRegion" index="1"]
 visible = false
@@ -132,6 +137,28 @@ texture = ExtResource( 18 )
 visible = false
 polygon = PoolVector2Array( -13.977, 1.03326, -13.977, -0.929626, -12.0141, -0.951691, -11.9921, -2.95871, -10.0512, -2.93665, -9.96298, -8.95764, -8.02216, -8.95764, -7.95599, -10.9206, -5.94897, -10.9867, -5.94897, -13.0158, -3.98608, -13.0599, -2.00275, -12.9777, -1.98273, -11.0276, -0.0126343, -11.0276, -0.022644, -9.01941, 1.97748, -9.02939, 2.01941, -4.9754, 3.9895, -4.9754, 3.97571, -3.07327, 10.0016, -2.99924, 9.99158, -0.969147, 11.9917, -1.02914, 11.9977, 0.983032, 13.9778, 1.01303, 13.9802, 7.00943, 12.0001, 7.03943, 12.0171, 9.04355, 9.98804, 8.97739, 9.98804, 11.0726, 7.98102, 11.0285, 8.03986, 13.0038, -4.02069, 13.0038, -4.01691, 11.0947, -6.02393, 11.0947, -6.00183, 9.04355, -8.00885, 8.95532, -8.09705, 6.97037, -10.06, 6.9483, -10.082, 5.16187, -11.9524, 5.0914, -12.0185, 1.03326 )
 
+[node name="SouthEastLakeRegion" parent="." instance=ExtResource( 1 )]
+position = Vector2( 536.145, 312.955 )
+region_details = ExtResource( 21 )
+region_outline = ExtResource( 20 )
+region_overlay = ExtResource( 19 )
+occupied_color = Color( 0, 0, 0, 0 )
+change_duration = 2.0
+
+[node name="Details" parent="SouthEastLakeRegion" index="0"]
+texture = ExtResource( 21 )
+
+[node name="Overlay" parent="SouthEastLakeRegion/Details" index="0"]
+modulate = Color( 0, 0, 0, 0 )
+texture = ExtResource( 19 )
+
+[node name="Outline" parent="SouthEastLakeRegion/Details" index="1"]
+texture = ExtResource( 20 )
+
+[node name="CollisionPolygon2D" parent="SouthEastLakeRegion" index="1"]
+visible = false
+polygon = PoolVector2Array( -14.9321, 13.5706, -14.9321, 11.6126, -12.9741, 11.5443, -12.9741, 9.56354, -11.0161, 9.51801, -10.9706, 7.53726, -9.08087, 7.5145, -9.03534, 1.57224, -11.0161, 1.5267, -11.0389, -2.43481, -4.98279, -2.45758, -4.98279, -4.43835, -3.00201, -4.50665, -2.97925, -6.46463, -0.975708, -6.44186, -1.03961, -15.4804, 0.963928, -15.5032, 0.986694, -17.4384, 11.0498, -17.484, 11.0726, -15.4577, 12.9623, -15.4121, 12.985, -13.4086, 14.9203, -13.4314, 15.0114, 3.55301, 10.9815, 3.53024, 11.027, 7.56006, 8.90967, 7.53729, 9.06909, 9.58636, 6.92902, 9.54095, 7.02008, 11.59, 5.03931, 11.6128, 5.08484, 13.6391, 1.03229, 13.5252, 1.07782, 15.597, -1.01678, 15.5743, -0.92572, 17.5551, -9.00812, 17.6006, -9.07642, 15.5515, -12.9924, 15.5743, -13.0835, 13.5252 )
+
 [node name="LakeOutline" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 1 )
 position = Vector2( 520.153, 294.467 )
@@ -151,3 +178,5 @@ zoom = Vector2( 0.2, 0.2 )
 [editable path="EastRegion"]
 
 [editable path="SouthLakeRegion"]
+
+[editable path="SouthEastLakeRegion"]
