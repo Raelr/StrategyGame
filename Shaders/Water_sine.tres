@@ -5,6 +5,8 @@
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
+uniform vec4 shadow_color : hint_color;
+
 uniform vec2 tiled_factor = vec2(4.0,4.0);
 uniform float aspect_ratio = 0.5;
 
@@ -38,19 +40,26 @@ void fragment() {
 	texture_based_offset *= uv_wave_size;
 	
 	vec2 waves_uv_offset = calculate_waves_offset(TIME, sine_time_scale, tiled_uvs, sine_offset_scale);
+	vec2 waves_uvs = tiled_uvs + waves_uv_offset * sine_wave_size + texture_based_offset;
+	float waves_height = (texture_based_offset.y + waves_uv_offset.y) * 0.25 + 0.5;
+	//waves_height = min(waves_height * 1.5, 1.0);
 	
-	COLOR = texture(TEXTURE, tiled_uvs + waves_uv_offset * sine_wave_size + texture_based_offset);
+	vec4 diffuse_color = texture(TEXTURE, waves_uvs);
+	COLOR = mix(diffuse_color, shadow_color, waves_height);
+//	COLOR = vec4(waves_height, waves_height, waves_height, 1.0);
+	NORMALMAP = texture(NORMAL_TEXTURE, waves_uvs / 5.0).rgb;
 }
 "
 
 [resource]
 shader = SubResource( 1 )
-shader_param/tiled_factor = Vector2( 0.75, 0.75 )
+shader_param/shadow_color = Color( 0, 0.298039, 0.329412, 1 )
+shader_param/tiled_factor = Vector2( 0.5, 0.5 )
 shader_param/aspect_ratio = 0.875269
-shader_param/uv_offset_scale = Vector2( 0.5, 0.8 )
-shader_param/uv_wave_size = Vector2( 0.03, 0.03 )
-shader_param/time_scale = Vector2( 0.02, 0.02 )
-shader_param/sine_time_scale = 0.25
-shader_param/sine_offset_scale = Vector2( 0.2, 3 )
-shader_param/sine_wave_size = Vector2( 0.02, 0.04 )
+shader_param/uv_offset_scale = Vector2( 0.5, 0.3 )
+shader_param/uv_wave_size = Vector2( 0.4, 0.08 )
+shader_param/time_scale = Vector2( 0.02, 0.01 )
+shader_param/sine_time_scale = 0.75
+shader_param/sine_offset_scale = Vector2( 20, 25 )
+shader_param/sine_wave_size = Vector2( 0.01, 0.01 )
 shader_param/uv_offset_texture = ExtResource( 1 )
