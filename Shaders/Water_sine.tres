@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=2]
 
-[ext_resource path="res://Sprites/WaveTExture.jpg" type="Texture" id=1]
+[ext_resource path="res://Sprites/Water.png" type="Texture" id=1]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -13,17 +13,22 @@ uniform vec2 uv_offset_scale = vec2(0.2,0.2);
 uniform vec2 uv_wave_size = vec2(1.0, 1.0);
 uniform vec2 time_scale = vec2(1.0, 1.0);
 
-uniform vec2 sine_time_scale = vec2(1.0, 1.0);
+uniform float sine_time_scale = 1.0;
 uniform vec2 sine_offset_scale = vec2(2.0, 2.0);
 uniform vec2 sine_wave_size = vec2(0.05, 0.1);
+
+vec2 calculate_waves_offset(float time, float multiplier, vec2 uv, vec2 offset_scale) {
+	vec2 offset;
+	float time_multiplier = time * multiplier;
+	float unique_offset = uv.x + uv.y;
+	offset.x = cos(time_multiplier + unique_offset * offset_scale.x);
+	offset.y = sin(time_multiplier + unique_offset * offset_scale.y);
+	return offset;
+}
 
 void fragment() {
 	vec2 tiled_uvs = UV * tiled_factor;
 	tiled_uvs.y *= aspect_ratio;
-	//COLOR = vec4(tiled_uvs, 0.0, 1.0);
-	vec2 waves_uv_offset;
-	waves_uv_offset.x = cos(TIME * sine_time_scale.x + (tiled_uvs.x + tiled_uvs.y) * sine_offset_scale.x);
-	waves_uv_offset.y = sin(TIME * sine_time_scale.y + (tiled_uvs.x + tiled_uvs.y) * sine_offset_scale.y);
 	
 	vec2 uv_offset = UV * uv_offset_scale;
 	uv_offset += TIME * time_scale;
@@ -32,18 +37,20 @@ void fragment() {
 	texture_based_offset = texture_based_offset * 2.0 - 1.0;
 	texture_based_offset *= uv_wave_size;
 	
+	vec2 waves_uv_offset = calculate_waves_offset(TIME, sine_time_scale, tiled_uvs, sine_offset_scale);
+	
 	COLOR = texture(TEXTURE, tiled_uvs + waves_uv_offset * sine_wave_size + texture_based_offset);
 }
 "
 
 [resource]
 shader = SubResource( 1 )
-shader_param/tiled_factor = Vector2( 0.6, 0.6 )
+shader_param/tiled_factor = Vector2( 0.75, 0.75 )
 shader_param/aspect_ratio = 0.875269
 shader_param/uv_offset_scale = Vector2( 0.5, 0.8 )
 shader_param/uv_wave_size = Vector2( 0.03, 0.03 )
 shader_param/time_scale = Vector2( 0.02, 0.02 )
-shader_param/sine_time_scale = Vector2( 0.5, 0.75 )
+shader_param/sine_time_scale = 0.25
 shader_param/sine_offset_scale = Vector2( 0.2, 3 )
-shader_param/sine_wave_size = Vector2( 0.02, 0.03 )
+shader_param/sine_wave_size = Vector2( 0.02, 0.04 )
 shader_param/uv_offset_texture = ExtResource( 1 )
