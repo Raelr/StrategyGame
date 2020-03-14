@@ -28,8 +28,8 @@
 [node name="World" type="Node2D"]
 
 [node name="Water" parent="." instance=ExtResource( 11 )]
-position = Vector2( 511.837, 291.032 )
-scale = Vector2( 1.06179, 0.943695 )
+position = Vector2( 511.604, 290.156 )
+scale = Vector2( 1.1397, 1.09612 )
 z_index = -1
 
 [node name="WestRegion" parent="." instance=ExtResource( 1 )]

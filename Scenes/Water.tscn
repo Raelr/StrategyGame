@@ -1,48 +1,24 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Sprites/Water.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/LakeWater.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Water.gd" type="Script" id=2]
-[ext_resource path="res://Sprites/WaveTExture.jpg" type="Texture" id=3]
+[ext_resource path="res://Sprites/Water.png" type="Texture" id=3]
+[ext_resource path="res://Shaders/Water_offset.shader" type="Shader" id=4]
 [ext_resource path="res://Sprites/WaterNormalMap.jpg" type="Texture" id=5]
 
-[sub_resource type="Shader" id=1]
-code = "shader_type canvas_item;
-
-uniform float tiled_factor = 7.0;
-uniform float aspect_ratio = 0.5;
-
-uniform sampler2D uv_offset_texture : hint_black;
-uniform vec2 uv_offset_scale = vec2(0.2,0.2);
-uniform vec2 wave_size = vec2(1.0, 1.0);
-uniform vec2 time_scale = vec2(1.0, 1.0);
-
-void fragment() {
-	vec2 uv_offset = UV * uv_offset_scale;
-	uv_offset += TIME * time_scale;
-	
-	vec2 texture_based_offset = texture(uv_offset_texture, uv_offset).rg;
-	texture_based_offset = texture_based_offset * 2.0 - 1.0;
-	texture_based_offset *= wave_size;
-	
-	vec2 adjusted_uv = UV * tiled_factor;
-	adjusted_uv.y *= aspect_ratio;
-	
-	COLOR = texture(TEXTURE, adjusted_uv + texture_based_offset);
-	NORMALMAP = texture(NORMAL_TEXTURE, adjusted_uv).rgb;
-}"
-
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
-shader_param/tiled_factor = 2.5
-shader_param/aspect_ratio = 0.888774
-shader_param/uv_offset_scale = Vector2( 1, 1 )
-shader_param/wave_size = Vector2( 0.2, 0.2 )
-shader_param/time_scale = Vector2( 0.01, 0.01 )
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 4 )
+shader_param/tiled_factor = 1.05
+shader_param/aspect_ratio = 0.961763
+shader_param/uv_offset_scale = Vector2( 1, -1 )
+shader_param/wave_size = Vector2( 0.022, -0.09 )
+shader_param/time_scale = Vector2( 0.1, 0.1 )
 shader_param/uv_offset_texture = ExtResource( 3 )
 
 [node name="Water" type="Sprite"]
-material = SubResource( 2 )
-position = Vector2( 589.289, 275.709 )
+material = SubResource( 1 )
+position = Vector2( 582.056, 278.927 )
+scale = Vector2( 1.09768, 1.05681 )
 texture = ExtResource( 1 )
 normal_map = ExtResource( 5 )
 script = ExtResource( 2 )
