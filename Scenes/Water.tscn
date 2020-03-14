@@ -1,25 +1,15 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Sprites/LakeWater.png" type="Texture" id=1]
+[ext_resource path="res://Shaders/Water_sine.tres" type="Material" id=1]
 [ext_resource path="res://Scripts/Water.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/Water.png" type="Texture" id=3]
-[ext_resource path="res://Shaders/Water_offset.shader" type="Shader" id=4]
 [ext_resource path="res://Sprites/WaterNormalMap.jpg" type="Texture" id=5]
 
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 4 )
-shader_param/tiled_factor = 1.05
-shader_param/aspect_ratio = 0.961763
-shader_param/uv_offset_scale = Vector2( 1, -1 )
-shader_param/wave_size = Vector2( 0.022, -0.09 )
-shader_param/time_scale = Vector2( 0.1, 0.1 )
-shader_param/uv_offset_texture = ExtResource( 3 )
-
 [node name="Water" type="Sprite"]
-material = SubResource( 1 )
+material = ExtResource( 1 )
 position = Vector2( 582.056, 278.927 )
 scale = Vector2( 1.09768, 1.05681 )
-texture = ExtResource( 1 )
+texture = ExtResource( 3 )
 normal_map = ExtResource( 5 )
 script = ExtResource( 2 )
 [connection signal="item_rect_changed" from="." to="." method="calculate_aspect_ratio"]
