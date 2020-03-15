@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=2]
 
-[ext_resource path="res://Sprites/Water.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/LakeWaterUV.png" type="Texture" id=1]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -46,20 +46,20 @@ void fragment() {
 	
 	vec4 diffuse_color = texture(TEXTURE, waves_uvs);
 	COLOR = mix(diffuse_color, shadow_color, waves_height);
-//	COLOR = vec4(waves_height, waves_height, waves_height, 1.0);
+	//COLOR = vec4(waves_height, waves_height, waves_height, 1.0);
 	NORMALMAP = texture(NORMAL_TEXTURE, waves_uvs / 5.0).rgb;
 }
 "
 
 [resource]
 shader = SubResource( 1 )
-shader_param/shadow_color = Color( 0, 0.298039, 0.329412, 1 )
-shader_param/tiled_factor = Vector2( 0.5, 0.5 )
-shader_param/aspect_ratio = 0.875269
-shader_param/uv_offset_scale = Vector2( 0.5, 0.3 )
-shader_param/uv_wave_size = Vector2( 0.4, 0.08 )
-shader_param/time_scale = Vector2( 0.02, 0.01 )
+shader_param/shadow_color = Color( 0.27451, 0.4, 0.741176, 1 )
+shader_param/tiled_factor = Vector2( 1, 1 )
+shader_param/aspect_ratio = 1.0
+shader_param/uv_offset_scale = Vector2( 1, 1 )
+shader_param/uv_wave_size = Vector2( 0.02, 0.02 )
+shader_param/time_scale = Vector2( 0.01, 0.01 )
 shader_param/sine_time_scale = 0.75
-shader_param/sine_offset_scale = Vector2( 20, 25 )
+shader_param/sine_offset_scale = Vector2( 10, 25 )
 shader_param/sine_wave_size = Vector2( 0.01, 0.01 )
 shader_param/uv_offset_texture = ExtResource( 1 )

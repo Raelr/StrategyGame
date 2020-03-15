@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scenes/Region.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Region1Details.png" type="Texture" id=2]
@@ -24,21 +24,20 @@
 [ext_resource path="res://Sprites/Region7Details.png" type="Texture" id=22]
 [ext_resource path="res://Sprites/Region7Overlay.png" type="Texture" id=23]
 [ext_resource path="res://Sprites/Region7Outline.png" type="Texture" id=24]
-[ext_resource path="res://Sprites/LakeWater.png" type="Texture" id=25]
 
 [node name="World" type="Node2D"]
 
 [node name="Water" parent="." instance=ExtResource( 11 )]
-modulate = Color( 0, 0.929412, 1, 1 )
-position = Vector2( 510.931, 290.197 )
-scale = Vector2( 1.01353, 0.887107 )
+position = Vector2( 511.004, 290.47 )
+scale = Vector2( 1.01522, 1.04085 )
 z_index = -1
 
-[node name="Light2D" type="Light2D" parent="Water"]
-position = Vector2( -0.0995077, 0.159174 )
-scale = Vector2( 1.03109, 1.27449 )
-texture = ExtResource( 25 )
-energy = 1.4
+[node name="ColorRect" parent="Water/CanvasLayer" index="0"]
+margin_left = 495.04
+margin_top = 276.072
+margin_right = 527.04
+margin_bottom = 305.072
+color = Color( 0.290196, 0.00392157, 1, 1 )
 
 [node name="WestRegion" parent="." instance=ExtResource( 1 )]
 position = Vector2( 449.949, 281.214 )
@@ -202,6 +201,8 @@ texture = ExtResource( 15 )
 position = Vector2( 499.237, 284.756 )
 current = true
 zoom = Vector2( 0.2, 0.2 )
+
+[editable path="Water"]
 
 [editable path="WestRegion"]
 
