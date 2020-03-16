@@ -41,7 +41,7 @@ void fragment() {
 	
 	vec2 waves_uv_offset = calculate_waves_offset(TIME, sine_time_scale, tiled_uvs, sine_offset_scale);
 	vec2 waves_uvs = tiled_uvs + waves_uv_offset * sine_wave_size + texture_based_offset;
-	float waves_height = (texture_based_offset.y + waves_uv_offset.y) * 0.25 + 0.5;
+	float waves_height = (texture_based_offset.y + waves_uv_offset.y) * 0.25 + 0.4;
 	//waves_height = min(waves_height * 1.5, 1.0);
 	
 	vec4 diffuse_color = texture(TEXTURE, waves_uvs);
