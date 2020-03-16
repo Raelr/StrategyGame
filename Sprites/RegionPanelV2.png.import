@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/water_uv_offset.png-136a70c2e429e0fa03d543059c26a7da.stex"
+path="res://.import/RegionPanelV2.png-4e58a25457a38a4163331bca3753754d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/water_uv_offset.png"
-dest_files=[ "res://.import/water_uv_offset.png-136a70c2e429e0fa03d543059c26a7da.stex" ]
+source_file="res://Sprites/RegionPanelV2.png"
+dest_files=[ "res://.import/RegionPanelV2.png-4e58a25457a38a4163331bca3753754d.stex" ]
 
 [params]
 
@@ -19,8 +19,8 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
-flags/filter=true
+flags/repeat=0
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
