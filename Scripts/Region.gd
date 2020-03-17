@@ -22,7 +22,7 @@ func _input_event(viewport, event, shape_idx):
 				get_parent().populate_ui(region_name)
 				occupied_color = Color(1, 0, 0, 0.4)
 			elif Input.is_action_pressed("rmb"):
-				get_parent().set_ui_state(false)
+				get_parent().disable_region_ui()
 				occupied_color = Color(0, 0, 0, 0)
 
 func _process(delta):
