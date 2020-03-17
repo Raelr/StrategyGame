@@ -220,10 +220,8 @@ current = true
 zoom = Vector2( 0.25, 0.25 )
 
 [node name="RegionPanel" parent="." instance=ExtResource( 25 )]
-position = Vector2( 666.998, 303.427 )
-visible_pos = Vector2( 588.241, 303.427 )
-invisible_pos = Vector2( 666.998, 303.427 )
-duration = 1.0
+visible = false
+position = Vector2( 666.718, 303.708 )
 
 [editable path="Water"]
 

@@ -1,35 +1,21 @@
 extends Node2D
 
-export (Vector2) var visible_pos
-export (Vector2) var invisible_pos
-export (float) var duration
-var elapsed = 0.0
-var move = false
-var target_pos
-
-func _ready():
-	target_pos = invisible_pos
+var is_activated = false
 
 func update_panel(regionName):
-	elapsed = 0.0
-	$NameText.text = regionName
-	target_pos = visible_pos
-	move = visible
+	$RegionPanel/NameText.text = regionName
+	if not is_activated:
+		set_visible(true)
+		$RegionPanel/AnimationPlayer.current_animation = "activated"
+		$RegionPanel/AnimationPlayer.queue("idle")
+		$RegionPanel/AnimationPlayer.play()
+		is_activated = true
 
 func deactivate_panel():
-	elapsed = 0.0
-	target_pos = invisible_pos
-	move = visible
+	$RegionPanel/AnimationPlayer.current_animation = "deactivated"
+	$RegionPanel/AnimationPlayer.play()
+	is_activated = false
 
-func _process(delta):
-	if move:
-		if elapsed < duration:
-			elapsed += delta
-			var fraction = elapsed / duration
-			global_position = global_position.linear_interpolate(target_pos, fraction)
-		else:
-			global_position = target_pos
-			move = false
-			elapsed = 0.0
-			if target_pos == invisible_pos:
-				visible = false
+func set_visible(state):
+	visible = state
+	print(state)
