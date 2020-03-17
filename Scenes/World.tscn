@@ -50,6 +50,7 @@ region_overlay = ExtResource( 4 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_name = "Weslund"
+wealth = 1
 
 [node name="Details" parent="WestRegion" index="0"]
 texture = ExtResource( 2 )
@@ -75,7 +76,8 @@ region_outline = ExtResource( 5 )
 region_overlay = ExtResource( 7 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
-region_name = "Asosia"
+region_name = "Ososia"
+wealth = 2
 
 [node name="Details" parent="SouthRegion" index="0"]
 texture = ExtResource( 6 )
@@ -99,6 +101,7 @@ region_overlay = ExtResource( 10 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_name = "Emyndur"
+wealth = 1
 
 [node name="Details" parent="NorthRegion" index="0"]
 position = Vector2( -0.339638, -0.123505 )
@@ -123,6 +126,7 @@ region_overlay = ExtResource( 14 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_name = "Tuzari"
+wealth = 3
 
 [node name="Details" parent="EastRegion" index="0"]
 texture = ExtResource( 13 )
@@ -148,6 +152,7 @@ region_overlay = ExtResource( 16 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_name = "Albus"
+wealth = 2
 
 [node name="Details" parent="SouthLakeRegion" index="0"]
 texture = ExtResource( 17 )
@@ -171,6 +176,7 @@ region_overlay = ExtResource( 19 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_name = "Duvej"
+wealth = 4
 
 [node name="Details" parent="SouthEastLakeRegion" index="0"]
 texture = ExtResource( 21 )
@@ -194,6 +200,7 @@ region_overlay = ExtResource( 23 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_name = "Pietro"
+wealth = 1
 
 [node name="Details" parent="EastLakeRegion" index="0"]
 texture = ExtResource( 22 )
@@ -219,9 +226,11 @@ position = Vector2( 499.237, 284.756 )
 current = true
 zoom = Vector2( 0.25, 0.25 )
 
-[node name="RegionPanel" parent="." instance=ExtResource( 25 )]
-visible = false
-position = Vector2( 666.718, 303.708 )
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
+
+[node name="RegionPanel" parent="CanvasLayer" instance=ExtResource( 25 )]
+position = Vector2( 666.793, 303.72 )
 
 [editable path="Water"]
 

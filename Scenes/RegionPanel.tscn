@@ -4,10 +4,6 @@
 [ext_resource path="res://fonts/00TT.TTF" type="DynamicFontData" id=2]
 [ext_resource path="res://Scripts/RegionPanel.gd" type="Script" id=3]
 
-[sub_resource type="DynamicFont" id=1]
-size = 11
-font_data = ExtResource( 2 )
-
 [sub_resource type="Animation" id=2]
 resource_name = "activated"
 tracks/0/type = "value"
@@ -18,7 +14,7 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 0.5, 0.5 ),
+"transitions": PoolRealArray( 1, 0.5 ),
 "update": 0,
 "values": [ Vector2( -0.162323, 0 ), Vector2( -79.1287, 0 ) ]
 }
@@ -30,9 +26,21 @@ tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( -2, -2 ),
+"transitions": PoolRealArray( 1, -2 ),
 "update": 0,
 "values": [ 0.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CanvasLayer:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -79,12 +87,23 @@ tracks/2/keys = {
 [sub_resource type="Animation" id=3]
 resource_name = "idle"
 
-[node name="Panel" type="Node2D"]
+[sub_resource type="DynamicFont" id=1]
+size = 11
+font_data = ExtResource( 2 )
+
+[node name="Node2D" type="Node2D"]
 script = ExtResource( 3 )
 
 [node name="RegionPanel" type="Sprite" parent="."]
 position = Vector2( -0.162323, 0 )
 texture = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RegionPanel"]
+method_call_mode = 1
+anims/activated = SubResource( 2 )
+anims/deactivated = SubResource( 4 )
+anims/idle = SubResource( 3 )
 
 [node name="NameText" type="Label" parent="RegionPanel"]
 margin_left = -38.8083
@@ -101,8 +120,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="RegionPanel"]
-method_call_mode = 1
-anims/activated = SubResource( 2 )
-anims/deactivated = SubResource( 4 )
-anims/idle = SubResource( 3 )
+[node name="WealthText" type="Label" parent="RegionPanel"]
+margin_left = 0.0385514
+margin_top = -4.0
+margin_right = 19.0386
+margin_bottom = 6.0
+grow_vertical = 2
+rect_scale = Vector2( 1.07006, 1.07006 )
+custom_fonts/font = SubResource( 1 )
+text = "1"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -2,8 +2,9 @@ extends Node2D
 
 var is_activated = false
 
-func update_panel(regionName):
+func update_panel(regionName, wealth):
 	$RegionPanel/NameText.text = regionName
+	$RegionPanel/WealthText.text = str(wealth)
 	if not is_activated:
 		set_visible(true)
 		$RegionPanel/AnimationPlayer.current_animation = "activated"
@@ -18,4 +19,3 @@ func deactivate_panel():
 
 func set_visible(state):
 	visible = state
-	print(state)

@@ -1,12 +1,18 @@
 tool
 extends Node2D
+
+# Configuration Variables
 export (Texture) var region_details
 export (Texture) var region_outline
 export (Texture) var region_overlay
 export (bool) var update
 export (Color) var occupied_color
 export (float) var change_duration
+
+# Region Variables
 export (String) var region_name
+export (int) var wealth
+
 onready var outline_color = Color(0,0,0,1)
 var elapsed = 0.0
 
@@ -19,11 +25,9 @@ func _input_event(viewport, event, shape_idx):
 			update = true
 			elapsed = 0.0
 			if Input.is_action_pressed("lmb"):
-				get_parent().populate_ui(region_name)
-				occupied_color = Color(1, 0, 0, 0.4)
+				get_parent().populate_ui(region_name, wealth)
 			elif Input.is_action_pressed("rmb"):
 				get_parent().disable_region_ui()
-				occupied_color = Color(0, 0, 0, 0)
 
 func _process(delta):
 	if update:

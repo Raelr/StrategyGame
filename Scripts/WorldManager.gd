@@ -1,8 +1,8 @@
 extends Node2D
 
 func disable_region_ui():
-	$RegionPanel.deactivate_panel()
+	$CanvasLayer/RegionPanel.deactivate_panel()
 
-func populate_ui(region_name):
-	$RegionPanel.update_panel(region_name)
+func populate_ui(region_name, wealth):
+	$CanvasLayer/RegionPanel.update_panel(region_name, wealth)
 	
