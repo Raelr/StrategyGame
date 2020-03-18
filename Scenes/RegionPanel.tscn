@@ -1,8 +1,9 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Sprites/RegionPanel.png" type="Texture" id=1]
-[ext_resource path="res://fonts/00TT.TTF" type="DynamicFontData" id=2]
+[ext_resource path="res://fonts/PixelArtFont.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Scripts/RegionPanel.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Button.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Animation" id=2]
 resource_name = "activated"
@@ -87,17 +88,12 @@ tracks/2/keys = {
 [sub_resource type="Animation" id=3]
 resource_name = "idle"
 
-[sub_resource type="DynamicFont" id=1]
-size = 11
-font_data = ExtResource( 2 )
-
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 3 )
 
 [node name="RegionPanel" type="Sprite" parent="."]
 position = Vector2( -0.162323, 0 )
 texture = ExtResource( 1 )
-script = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RegionPanel"]
 method_call_mode = 1
@@ -112,7 +108,7 @@ margin_right = 17.1917
 margin_bottom = -41.0
 grow_vertical = 2
 rect_scale = Vector2( 0.779278, 0.779278 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "Region"
 align = 1
 autowrap = true
@@ -127,10 +123,19 @@ margin_right = 19.0386
 margin_bottom = 6.0
 grow_vertical = 2
 rect_scale = Vector2( 1.07006, 1.07006 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "1"
 align = 1
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ButtonBorder" parent="RegionPanel" instance=ExtResource( 4 )]
+position = Vector2( 0.0673828, 47.0694 )
+border_idle = Color( 0.607843, 0.678431, 0.717647, 1 )
+fill_idle = Color( 0.411765, 0.415686, 0.415686, 1 )
+border_hover = Color( 0.607843, 0.678431, 0.717647, 1 )
+fill_hover = Color( 0.34902, 0.337255, 0.321569, 1 )
+border_click = Color( 0.411765, 0.415686, 0.415686, 1 )
+fill_click = Color( 0.607843, 0.678431, 0.717647, 1 )
