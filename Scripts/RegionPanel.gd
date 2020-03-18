@@ -10,6 +10,7 @@ func update_panel(regionName, wealth):
 		$RegionPanel/AnimationPlayer.current_animation = "activated"
 		$RegionPanel/AnimationPlayer.queue("idle")
 		$RegionPanel/AnimationPlayer.play()
+		$RegionPanel/Button.reset()
 		is_activated = true
 
 func deactivate_panel():

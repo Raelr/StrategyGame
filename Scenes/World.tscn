@@ -225,10 +225,7 @@ position = Vector2( 499.237, 284.756 )
 current = true
 zoom = Vector2( 0.25, 0.25 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-follow_viewport_enable = true
-
-[node name="RegionPanel" parent="CanvasLayer" instance=ExtResource( 25 )]
+[node name="RegionPanel" parent="." instance=ExtResource( 25 )]
 position = Vector2( 666.793, 303.551 )
 
 [editable path="Water"]
