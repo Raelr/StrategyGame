@@ -1,6 +1,8 @@
 tool
 extends Node2D
 
+enum REGIONTYPE { grassLand, hills, mountains }
+
 # Configuration Variables
 export (Texture) var region_details
 export (Texture) var region_outline
@@ -8,6 +10,7 @@ export (Texture) var region_overlay
 export (bool) var update
 export (Color) var occupied_color
 export (float) var change_duration
+export (REGIONTYPE) var region_type
 
 # Region Variables
 export (String) var region_name
@@ -25,7 +28,7 @@ func _input_event(viewport, event, shape_idx):
 			update = true
 			elapsed = 0.0
 			if Input.is_action_pressed("lmb"):
-				get_parent().populate_ui(region_name, wealth)
+				get_parent().populate_ui(region_name, wealth, region_type)
 			elif Input.is_action_pressed("rmb"):
 				get_parent().disable_region_ui()
 

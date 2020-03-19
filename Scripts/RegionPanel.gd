@@ -2,9 +2,29 @@ extends Node2D
 
 var is_activated = false
 
-func update_panel(regionName, wealth):
+export (Array) var region_icons
+
+var types = [
+	{
+		'name': 'Grasslands',
+		'bonus': 0
+	},
+	{
+		'name': 'Hills',
+		'bonus': 1
+	},
+	{
+		'name': 'Mountains',
+		'bonus': 2
+	}
+]
+
+func update_panel(regionName, wealth, region_type):
 	$RegionPanel/NameText.text = regionName
 	$RegionPanel/WealthText.text = str(wealth)
+	$RegionPanel/RegionTypeIcon.texture = region_icons[region_type]
+	$RegionPanel/RegionTypeIcon/RegionType.text = types[region_type].name
+	$RegionPanel/RegionTypeIcon/Effect.text = "+" + str(types[region_type].bonus) + " Defence"
 	if not is_activated:
 		set_visible(true)
 		$RegionPanel/AnimationPlayer.current_animation = "activated"
