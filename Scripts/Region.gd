@@ -25,12 +25,8 @@ func _ready():
 func _input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.pressed:
-			update = true
-			elapsed = 0.0
 			if Input.is_action_pressed("lmb"):
 				get_parent().populate_ui(region_name, wealth, region_type)
-			elif Input.is_action_pressed("rmb"):
-				get_parent().disable_region_ui()
 
 func _process(delta):
 	if update:

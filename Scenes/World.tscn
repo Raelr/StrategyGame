@@ -24,7 +24,7 @@
 [ext_resource path="res://Sprites/Region7Details.png" type="Texture" id=22]
 [ext_resource path="res://Sprites/Region7Overlay.png" type="Texture" id=23]
 [ext_resource path="res://Sprites/Region7Outline.png" type="Texture" id=24]
-[ext_resource path="res://Scenes/RegionPanel.tscn" type="PackedScene" id=25]
+[ext_resource path="res://Scenes/RTSCamera.tscn" type="PackedScene" id=25]
 [ext_resource path="res://Scripts/WorldManager.gd" type="Script" id=26]
 
 [node name="World" type="Node2D"]
@@ -58,9 +58,11 @@ texture = ExtResource( 2 )
 [node name="Overlay" parent="WestRegion/Details" index="0"]
 modulate = Color( 0, 0, 0, 0 )
 position = Vector2( 0.506, -0.523 )
+texture = ExtResource( 4 )
 
 [node name="Outline" parent="WestRegion/Details" index="1"]
 position = Vector2( 0.00668335, -0.0207214 )
+texture = ExtResource( 3 )
 
 [node name="Area2D" parent="WestRegion/Details" index="2" instance=ExtResource( 1 )]
 
@@ -224,13 +226,7 @@ modulate = Color( 0, 0, 0, 1 )
 position = Vector2( 507.459, 289.69 )
 texture = ExtResource( 15 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 499.237, 284.756 )
-current = true
-zoom = Vector2( 0.25, 0.25 )
-
-[node name="RegionPanel" parent="." instance=ExtResource( 25 )]
-position = Vector2( 666.793, 303.551 )
+[node name="Camera2D" parent="." instance=ExtResource( 25 )]
 
 [editable path="Water"]
 
