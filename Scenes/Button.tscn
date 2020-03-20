@@ -21,7 +21,7 @@ show_behind_parent = true
 texture = ExtResource( 1 )
 
 [node name="ButtonBorder" type="Sprite" parent="."]
-modulate = Color( 0.607843, 0.678431, 0.717647, 1 )
+modulate = Color( 0.780392, 0.686275, 0.54902, 1 )
 texture = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]

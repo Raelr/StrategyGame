@@ -106,11 +106,11 @@ anims/idle = SubResource( 3 )
 
 [node name="NameText" type="Label" parent="RegionPanel"]
 margin_left = -39.0
-margin_top = -51.0
-margin_right = 42.0
-margin_bottom = -35.0
+margin_top = -52.0
+margin_right = 49.0
+margin_bottom = -36.0
 grow_vertical = 2
-rect_scale = Vector2( 0.582304, 0.582304 )
+rect_scale = Vector2( 0.644166, 0.644166 )
 custom_fonts/font = ExtResource( 2 )
 text = "Region"
 align = 1
@@ -136,12 +136,11 @@ __meta__ = {
 
 [node name="Button" parent="RegionPanel" instance=ExtResource( 4 )]
 position = Vector2( 0, 46.921 )
-border_idle = Color( 0.607843, 0.678431, 0.717647, 1 )
+border_idle = Color( 0.780392, 0.686275, 0.54902, 1 )
 fill_idle = Color( 0.411765, 0.415686, 0.415686, 1 )
-border_hover = Color( 0.607843, 0.678431, 0.717647, 1 )
+border_hover = Color( 0.780392, 0.686275, 0.54902, 1 )
 fill_hover = Color( 0.25098, 0.243137, 0.247059, 1 )
 border_click = Color( 0.411765, 0.415686, 0.415686, 1 )
-fill_click = Color( 0.607843, 0.678431, 0.717647, 1 )
 
 [node name="RegionTypeIcon" type="Sprite" parent="RegionPanel"]
 position = Vector2( -24.0007, 22.9875 )
