@@ -34,9 +34,10 @@ func update_panel(regionName, wealth, region_type):
 		is_activated = true
 
 func deactivate_panel():
-	$RegionPanel/AnimationPlayer.current_animation = "deactivated"
-	$RegionPanel/AnimationPlayer.play()
-	is_activated = false
+	if is_activated:
+		$RegionPanel/AnimationPlayer.current_animation = "deactivated"
+		$RegionPanel/AnimationPlayer.play()
+		is_activated = false
 
 func set_visible(state):
 	visible = state
