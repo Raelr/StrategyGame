@@ -25,10 +25,11 @@ modulate = Color( 0.607843, 0.678431, 0.717647, 1 )
 texture = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = -18.2032
-margin_top = -4.41774
-margin_right = 21.7968
-margin_bottom = 5.58226
+margin_left = -14.9154
+margin_top = -4.34833
+margin_right = 30.0846
+margin_bottom = 11.6517
+rect_scale = Vector2( 0.686879, 0.686879 )
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "CLOSE"

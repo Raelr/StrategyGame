@@ -105,12 +105,12 @@ anims/deactivated = SubResource( 2 )
 anims/idle = SubResource( 3 )
 
 [node name="NameText" type="Label" parent="RegionPanel"]
-margin_left = -38.8083
+margin_left = -39.0
 margin_top = -51.0
-margin_right = 17.1917
-margin_bottom = -41.0
+margin_right = 42.0
+margin_bottom = -35.0
 grow_vertical = 2
-rect_scale = Vector2( 0.779278, 0.779278 )
+rect_scale = Vector2( 0.582304, 0.582304 )
 custom_fonts/font = ExtResource( 2 )
 text = "Region"
 align = 1
@@ -120,10 +120,10 @@ __meta__ = {
 }
 
 [node name="WealthText" type="Label" parent="RegionPanel"]
-margin_left = 0.0385514
-margin_top = -4.0
-margin_right = 19.0386
-margin_bottom = 6.0
+margin_left = 1.12768
+margin_top = -5.61103
+margin_right = 20.1277
+margin_bottom = 8.38897
 grow_vertical = 2
 rect_scale = Vector2( 1.07006, 1.07006 )
 custom_fonts/font = ExtResource( 2 )
@@ -148,12 +148,12 @@ position = Vector2( -24.0007, 22.9875 )
 texture = ExtResource( 5 )
 
 [node name="RegionType" type="Label" parent="RegionPanel/RegionTypeIcon"]
-margin_left = 11.884
-margin_top = -7.91122
-margin_right = 82.884
-margin_bottom = 2.08878
+margin_left = 17.2993
+margin_top = -7.19129
+margin_right = 109.299
+margin_bottom = 8.80871
 grow_vertical = 2
-rect_scale = Vector2( 0.672573, 0.672573 )
+rect_scale = Vector2( 0.402584, 0.402584 )
 custom_fonts/font = ExtResource( 2 )
 text = "Grasslands"
 align = 1
@@ -163,12 +163,12 @@ __meta__ = {
 }
 
 [node name="Effect" type="Label" parent="RegionPanel/RegionTypeIcon"]
-margin_left = 13.0
-margin_top = 2.24449
-margin_right = 84.0
-margin_bottom = 12.2445
+margin_left = 17.2394
+margin_top = 3.15032
+margin_right = 109.239
+margin_bottom = 19.1503
 grow_vertical = 2
-rect_scale = Vector2( 0.628811, 0.628811 )
+rect_scale = Vector2( 0.388653, 0.388653 )
 custom_fonts/font = ExtResource( 2 )
 text = "+0 defence"
 align = 1
