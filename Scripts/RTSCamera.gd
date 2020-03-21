@@ -6,41 +6,36 @@ export (float) var move_speed
 export (float) var max_distance
 
 const VELOCITY_DELTA = 0.01
-const MAX_ACCELERATION = 100
+const MAX_ACCELERATION = 50
 
 onready var screen = get_viewport().size
 onready var velocity = Vector2(0,0)
 onready var max_dist = Vector2(position.x + max_distance, position.y + max_distance)
 onready var min_dist = Vector2(position.x - max_distance, position.y - max_distance)
 
-func above_threshold_x(mouse_pos):
-	return mouse_pos.x > screen.x - mouse_offset.x
+func above_threshold(pos, threshold):
+	return pos > threshold
 
-func below_threshold_x(mouse_pos):
-	return mouse_pos.x < mouse_offset.x
-
-func above_threshold_y(mouse_pos):
-	return mouse_pos.y > screen.y - mouse_offset.y
-
-func below_threshold_y(mouse_pos):
-	return mouse_pos.y < mouse_offset.y
-
+func below_threshold(pos, threshold):
+	return pos < threshold
+ 
 func _process(delta):
-	position = position.linear_interpolate(adjust_velocity(), delta)
+		position = position.linear_interpolate(adjust_velocity(), delta)
 
 func adjust_velocity():
 	var mouse = get_viewport().get_mouse_position()
 	
-	if above_threshold_x(mouse):
+	if above_threshold(mouse.x, screen.x - mouse_offset.x):
 		velocity.x += move_speed
-	if below_threshold_x(mouse):
+	if below_threshold(mouse.x, mouse_offset.x):
 		velocity.x -= move_speed
-	if above_threshold_y(mouse):
+	if above_threshold(mouse.y, screen.y - mouse_offset.y):
 		velocity.y += move_speed
-	if below_threshold_y(mouse):
+	if below_threshold(mouse.y, mouse_offset.y):
 		velocity.y -= move_speed
 	
-	apply_friction()
+	velocity.x = apply_friction(velocity.x, friction.x)
+	velocity.y = apply_friction(velocity.y, friction.y)
 	
 	velocity = Vector2(clamp(velocity.x, -MAX_ACCELERATION, MAX_ACCELERATION), clamp(velocity.y, -MAX_ACCELERATION, MAX_ACCELERATION))
 	
@@ -51,12 +46,10 @@ func adjust_velocity():
 	
 	return Vector2(clamp((position.x + velocity.x), min_dist.x, max_dist.x), clamp((position.y + velocity.y), min_dist.y, max_dist.y))
 
-func apply_friction():
-	if velocity.x > 0:
-		velocity.x -= friction.x
-	elif velocity.x < 0:
-		velocity.x += friction.x
-	if velocity.y > 0:
-		velocity.y -= friction.y
-	elif velocity.y < 0:
-		velocity.y += friction.y
+func apply_friction(v_dimension, friction):
+	
+	if v_dimension > 0:
+		v_dimension -= friction
+	elif v_dimension < 0:
+		v_dimension += friction
+	return v_dimension
