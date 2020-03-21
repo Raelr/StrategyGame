@@ -227,6 +227,8 @@ position = Vector2( 507.459, 289.69 )
 texture = ExtResource( 15 )
 
 [node name="Camera2D" parent="." instance=ExtResource( 25 )]
+mouse_offset = Vector2( 20, 20 )
+move_speed = 20.0
 
 [editable path="Water"]
 
