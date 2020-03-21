@@ -15,6 +15,7 @@ script = ExtResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
+follow_viewport_enable = true
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 anchor_left = -3.91006e-05

@@ -228,7 +228,9 @@ texture = ExtResource( 15 )
 
 [node name="Camera2D" parent="." instance=ExtResource( 25 )]
 mouse_offset = Vector2( 20, 20 )
-move_speed = 20.0
+friction = Vector2( 0.25, 0.25 )
+move_speed = 5.0
+max_distance = 50.0
 
 [editable path="Water"]
 
