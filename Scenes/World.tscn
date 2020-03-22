@@ -250,6 +250,7 @@ texture = ExtResource( 15 )
 
 [node name="Unit" parent="." instance=ExtResource( 27 )]
 position = Vector2( 338.249, 288.993 )
+unitColor = Color( 1, 0.141176, 0, 1 )
 
 [editable path="Water"]
 
