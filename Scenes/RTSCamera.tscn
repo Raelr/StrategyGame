@@ -4,10 +4,19 @@
 [ext_resource path="res://Scenes/RegionPanel.tscn" type="PackedScene" id=5]
 
 [node name="Camera2D" type="Camera2D"]
-position = Vector2( 499.237, 284.756 )
+anchor_mode = 0
 current = true
-zoom = Vector2( 0.25, 0.25 )
 script = ExtResource( 1 )
 
-[node name="RegionPanel" parent="." instance=ExtResource( 5 )]
-position = Vector2( 167.556, 18.795 )
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="RegionPanel" parent="CanvasLayer" instance=ExtResource( 5 )]
+anchor_left = 1.155
+anchor_top = 0.625722
+anchor_right = 1.155
+anchor_bottom = 0.625722
+margin_left = 0.968018
+margin_top = -0.680786
+margin_right = 0.968018
+margin_bottom = -0.680786
+rect_scale = Vector2( 4, 4 )

@@ -4,9 +4,12 @@ export (Vector2) var mouse_offset
 export (Vector2) var friction
 export (float) var move_speed
 export (float) var max_distance
+export (float) var zoom_speed
 
 const VELOCITY_DELTA = 0.01
 const MAX_ACCELERATION = 50
+const MIN_ZOOM_FACTOR = 0.8
+const MAX_ZOOM_FACTOR = 1.1
 
 onready var screen = get_viewport().size
 onready var velocity = Vector2(0,0)
@@ -47,9 +50,21 @@ func adjust_velocity():
 	return Vector2(clamp((position.x + velocity.x), min_dist.x, max_dist.x), clamp((position.y + velocity.y), min_dist.y, max_dist.y))
 
 func apply_friction(v_dimension, friction):
-	
 	if v_dimension > 0:
 		v_dimension -= friction
 	elif v_dimension < 0:
 		v_dimension += friction
 	return v_dimension
+
+func _input(event):
+	if event is InputEventMagnifyGesture:
+		var zoom_velocity = Vector2(0,0)
+		if event.factor > 1:
+			zoom_velocity.x -= zoom_speed
+			zoom_velocity.y -= zoom_speed
+		else:
+			zoom_velocity.x += zoom_speed
+			zoom_velocity.y += zoom_speed
+		
+		zoom.x = clamp(zoom.x + zoom_velocity.x, MIN_ZOOM_FACTOR, MAX_ZOOM_FACTOR)
+		zoom.y = clamp(zoom.y + zoom_velocity.y, MIN_ZOOM_FACTOR, MAX_ZOOM_FACTOR)
