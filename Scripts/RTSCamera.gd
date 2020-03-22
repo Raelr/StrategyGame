@@ -58,6 +58,8 @@ func adjust_velocity():
 	velocity.x = apply_friction(velocity.x, friction.x)
 	velocity.y = apply_friction(velocity.y, friction.y)
 	
+	velocity = Vector2(clamp(velocity.x, -MAX_ACCELERATION, MAX_ACCELERATION), clamp(velocity.y, -MAX_ACCELERATION, MAX_ACCELERATION))
+	
 	if abs(velocity.x) < VELOCITY_DELTA:
 		velocity.x = 0
 	if abs(velocity.y) < VELOCITY_DELTA:

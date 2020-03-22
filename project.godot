@@ -42,6 +42,10 @@ scroll={
  ]
 }
 
+[physics]
+
+common/physics_jitter_fix=0.5
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
