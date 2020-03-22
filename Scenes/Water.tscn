@@ -13,17 +13,14 @@ texture = ExtResource( 3 )
 normal_map = ExtResource( 5 )
 script = ExtResource( 2 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = -1
-follow_viewport_enable = true
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
 anchor_left = -3.91006e-05
 anchor_right = -3.91006e-05
-margin_left = 564.04
-margin_top = 264.0
-margin_right = 600.04
-margin_bottom = 294.0
+margin_left = -17.9986
+margin_top = -15.0
+margin_right = 19.0014
+margin_bottom = 16.0
 color = Color( 0.309804, 0.447059, 0.784314, 1 )
 __meta__ = {
 "_edit_use_anchors_": false

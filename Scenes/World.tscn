@@ -35,21 +35,18 @@ position = Vector2( 513.925, 301.608 )
 anchor_mode = 1
 mouse_offset = Vector2( 30, 30 )
 friction = Vector2( 1, 1 )
+zoom_friction = Vector2( 0.05, 0.05 )
 move_speed = 100.0
 max_distance = 50.0
-zoom_speed = 0.01
+zoom_speed = 0.1
 
 [node name="Water" parent="." instance=ExtResource( 11 )]
 position = Vector2( 566.783, 321.544 )
 scale = Vector2( 4, 4 )
 z_index = -1
 
-[node name="ColorRect" parent="Water/CanvasLayer" index="0"]
-margin_left = 499.04
-margin_top = 265.0
-margin_right = 643.04
-margin_bottom = 384.0
-color = Color( 0.290196, 0.00392157, 1, 1 )
+[node name="ColorRect" parent="Water" index="0"]
+mouse_filter = 2
 
 [node name="WestRegion" parent="." instance=ExtResource( 1 )]
 position = Vector2( 338.55, 288.962 )
