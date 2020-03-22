@@ -33,6 +33,7 @@ script = ExtResource( 26 )
 [node name="Camera2D" parent="." instance=ExtResource( 25 )]
 position = Vector2( 513.925, 301.608 )
 anchor_mode = 1
+smoothing_enabled = true
 mouse_offset = Vector2( 30, 30 )
 friction = Vector2( 1, 1 )
 zoom_friction = Vector2( 0.05, 0.05 )
@@ -55,6 +56,7 @@ region_outline = ExtResource( 3 )
 region_overlay = ExtResource( 4 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
+neighbours = [ NodePath("../SouthRegion"), NodePath("../NorthRegion") ]
 region_name = "Weslund"
 wealth = 1
 
@@ -84,6 +86,7 @@ region_overlay = ExtResource( 7 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_type = 1
+neighbours = [ NodePath("../WestRegion"), NodePath("../NorthRegion"), NodePath("../SouthLakeRegion") ]
 region_name = "Ososia"
 wealth = 2
 
@@ -110,6 +113,7 @@ region_overlay = ExtResource( 10 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_type = 2
+neighbours = [ NodePath("../WestRegion"), NodePath("../SouthRegion"), NodePath("../EastRegion") ]
 region_name = "Emyndur"
 wealth = 1
 
@@ -137,6 +141,7 @@ region_outline = ExtResource( 12 )
 region_overlay = ExtResource( 14 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
+neighbours = [ NodePath("../NorthRegion"), NodePath("../EastLakeRegion") ]
 region_name = "Tuzari"
 wealth = 3
 
@@ -164,6 +169,7 @@ region_outline = ExtResource( 18 )
 region_overlay = ExtResource( 16 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
+neighbours = [ NodePath("../SouthRegion"), NodePath("../SouthEastLakeRegion") ]
 region_name = "Albus"
 wealth = 2
 
@@ -190,6 +196,7 @@ region_overlay = ExtResource( 19 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_type = 1
+neighbours = [ NodePath("../SouthLakeRegion"), NodePath("../EastLakeRegion") ]
 region_name = "Duvej"
 wealth = 4
 
@@ -215,6 +222,7 @@ region_outline = ExtResource( 24 )
 region_overlay = ExtResource( 23 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
+neighbours = [ NodePath("../EastRegion"), NodePath("../SouthEastLakeRegion") ]
 region_name = "Pietro"
 wealth = 1
 

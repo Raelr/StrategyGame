@@ -11,6 +11,7 @@ export (bool) var update
 export (Color) var occupied_color
 export (float) var change_duration
 export (REGIONTYPE) var region_type
+export (Array) var neighbours
 
 # Region Variables
 export (String) var region_name
