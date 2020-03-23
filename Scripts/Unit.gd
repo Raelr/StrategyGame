@@ -15,8 +15,17 @@ func _process(delta):
 		if Engine.editor_hint:
 			$Unit.material.set_shader_param("unit_color", unitColor)
 
+func set_selected():
+	change_outline(Color.yellow)
+
+func set_deselected():
+	change_outline(Color.black)
+
+func change_outline(color):
+	$Unit.material.set_shader_param("outline_color", color)
+
 func _on_Area2D_mouse_entered():
-	$Unit.material.set_shader_param("outline_color", Color.yellow)
+	get_parent().moused_over(self)
 
 func _on_Area2D_mouse_exited():
-	$Unit.material.set_shader_param("outline_color", Color.black)
+	get_parent().mouse_left(self)

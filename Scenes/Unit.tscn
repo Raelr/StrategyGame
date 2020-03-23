@@ -10,7 +10,9 @@ shader_param/width = 1.0
 shader_param/outline_color = Color( 0, 0, 0, 1 )
 shader_param/unit_color = Color( 1, 1, 1, 1 )
 
-[node name="Area2D" type="Area2D"]
+[node name="Unit" type="Area2D" groups=[
+"Unit",
+]]
 script = ExtResource( 3 )
 
 [node name="Unit" type="Sprite" parent="."]

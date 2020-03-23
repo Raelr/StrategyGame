@@ -55,9 +55,14 @@ func change_outline(color):
 	elapsed = 0.0
 	update = true
 
-func _on_Area2D_mouse_entered():
-	change_outline(Color(1, 1, 0, 1))
+func set_selected():
+	change_outline(Color.yellow)
 
-func _on_Area2D_mouse_exited():
+func set_deselected():
 	change_outline(Color(occupied_color.r, occupied_color.g, occupied_color.b, 1))
 
+func _on_Area2D_mouse_entered():
+	get_parent().moused_over(self)
+
+func _on_Area2D_mouse_exited():
+	get_parent().mouse_left(self)
