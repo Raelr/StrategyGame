@@ -5,7 +5,6 @@ enum REGIONTYPE { grassLand, hills, mountains }
 
 # Configuration Variables
 export (Texture) var region_details
-export (Texture) var region_outline
 export (Texture) var region_overlay
 export (bool) var update = false
 export (Color) var occupied_color
