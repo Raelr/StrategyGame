@@ -7,7 +7,7 @@ enum REGIONTYPE { grassLand, hills, mountains }
 export (Texture) var region_details
 export (Texture) var region_outline
 export (Texture) var region_overlay
-export (bool) var update
+export (bool) var update = false
 export (Color) var occupied_color
 export (float) var change_duration
 export (REGIONTYPE) var region_type
@@ -37,12 +37,10 @@ func _process(delta):
 
 func change_region_sprite():
 	$Details.texture = region_details
-	$Details/Outline.texture = region_outline
 	$Details/Overlay.texture = region_overlay
 
 func set_occupied(overlay_color, border_color, delta): 
 	transition_color(delta, $Details/Overlay, occupied_color)
-	$Details/Outline.modulate = border_color
 
 func transition_color(delta, ui, dest_color):
 	if elapsed < change_duration:
@@ -54,7 +52,7 @@ func transition_color(delta, ui, dest_color):
 		update = false
 
 func change_outline(color):
-	outline_color = color
+	$Details.material.set_shader_param("outline_color", color)
 	elapsed = 0.0
 	update = true
 

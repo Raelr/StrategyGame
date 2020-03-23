@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Scenes/Region.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Region1Details.png" type="Texture" id=2]
@@ -27,6 +27,56 @@
 [ext_resource path="res://Scenes/RTSCamera.tscn" type="PackedScene" id=25]
 [ext_resource path="res://Scripts/WorldManager.gd" type="Script" id=26]
 [ext_resource path="res://Scenes/Unit.tscn" type="PackedScene" id=27]
+[ext_resource path="res://Shaders/outline_shader_pixel_perfect.shader" type="Shader" id=28]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 28 )
+shader_param/width = 1.0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = ExtResource( 28 )
+shader_param/width = 1.0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = ExtResource( 28 )
+shader_param/width = 1.0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = ExtResource( 28 )
+shader_param/width = 1.0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+shader = ExtResource( 28 )
+shader_param/width = 1.0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = ExtResource( 28 )
+shader_param/width = 1.0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=7]
+resource_local_to_scene = true
+shader = ExtResource( 28 )
+shader_param/width = 1.0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 1, 1, 1, 1 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 26 )
@@ -51,7 +101,7 @@ z_index = -1
 mouse_filter = 2
 
 [node name="WestRegion" parent="." instance=ExtResource( 1 )]
-position = Vector2( 338.55, 288.962 )
+position = Vector2( 340.545, 288.962 )
 region_details = ExtResource( 2 )
 region_outline = ExtResource( 3 )
 region_overlay = ExtResource( 4 )
@@ -62,6 +112,7 @@ region_name = "Weslund"
 wealth = 1
 
 [node name="Details" parent="WestRegion" index="0"]
+material = SubResource( 1 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 2 )
 
@@ -69,14 +120,11 @@ texture = ExtResource( 2 )
 modulate = Color( 0, 0, 0, 0 )
 texture = ExtResource( 4 )
 
-[node name="Outline" parent="WestRegion/Details" index="1"]
-position = Vector2( -0.000823975, -0.000701869 )
-texture = ExtResource( 3 )
-
-[node name="Area2D" parent="WestRegion/Details" index="2" instance=ExtResource( 1 )]
+[node name="Area2D" parent="WestRegion/Details" index="1" instance=ExtResource( 1 )]
 
 [node name="CollisionPolygon2D" parent="WestRegion" index="1"]
 visible = false
+position = Vector2( -1.93967, 0 )
 polygon = PoolVector2Array( -79.9742, 59.9441, -76.0089, 59.933, -75.9755, 63.9205, -72.0103, 63.9316, -72.0168, 67.9284, -68.0404, 67.9395, -68.007, 71.9604, -64.0016, 71.9671, -64.0172, 75.928, -60.0296, 75.9391, -59.9851, 79.9266, -55.9976, 79.9378, -56.0129, 83.9211, -52.0143, 83.9434, -52.0073, 87.9557, -48.0421, 87.9669, -48.0087, 91.921, -44.0211, 91.9433, -44.0007, 95.949, -40.0355, 95.9602, -39.9798, 99.9366, -36.0034, 99.97, -35.9987, 103.933, -32.0112, 103.944, -32.0001, 107.943, -27.9968, 107.939, -28.0191, 111.96, 52.0343, 111.924, 52.0231, 107.925, 56.0107, 107.937, 56.0329, 103.927, 60.0316, 103.927, 60.0294, 99.9232, 63.9946, 99.9121, 64.0058, 95.9134, 68.0238, 95.9042, 68.0127, 91.9278, 72.0002, 91.9278, 72.0086, 87.9466, 76.0116, 87.9316, 76.0222, 83.9325, 79.9574, 83.9218, 80.0307, 59.9422, 75.9996, 59.9315, 76.0102, 55.9218, 72.0005, 55.9324, 72.0192, 51.912, 67.9881, 51.9013, 68.0022, -4.05606, 71.9906, -4.06671, 71.9586, -8.0658, 76.0004, -8.11911, 76.0004, -12.0329, 79.9958, -12.0626, 80.0367, -76.0796, 76.027, -76.1116, 76.059, -80.068, 72.0279, -80.0893, 72.074, -84.0863, 68.0323, -84.0863, 68.0216, -88.096, 64.0332, -88.128, 64.041, -92.1016, 60.0313, -92.0909, 60.0419, -96.0687, 56.0429, -96.1114, 56.0553, -100.104, 52.0562, -100.125, 52.0515, -104.141, 47.9991, -104.131, 48.0525, -108.045, 43.9973, -108.106, 44.04, -112.106, -20.006, -112.089, -20.006, -108.121, -24.0157, -108.089, -24.0157, -104.122, -28.019, -104.071, -27.9977, -100.104, -31.9541, -100.104, -32.0118, -96.1477, -36.0322, -96.137, -35.9447, -92.0868, -40.0504, -92.1614, -39.9864, -88.0856, -44.0176, -88.1368, -43.9963, -60.0921, -47.9954, -60.0601, -47.9847, -56.1357, -52.0052, -56.1229, -52.018, -52.1302, -55.9851, -52.1302, -55.9979, -24.1025, -60.0183, -24.0918, -59.997, -20.1141, -64.0194, -20.1205, -64.0087, -16.1427, -67.9758, -16.1427, -67.9545, -12.1223, -72.0175, -12.1223, -71.9962, -8.10193, -76.0335, -8.10825, -75.9908, -4.13049, -79.9579, -4.14114 )
 
 [node name="SouthRegion" parent="." instance=ExtResource( 1 )]
@@ -92,15 +140,13 @@ region_name = "Ososia"
 wealth = 2
 
 [node name="Details" parent="SouthRegion" index="0"]
+material = SubResource( 2 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 6 )
 
 [node name="Overlay" parent="SouthRegion/Details" index="0"]
 modulate = Color( 0, 0, 0, 0 )
 texture = ExtResource( 7 )
-
-[node name="Outline" parent="SouthRegion/Details" index="1"]
-texture = ExtResource( 5 )
 
 [node name="CollisionPolygon2D" parent="SouthRegion" index="1"]
 visible = false
@@ -119,6 +165,7 @@ region_name = "Emyndur"
 wealth = 1
 
 [node name="Details" parent="NorthRegion" index="0"]
+material = SubResource( 3 )
 position = Vector2( -0.339638, -0.123505 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 9 )
@@ -128,12 +175,9 @@ modulate = Color( 0, 0, 0, 0 )
 position = Vector2( -0.0238037, -0.0238342 )
 texture = ExtResource( 10 )
 
-[node name="Outline" parent="NorthRegion/Details" index="1"]
-texture = ExtResource( 8 )
-
 [node name="CollisionPolygon2D" parent="NorthRegion" index="1"]
 visible = false
-polygon = PoolVector2Array( -44.3319, 49.8552, -44.3341, -10.1192, -48.3698, -10.1392, -48.3498, -14.1449, -52.3754, -14.1248, -52.3398, -18.1024, -56.3454, -18.1325, -56.3454, -22.108, -60.3853, -22.1282, -60.3652, -26.1238, -64.3909, -26.1238, -64.3752, -30.1053, -68.3608, -30.1254, -68.3508, -34.131, -72.3464, -34.1251, -72.3367, -50.1436, -68.3611, -50.1436, -68.3811, -54.1593, -64.3654, -54.1393, -64.3452, -58.155, -60.3596, -58.165, -60.3796, -62.1506, -28.3806, -62.1406, -28.3705, -58.1049, -20.3693, -58.1409, -20.3593, -62.0965, -16.3436, -62.1265, -16.3655, -66.1402, -12.3799, -66.1402, -12.3378, -70.0997, -4.37653, -70.1498, -4.31647, -66.1541, -0.358704, -66.1101, -0.348694, -62.1746, 3.65692, -62.1445, 3.65515, -58.1348, 7.62073, -58.1348, 7.64075, -54.1292, 11.6502, -54.1312, 11.6602, -50.1256, 15.6558, -50.1456, 15.6864, -46.1521, 19.6519, -46.142, 19.672, -42.0863, 39.6798, -42.1265, 39.6398, -38.1409, 43.6354, -38.1109, 43.6354, -34.1673, 47.6511, -34.1373, 47.641, -30.1918, 51.6467, -30.1517, 51.6608, -26.1621, 55.6364, -26.1621, 55.6664, -22.1464, 59.652, -22.1264, 59.6661, -18.1409, 63.6517, -18.1609, 63.6617, -14.1853, 67.6273, -14.1653, 67.6614, -10.1257, 71.687, -10.1357, 71.6935, 37.8879, 67.6678, 37.8879, 67.6578, 41.9035, 55.655, 41.8676, 55.685, 45.8632, 51.6494, 45.8832, 51.6876, 49.8729, 47.6619, 49.9129, 47.6819, 53.8885, 43.6763, 53.8785, 43.7162, 57.8922, 39.6105, 57.8922, 39.6723, 61.8918, 35.6567, 61.8718, 35.6467, 65.8875, 31.6672, 65.8876, 31.6711, 69.8992, 27.6555, 69.8892, 27.6455, 65.8836, 23.6499, 65.8836, 23.6415, 61.8657, 19.6459, 61.8557, 19.6358, 57.8501, 15.6622, 57.866, 15.6321, 53.8804, 11.6766, 53.9005, 11.6447, 49.9049, 7.59894, 49.9049, 7.67554, 45.891, 3.62982, 45.8809, 3.64984, 41.8853, -0.345764, 41.8953, -0.351868, 37.8656, -4.36749, 37.8556, -4.39758, 33.91, -28.3318, 33.8839, -28.3218, 37.9096, -32.3474, 37.8995, -32.3396, 41.8772, -36.3352, 41.8772, -36.3213, 45.8848, -40.3269, 45.8648, -40.3269, 49.8604 )
+polygon = PoolVector2Array( -44.2177, 41.7549, -44.2342, -10.0729, -48.3698, -10.1392, -48.3498, -14.1449, -52.3754, -14.1248, -52.3398, -18.1024, -56.3454, -18.1325, -56.3454, -22.108, -60.3853, -22.1282, -60.3652, -26.1238, -64.3909, -26.1238, -64.3752, -30.1053, -68.3608, -30.1254, -68.3508, -34.131, -72.3464, -34.1251, -72.3367, -50.1436, -68.3611, -50.1436, -68.3811, -54.1593, -64.3654, -54.1393, -64.3452, -58.155, -60.3596, -58.165, -60.3796, -62.1506, -28.3806, -62.1406, -28.3705, -58.1049, -20.3693, -58.1409, -20.3593, -62.0965, -16.3436, -62.1265, -16.3655, -66.1402, -12.3799, -66.1402, -12.3378, -70.0997, -4.37653, -70.1498, -4.31647, -66.1541, -0.358704, -66.1101, -0.348694, -62.1746, 3.65692, -62.1445, 3.65515, -58.1348, 7.62073, -58.1348, 7.64075, -54.1292, 11.6502, -54.1312, 11.6602, -50.1256, 15.6558, -50.1456, 15.6864, -46.1521, 19.6519, -46.142, 19.672, -42.0863, 39.6798, -42.1265, 39.6398, -38.1409, 43.6354, -38.1109, 43.6354, -34.1673, 47.6511, -34.1373, 47.641, -30.1918, 51.6467, -30.1517, 51.6608, -26.1621, 55.6364, -26.1621, 55.6664, -22.1464, 59.652, -22.1264, 59.6661, -18.1409, 63.6517, -18.1609, 63.6617, -14.1853, 67.6273, -14.1653, 67.6614, -10.1257, 71.687, -10.1357, 71.6935, 37.8879, 67.6678, 37.8879, 67.6578, 41.9035, 55.655, 41.8676, 55.685, 45.8632, 51.6494, 45.8832, 51.6876, 49.8729, 47.6619, 49.9129, 47.6819, 53.8885, 43.6763, 53.8785, 43.7162, 57.8922, 39.6105, 57.8922, 39.6723, 61.8918, 35.6567, 61.8718, 35.6467, 65.8875, 31.6672, 65.8876, 31.6711, 69.8992, 27.6555, 69.8892, 27.6455, 65.8836, 23.6499, 65.8836, 23.6415, 61.8657, 19.6459, 61.8557, 19.6358, 57.8501, 15.6622, 57.866, 15.6321, 53.8804, 11.6766, 53.9005, 11.6447, 49.9049, 7.59894, 49.9049, 7.67554, 45.891, 3.62982, 45.8809, 3.64984, 41.8853, -0.345764, 41.8953, -0.351868, 37.8656, -4.36749, 37.8556, -4.39758, 33.91, -28.3318, 33.8839, -28.3218, 37.9096, -32.3474, 37.8995, -32.3396, 41.8772, -36.3352, 41.8772, -36.3213, 45.8848, -40.1831, 45.751, -40.3123, 49.6782, -44.3811, 49.9526, -44.2177, 41.7549 )
 
 [node name="EastRegion" parent="." instance=ExtResource( 1 )]
 position = Vector2( 600.445, 253.015 )
@@ -147,6 +191,7 @@ region_name = "Tuzari"
 wealth = 3
 
 [node name="Details" parent="EastRegion" index="0"]
+material = SubResource( 4 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 13 )
 
@@ -154,10 +199,6 @@ texture = ExtResource( 13 )
 modulate = Color( 0, 0, 0, 1.96171e-07 )
 position = Vector2( 0, -0.006 )
 texture = ExtResource( 14 )
-
-[node name="Outline" parent="EastRegion/Details" index="1"]
-position = Vector2( 0, -0.00585449 )
-texture = ExtResource( 12 )
 
 [node name="CollisionPolygon2D" parent="EastRegion" index="1"]
 visible = false
@@ -175,15 +216,13 @@ region_name = "Albus"
 wealth = 2
 
 [node name="Details" parent="SouthLakeRegion" index="0"]
+material = SubResource( 5 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 17 )
 
 [node name="Overlay" parent="SouthLakeRegion/Details" index="0"]
 modulate = Color( 0, 0, 0, 0 )
 texture = ExtResource( 16 )
-
-[node name="Outline" parent="SouthLakeRegion/Details" index="1"]
-texture = ExtResource( 18 )
 
 [node name="CollisionPolygon2D" parent="SouthLakeRegion" index="1"]
 visible = false
@@ -202,15 +241,13 @@ region_name = "Duvej"
 wealth = 4
 
 [node name="Details" parent="SouthEastLakeRegion" index="0"]
+material = SubResource( 6 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 21 )
 
 [node name="Overlay" parent="SouthEastLakeRegion/Details" index="0"]
 modulate = Color( 0, 0, 0, 0 )
 texture = ExtResource( 19 )
-
-[node name="Outline" parent="SouthEastLakeRegion/Details" index="1"]
-texture = ExtResource( 20 )
 
 [node name="CollisionPolygon2D" parent="SouthEastLakeRegion" index="1"]
 visible = false
@@ -228,15 +265,13 @@ region_name = "Pietro"
 wealth = 1
 
 [node name="Details" parent="EastLakeRegion" index="0"]
+material = SubResource( 7 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 22 )
 
 [node name="Overlay" parent="EastLakeRegion/Details" index="0"]
 modulate = Color( 0, 0, 0, 0 )
 texture = ExtResource( 23 )
-
-[node name="Outline" parent="EastLakeRegion/Details" index="1"]
-texture = ExtResource( 24 )
 
 [node name="CollisionPolygon2D" parent="EastLakeRegion" index="1"]
 visible = false

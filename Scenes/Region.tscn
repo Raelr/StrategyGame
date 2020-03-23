@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
+[ext_resource path="res://Shaders/outline_shader_pixel_perfect.shader" type="Shader" id=1]
 [ext_resource path="res://Scripts/Region.gd" type="Script" id=4]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/width = 1.0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 1, 1, 1, 1 )
 
 [node name="Area2D" type="Area2D" groups=[
 "region",
@@ -8,12 +16,10 @@
 script = ExtResource( 4 )
 
 [node name="Details" type="Sprite" parent="."]
+material = SubResource( 1 )
 
 [node name="Overlay" type="Sprite" parent="Details"]
 modulate = Color( 1, 1, 1, 0 )
-
-[node name="Outline" type="Sprite" parent="Details"]
-modulate = Color( 0, 0, 0, 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 [connection signal="mouse_entered" from="." to="." method="_on_Area2D_mouse_entered"]
