@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Scenes/Region.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Region1Details.png" type="Texture" id=2]
@@ -11,7 +11,6 @@
 [ext_resource path="res://Sprites/Region3Details.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/Region3Overlay.png" type="Texture" id=10]
 [ext_resource path="res://Scenes/Water.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Sprites/FourthRegionOutline.png" type="Texture" id=12]
 [ext_resource path="res://Sprites/FourthRegionDetails.png" type="Texture" id=13]
 [ext_resource path="res://Sprites/FourthRegionOverlay.png" type="Texture" id=14]
 [ext_resource path="res://Sprites/LakeOutline.png" type="Texture" id=15]
@@ -28,6 +27,7 @@
 [ext_resource path="res://Scripts/WorldManager.gd" type="Script" id=26]
 [ext_resource path="res://Scenes/Unit.tscn" type="PackedScene" id=27]
 [ext_resource path="res://Shaders/outline_shader_pixel_perfect.shader" type="Shader" id=28]
+[ext_resource path="res://Sprites/LakeWater.png" type="Texture" id=29]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -49,6 +49,9 @@ shader = ExtResource( 28 )
 shader_param/width = 1.0
 shader_param/outline_color = null
 shader_param/unit_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StreamTexture" id=8]
+load_path = "res://.import/FourthRegionOutline.png-1fae4b86d3cd94a5e19c47dcd61b5124.stex"
 
 [sub_resource type="ShaderMaterial" id=4]
 resource_local_to_scene = true
@@ -93,11 +96,16 @@ max_distance = 50.0
 zoom_speed = 0.1
 
 [node name="Water" parent="." instance=ExtResource( 11 )]
-position = Vector2( 566.783, 321.544 )
-scale = Vector2( 4, 4 )
+position = Vector2( 568.625, 328.429 )
+scale = Vector2( 4.09953, 4.40288 )
 z_index = -1
+texture = ExtResource( 29 )
 
 [node name="ColorRect" parent="Water" index="0"]
+margin_left = -18.6236
+margin_top = -15.1539
+margin_right = 18.3764
+margin_bottom = 16.8461
 mouse_filter = 2
 
 [node name="WestRegion" parent="." instance=ExtResource( 1 )]
@@ -182,7 +190,7 @@ polygon = PoolVector2Array( -44.2177, 41.7549, -44.2342, -10.0729, -48.3698, -10
 [node name="EastRegion" parent="." instance=ExtResource( 1 )]
 position = Vector2( 600.445, 253.015 )
 region_details = ExtResource( 13 )
-region_outline = ExtResource( 12 )
+region_outline = SubResource( 8 )
 region_overlay = ExtResource( 14 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
@@ -279,7 +287,7 @@ polygon = PoolVector2Array( -51.9946, 6.01135, -51.9976, -26.0045, -32.055, -25.
 
 [node name="LakeOutline" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 568.443, 322.977 )
+position = Vector2( 570.468, 325.005 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 15 )
 
