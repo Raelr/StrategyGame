@@ -13,10 +13,10 @@ void fragment() {
 	alpha += texture(TEXTURE, UV + vec2(-size.x, 0.0)).a;
 	alpha += texture(TEXTURE, UV + vec2(0.0, size.y)).a;
 	alpha += texture(TEXTURE, UV + vec2(0.0, -size.y)).a;
-	alpha += texture(TEXTURE, UV + vec2(size.x, size.y)).a;
-	alpha += texture(TEXTURE, UV + vec2(-size.x, size.y)).a;
-	alpha += texture(TEXTURE, UV + vec2(size.x, -size.y)).a;
-	alpha += texture(TEXTURE, UV + vec2(-size.x, -size.y)).a;
+//	alpha += texture(TEXTURE, UV + vec2(size, size)).a;
+//	alpha += texture(TEXTURE, UV + vec2(-size, size)).a;
+//	alpha += texture(TEXTURE, UV + vec2(size, -size)).a;
+//	alpha += texture(TEXTURE, UV + vec2(-size, -size)).a;
 	
 	vec3 final_color = mix( outline_color.rgb, sprite_color.rgb * unit_color.rgb, sprite_color.a);
 	COLOR = vec4(final_color.rgb, clamp(alpha, 0.0, 1.0));

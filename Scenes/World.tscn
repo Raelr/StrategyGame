@@ -249,8 +249,8 @@ scale = Vector2( 4, 4 )
 texture = ExtResource( 15 )
 
 [node name="Unit" parent="." instance=ExtResource( 27 )]
-position = Vector2( 338.249, 288.993 )
-unitColor = Color( 1, 0.00392157, 0.00392157, 1 )
+position = Vector2( 338.542, 288.968 )
+unitColor = Color( 1, 1, 1, 1 )
 
 [editable path="Water"]
 
