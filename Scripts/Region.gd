@@ -63,3 +63,4 @@ func _on_Area2D_mouse_entered():
 
 func _on_Area2D_mouse_exited():
 	change_outline(Color(occupied_color.r, occupied_color.g, occupied_color.b, 1))
+

@@ -2,7 +2,7 @@ shader_type canvas_item;
 
 uniform float width: hint_range(0.0, 30.0);
 uniform vec4 outline_color: hint_color;
-uniform vec4 sprite_unit_color : hint_color;
+uniform vec4 unit_color: hint_color;
 
 void fragment() {
 	float size = width * 1.0 / float(textureSize(TEXTURE, 0).x);
@@ -18,6 +18,6 @@ void fragment() {
 	alpha += texture(TEXTURE, UV + vec2(size, -size)).a;
 	alpha += texture(TEXTURE, UV + vec2(-size, -size)).a;
 	
-	vec4 final_color = mix(sprite_unit_color, outline_color, clamp(alpha, 0.0, 1.0));
+	vec3 final_color = mix(sprite_color.rgb * unit_color.rgb, outline_color.rgb, clamp(alpha, 0.0, 1.0));
 	COLOR = vec4(final_color.rgb, clamp(abs(alpha) + sprite_color.a, 0.0, 1.0));
 }

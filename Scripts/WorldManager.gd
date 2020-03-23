@@ -1,5 +1,6 @@
 extends Node2D
 
+
 func disable_region_ui():
 	$Camera2D/CanvasLayer/RegionPanel.deactivate_panel()
 
