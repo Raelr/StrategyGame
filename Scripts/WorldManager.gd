@@ -23,17 +23,35 @@ func mouse_left(object):
 
 func select_element():
 	if not moused_elements.empty():
-		selected = moused_elements.back()
-		var details = selected.get_details()
-		if details["type"] == "region":
-			populate_ui(details["name"], details["wealth"], details["region type"])
-		elif details["type"] == "unit":
-			pass
+		var details = null
+		if selected != moused_elements.back():
+			reset_selected(selected)
+			selected = moused_elements.back()
+		if selected:
+			details = selected.get_details()
+		if details:
+			selected.outline_color = Color.yellow
+			selected.set_selected()
+			match details["type"]:
+				"region":
+					populate_ui(details["name"], details["wealth"], details["region type"])
+				"unit":
+					show_unit_paths(selected)
+
+func show_unit_paths(unit):
+	var unit_region = unit.current_region
+	unit_region.show_neighbours()
+
+func reset_selected(selected_item):
+	if selected:
+		selected_item.outline_color = Color.black
+		selected_item.reset()
 
 func _input(event):
 	if event is InputEventKey:
 		if event.pressed:
 			if Input.is_action_just_pressed('ui_cancel'):
+				reset_selected(selected)
 				disable_region_ui()
 	if event is InputEventMouseButton:
 		if event.pressed:

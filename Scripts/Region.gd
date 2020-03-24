@@ -11,7 +11,6 @@ export (Color) var occupied_color
 export (float) var change_duration
 export (REGIONTYPE) var region_type
 export (Array) var neighbours
-
 # Region Variables
 export (String) var region_name
 export (int) var wealth
@@ -61,10 +60,25 @@ func set_selected():
 	change_outline(Color.yellow)
 
 func set_deselected():
-	change_outline(Color(occupied_color.r, occupied_color.g, occupied_color.b, 1))
+	change_outline(outline_color)
+
+func reset():
+	set_deselected()
 
 func _on_Area2D_mouse_entered():
 	get_parent().moused_over(self)
 
 func _on_Area2D_mouse_exited():
 	get_parent().mouse_left(self)
+
+func show_neighbours():
+	for neighbour in neighbours:
+		var n = get_node(neighbour)
+		n.outline_color = Color.white
+		n.change_outline(n.outline_color)
+
+func reset_neighbours():
+	for neighbour in neighbours:
+		var n = get_node(neighbour)
+		n.outline_color = Color.black
+		n.change_outline(n.outline_color)
