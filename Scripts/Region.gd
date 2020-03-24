@@ -22,11 +22,13 @@ var elapsed = 0.0
 func _ready():
 	change_region_sprite()
 
-func _input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton:
-		if event.pressed:
-			if Input.is_action_pressed("lmb"):
-				get_parent().populate_ui(region_name, wealth, region_type)
+func get_details():
+	return {
+		"type": "region",
+		"name": region_name,
+		"wealth": wealth,
+		"region type": region_type
+	}
 
 func _process(delta):
 	if update:

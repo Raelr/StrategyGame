@@ -43,6 +43,13 @@ shader_param/width = 1.0
 shader_param/outline_color = null
 shader_param/unit_color = Color( 1, 1, 1, 1 )
 
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = ExtResource( 28 )
+shader_param/width = 1.0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 1, 1, 1, 1 )
+
 [sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
 shader = ExtResource( 28 )
@@ -64,13 +71,6 @@ shader_param/width = 1.0
 shader_param/outline_color = null
 shader_param/unit_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="ShaderMaterial" id=8]
-resource_local_to_scene = true
-shader = ExtResource( 28 )
-shader_param/width = 1.0
-shader_param/outline_color = null
-shader_param/unit_color = Color( 1, 1, 1, 1 )
-
 [node name="World" type="Node2D"]
 script = ExtResource( 26 )
 
@@ -82,8 +82,8 @@ mouse_offset = Vector2( 30, 30 )
 friction = Vector2( 1, 1 )
 zoom_friction = Vector2( 0.05, 0.05 )
 move_speed = 100.0
-max_distance = 50.0
-zoom_speed = 0.1
+max_distance = 75.0
+zoom_speed = 0.4
 
 [node name="Water" parent="." instance=ExtResource( 11 )]
 position = Vector2( 568.625, 328.429 )
@@ -184,7 +184,7 @@ region_name = "Tuzari"
 wealth = 3
 
 [node name="Details" parent="EastRegion" index="0"]
-material = SubResource( 5 )
+material = SubResource( 4 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 13 )
 
@@ -208,7 +208,7 @@ region_name = "Albus"
 wealth = 2
 
 [node name="Details" parent="SouthLakeRegion" index="0"]
-material = SubResource( 6 )
+material = SubResource( 5 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 17 )
 
@@ -232,7 +232,7 @@ region_name = "Duvej"
 wealth = 4
 
 [node name="Details" parent="SouthEastLakeRegion" index="0"]
-material = SubResource( 7 )
+material = SubResource( 6 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 21 )
 
@@ -255,7 +255,7 @@ region_name = "Pietro"
 wealth = 1
 
 [node name="Details" parent="EastLakeRegion" index="0"]
-material = SubResource( 8 )
+material = SubResource( 7 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 22 )
 
