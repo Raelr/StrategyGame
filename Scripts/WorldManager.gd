@@ -2,6 +2,8 @@ extends Node2D
 
 var moused_elements = Array()
 var selected = null
+enum SELECTED {region, unit}
+var selected_type
 
 func disable_region_ui():
 	$Camera2D/CanvasLayer/RegionPanel.deactivate_panel()
@@ -18,7 +20,7 @@ func moused_over(object):
 func mouse_left(object):
 	object.set_deselected()
 	moused_elements.erase(object)
-	select_last_object()
+	select_next()
 
 func select_element():
 	if not moused_elements.empty():
@@ -34,19 +36,20 @@ func select_element():
 			match details["type"]:
 				"region":
 					populate_ui(details["name"], details["wealth"], details["region type"])
+					selected_type = SELECTED.region
 				"unit":
-					show_unit_paths(selected)
-
-func show_unit_paths(unit):
-	var unit_region = unit.current_region
-	unit_region.show_neighbours()
+					selected.highlight_paths()
+					selected_type = SELECTED.unit
 
 func reset_selected(selected_item):
 	if selected:
 		selected_item.outline_color = Color.black
 		selected_item.reset()
 
-func select_last_object():
+func get_latest_element():
+	return moused_elements.back()
+
+func select_next():
 	if not moused_elements.empty():
 		moused_elements.back().set_selected()
 
@@ -56,9 +59,16 @@ func _input(event):
 			if Input.is_action_just_pressed('ui_cancel'):
 				reset_selected(selected)
 				disable_region_ui()
-				select_last_object()
+				select_next()
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.is_action_pressed("lmb"):
 				select_element()
-			
+			if event.is_action_pressed("rmb"):
+				if selected_type == SELECTED.unit:
+					var n = selected.get_possible_paths()
+					var element = get_latest_element()
+					for region in n:
+						if region == element:
+							selected.move_unit(element)
+							break

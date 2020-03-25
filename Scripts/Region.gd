@@ -71,11 +71,16 @@ func _on_Area2D_mouse_entered():
 func _on_Area2D_mouse_exited():
 	get_parent().mouse_left(self)
 
-func show_neighbours():
+func show_neighbours(unit_neighbours):
+	for neighbour in unit_neighbours:
+		neighbour.outline_color = Color.white
+		neighbour.change_outline(neighbour.outline_color)
+
+func get_neighbours():
+	var n = Array()
 	for neighbour in neighbours:
-		var n = get_node(neighbour)
-		n.outline_color = Color.white
-		n.change_outline(n.outline_color)
+		n.push_back(get_node(neighbour))
+	return n
 
 func reset_neighbours():
 	for neighbour in neighbours:

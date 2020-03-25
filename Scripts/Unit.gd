@@ -36,4 +36,17 @@ func _on_Area2D_mouse_exited():
 	get_parent().mouse_left(self)
 
 func _on_Unit_area_entered(area):
-	current_region = area
+	if not current_region:
+		current_region = area
+
+func move_unit(region):
+	position = region.position
+	current_region.reset_neighbours()
+	current_region = region
+	highlight_paths()
+
+func get_possible_paths():
+	return current_region.get_neighbours()
+
+func highlight_paths():
+	current_region.show_neighbours(current_region.get_neighbours())
