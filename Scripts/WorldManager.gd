@@ -18,8 +18,7 @@ func moused_over(object):
 func mouse_left(object):
 	object.set_deselected()
 	moused_elements.erase(object)
-	if not moused_elements.empty(): 
-		moused_elements.back().set_selected()
+	select_last_object()
 
 func select_element():
 	if not moused_elements.empty():
@@ -47,12 +46,17 @@ func reset_selected(selected_item):
 		selected_item.outline_color = Color.black
 		selected_item.reset()
 
+func select_last_object():
+	if not moused_elements.empty():
+		moused_elements.back().set_selected()
+
 func _input(event):
 	if event is InputEventKey:
 		if event.pressed:
 			if Input.is_action_just_pressed('ui_cancel'):
 				reset_selected(selected)
 				disable_region_ui()
+				select_last_object()
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.is_action_pressed("lmb"):
