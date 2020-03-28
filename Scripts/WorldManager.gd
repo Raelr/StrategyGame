@@ -1,8 +1,9 @@
 extends Node2D
 
+enum SELECTED {region, unit}
+
 var moused_elements = Array()
 var selected = null
-enum SELECTED {region, unit}
 var selected_type
 
 func disable_region_ui():
@@ -66,9 +67,5 @@ func _input(event):
 				select_element()
 			if event.is_action_pressed("rmb"):
 				if selected_type == SELECTED.unit:
-					var n = selected.get_possible_paths()
 					var element = get_latest_element()
-					for region in n:
-						if region == element:
-							selected.move_unit(element)
-							break
+					selected.process_action(element)

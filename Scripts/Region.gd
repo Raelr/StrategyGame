@@ -43,18 +43,18 @@ func set_occupied(overlay_color, border_color, delta):
 	transition_color(delta, $Details/Overlay, occupied_color)
 
 func transition_color(delta, ui, dest_color):
+	var overlay = Color(dest_color.r, dest_color.g, dest_color.b ,0.5)
 	if elapsed < change_duration:
 		elapsed += delta
-		ui.modulate = ui.modulate.linear_interpolate(dest_color, elapsed / change_duration)
+		ui.modulate = ui.modulate.linear_interpolate(overlay, elapsed / change_duration)
+		change_outline($Details.material.get_shader_param("outline_color").linear_interpolate(dest_color, elapsed / change_duration))
 	elif elapsed >= change_duration:
-		ui.modulate = dest_color
+		ui.modulate = overlay
 		elapsed = 0.0
 		update = false
 
 func change_outline(color):
 	$Details.material.set_shader_param("outline_color", color)
-	elapsed = 0.0
-	update = true
 
 func set_selected():
 	change_outline(Color.yellow)
@@ -85,5 +85,5 @@ func get_neighbours():
 func reset_neighbours():
 	for neighbour in neighbours:
 		var n = get_node(neighbour)
-		n.outline_color = Color.black
+		n.outline_color = n.occupied_color
 		n.change_outline(n.outline_color)
