@@ -12,6 +12,7 @@ export (float) var change_duration
 export (float) var border_change_duration
 export (REGIONTYPE) var region_type
 export (Array) var neighbours
+
 # Region Variables
 export (String) var region_name
 export (int) var wealth
@@ -65,6 +66,7 @@ func set_selected():
 	update = true
 
 func set_deselected():
+	print("deselected" + name)
 	outline_color = occupied_color
 	elapsed = 0.0
 	update = true

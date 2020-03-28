@@ -45,7 +45,7 @@ func select_element():
 
 func reset_selected(selected_item):
 	if selected:
-		selected_item.outline_color = Color.black
+		selected_item.set_deselected()
 		selected_item.reset()
 
 func get_latest_element():

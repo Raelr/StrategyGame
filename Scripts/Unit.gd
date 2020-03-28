@@ -16,7 +16,7 @@ func set_selected():
 	change_outline(Color.yellow)
 
 func set_deselected():
-	change_outline(outline_color)
+	change_outline(Color.black)
 
 func get_details():
 	return {
@@ -48,8 +48,9 @@ func move_unit(region):
 
 func set_current_region(region):
 	current_region = region
-	current_region.outline_color = faction_color
 	current_region.occupied_color = Color(faction_color.r, faction_color.g, faction_color.b, 0.5)
+	current_region.outline_color = Color.yellow
+	current_region.change_outline(Color.yellow)
 	current_region.elapsed = 0.0
 	current_region.update = true
 
