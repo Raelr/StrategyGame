@@ -166,7 +166,6 @@ texture = ExtResource( 9 )
 
 [node name="Overlay" parent="NorthRegion/Details" index="0"]
 modulate = Color( 0, 0, 0, 0 )
-position = Vector2( -0.0238037, -0.0238342 )
 texture = ExtResource( 10 )
 
 [node name="CollisionPolygon2D" parent="NorthRegion" index="1"]

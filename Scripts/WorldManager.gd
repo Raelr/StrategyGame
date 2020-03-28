@@ -13,12 +13,14 @@ func populate_ui(region_name, wealth, region_type):
 
 func moused_over(object):
 	if not moused_elements.empty():
-		moused_elements.back().set_deselected()
+		if moused_elements.back() != selected:
+			moused_elements.back().set_deselected()
 	object.set_selected()
 	moused_elements.push_back(object)
 
 func mouse_left(object):
-	object.set_deselected()
+	if object != selected:
+		object.set_deselected()
 	moused_elements.erase(object)
 	select_next()
 
