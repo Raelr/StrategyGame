@@ -40,7 +40,7 @@ shader_param/unit_color = Color( 1, 1, 1, 1 )
 resource_local_to_scene = true
 shader = ExtResource( 28 )
 shader_param/width = 1.0
-shader_param/outline_color = null
+shader_param/outline_color = Color( 0, 0, 0, 1 )
 shader_param/unit_color = Color( 1, 1, 1, 1 )
 
 [sub_resource type="ShaderMaterial" id=4]
@@ -276,6 +276,7 @@ texture = ExtResource( 15 )
 [node name="Unit" parent="." instance=ExtResource( 27 )]
 position = Vector2( 338.542, 288.968 )
 unitColor = Color( 1, 1, 1, 1 )
+faction_color = Color( 0.364706, 0, 1, 1 )
 
 [editable path="Water"]
 

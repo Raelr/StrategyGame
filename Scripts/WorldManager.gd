@@ -1,7 +1,6 @@
 extends Node2D
 
 enum SELECTED {region, unit}
-
 var moused_elements = Array()
 var selected = null
 var selected_type

@@ -9,6 +9,7 @@ export (Texture) var region_overlay
 export (bool) var update = false
 export (Color) var occupied_color
 export (float) var change_duration
+export (float) var border_change_duration
 export (REGIONTYPE) var region_type
 export (Array) var neighbours
 # Region Variables
@@ -16,6 +17,7 @@ export (String) var region_name
 export (int) var wealth
 
 onready var outline_color = Color(0,0,0,1)
+onready var current_outline_color = Color(0,0,0,1)
 var elapsed = 0.0
 
 func _ready():
@@ -40,27 +42,32 @@ func change_region_sprite():
 	$Details/Overlay.texture = region_overlay
 
 func set_occupied(overlay_color, border_color, delta): 
-	transition_color(delta, $Details/Overlay, occupied_color)
+	transition_color(delta, $Details/Overlay, occupied_color, border_color)
 
-func transition_color(delta, ui, dest_color):
-	var overlay = Color(dest_color.r, dest_color.g, dest_color.b ,0.5)
+func transition_color(delta, ui, dest_color, border):
 	if elapsed < change_duration:
 		elapsed += delta
-		ui.modulate = ui.modulate.linear_interpolate(overlay, elapsed / change_duration)
-		change_outline($Details.material.get_shader_param("outline_color").linear_interpolate(dest_color, elapsed / change_duration))
+		ui.modulate = ui.modulate.linear_interpolate(dest_color, elapsed / change_duration)
+		change_outline(current_outline_color.linear_interpolate(border, elapsed / change_duration))
 	elif elapsed >= change_duration:
-		ui.modulate = overlay
+		ui.modulate = dest_color
+		change_outline(border)
 		elapsed = 0.0
 		update = false
 
 func change_outline(color):
 	$Details.material.set_shader_param("outline_color", color)
+	current_outline_color = color
 
 func set_selected():
-	change_outline(Color.yellow)
+	outline_color = Color.yellow
+	elapsed = 0.0
+	update = true
 
 func set_deselected():
-	change_outline(outline_color)
+	outline_color = occupied_color
+	elapsed = 0.0
+	update = true
 
 func reset():
 	set_deselected()

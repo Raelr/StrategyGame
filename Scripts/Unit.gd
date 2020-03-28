@@ -3,6 +3,7 @@ extends Area2D
 
 export (Color) var unitColor
 export (Color) var outline_color
+export (Color) var faction_color
 export (bool) var update
 var current_region = null
 
@@ -47,8 +48,8 @@ func move_unit(region):
 
 func set_current_region(region):
 	current_region = region
-	current_region.occupied_color = Color.purple
-	current_region.elapsed = 0.0
+	current_region.outline_color = faction_color
+	current_region.occupied_color = Color(faction_color.r, faction_color.g, faction_color.b, 0.5)
 	current_region.update = true
 
 func process_action(moused_element):
