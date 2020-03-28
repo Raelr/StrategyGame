@@ -65,4 +65,8 @@ func get_possible_paths():
 	return current_region.get_neighbours()
 
 func highlight_paths():
-	current_region.show_neighbours(current_region.get_neighbours())
+	var line = $Line
+	line.reset_line()
+	var n = current_region.get_neighbours()
+	for region in n:
+		line.set_destination(region.position - position)

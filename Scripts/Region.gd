@@ -66,7 +66,6 @@ func set_selected():
 	update = true
 
 func set_deselected():
-	print("deselected" + name)
 	outline_color = occupied_color
 	elapsed = 0.0
 	update = true
@@ -82,8 +81,7 @@ func _on_Area2D_mouse_exited():
 
 func show_neighbours(unit_neighbours):
 	for neighbour in unit_neighbours:
-		neighbour.outline_color = Color.white
-		neighbour.change_outline(neighbour.outline_color)
+		break
 
 func get_neighbours():
 	var n = Array()
@@ -94,5 +92,4 @@ func get_neighbours():
 func reset_neighbours():
 	for neighbour in neighbours:
 		var n = get_node(neighbour)
-		n.outline_color = n.occupied_color
-		n.change_outline(n.outline_color)
+		break
