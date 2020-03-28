@@ -50,6 +50,7 @@ func set_current_region(region):
 	current_region = region
 	current_region.outline_color = faction_color
 	current_region.occupied_color = Color(faction_color.r, faction_color.g, faction_color.b, 0.5)
+	current_region.elapsed = 0.0
 	current_region.update = true
 
 func process_action(moused_element):
