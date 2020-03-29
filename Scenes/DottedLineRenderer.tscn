@@ -5,4 +5,4 @@
 
 [node name="DottedLineRenderer" type="Node2D"]
 script = ExtResource( 2 )
-dot = ExtResource( 1 )
+dot_sprite = ExtResource( 1 )
