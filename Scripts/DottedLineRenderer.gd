@@ -45,7 +45,5 @@ func create_dot(dot_pos, sprite, line_color, direction):
 	add_child(node)
 	node.scale = Vector2(dot_radius, dot_radius)
 	node.position = dot_pos
-	var dir = direction - node.position
-	print(node.position.angle_to_point(direction))
-	node.rotation = node.position.angle_to_point(direction)
+	node.rotation = direction.angle()
 	segments.push_back(node)
