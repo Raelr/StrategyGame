@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Sprites/SkeletonUnit.png" type="Texture" id=1]
 [ext_resource path="res://Shaders/outline_shader_pixel_perfect.shader" type="Shader" id=2]
 [ext_resource path="res://Scripts/Unit.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/DottedLineRenderer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Sprites/Arrow.png" type="Texture" id=5]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
@@ -28,6 +29,7 @@ polygon = PoolVector2Array( -26.1108, 6.03195, -26.0228, -17.97, -21.9792, -18.0
 
 [node name="Line" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, 0.654984 )
+arrow_end = ExtResource( 5 )
 dot_radius = 4.0
 gap = 5.0
 [connection signal="area_entered" from="." to="." method="_on_Unit_area_entered"]

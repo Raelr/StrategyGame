@@ -79,17 +79,8 @@ func _on_Area2D_mouse_entered():
 func _on_Area2D_mouse_exited():
 	get_parent().mouse_left(self)
 
-func show_neighbours(unit_neighbours):
-	for neighbour in unit_neighbours:
-		break
-
 func get_neighbours():
 	var n = Array()
 	for neighbour in neighbours:
 		n.push_back(get_node(neighbour))
 	return n
-
-func reset_neighbours():
-	for neighbour in neighbours:
-		var n = get_node(neighbour)
-		break
