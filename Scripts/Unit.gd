@@ -69,4 +69,4 @@ func highlight_paths():
 	line.reset_line()
 	var n = current_region.get_neighbours()
 	for region in n:
-		line.set_destination(region.position - position)
+		line.set_destination(region.position - position, Color.crimson)

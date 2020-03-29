@@ -28,8 +28,8 @@ polygon = PoolVector2Array( -26.1108, 6.03195, -26.0228, -17.97, -21.9792, -18.0
 
 [node name="Line" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, 0.654984 )
-dot_radius = 1.0
-gap = 10.0
+dot_radius = 4.0
+gap = 5.0
 [connection signal="area_entered" from="." to="." method="_on_Unit_area_entered"]
 [connection signal="mouse_entered" from="." to="." method="_on_Area2D_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_Area2D_mouse_exited"]
