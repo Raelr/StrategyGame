@@ -24,9 +24,11 @@ func set_destination(dest, line_color):
 	for i in range(0, dot_max):
 		var dot_pos = get_next_step(prev_pos, direction * dot_gap)
 		var sprite = dot_sprite
+		var dir = null
 		if arrow_end and i == dot_max - 1:
 			sprite = arrow_end
-		create_dot(dot_pos, sprite, line_color, dest)
+			dir = dest
+		create_dot(dot_pos, sprite, line_color, dir)
 		prev_pos = dot_pos
 
 func get_next_step(pos, direction):
@@ -45,5 +47,7 @@ func create_dot(dot_pos, sprite, line_color, direction):
 	add_child(node)
 	node.scale = Vector2(dot_radius, dot_radius)
 	node.position = dot_pos
-	node.rotation = direction.angle()
+	if direction:
+		node.rotation = direction.angle()
+		print(node.rotation_degrees)
 	segments.push_back(node)
