@@ -48,11 +48,7 @@ func move_unit(region):
 
 func set_current_region(region):
 	current_region = region
-	current_region.occupied_color = Color(faction_color.r, faction_color.g, faction_color.b, 0.5)
-	current_region.outline_color = Color.yellow
-	current_region.change_outline(Color.yellow)
-	current_region.elapsed = 0.0
-	current_region.update = true
+	current_region.on_new_occupant(faction_color)
 
 func process_action(moused_element):
 	var n = get_possible_paths()

@@ -60,6 +60,7 @@ func _input(event):
 		if event.pressed:
 			if Input.is_action_just_pressed('ui_cancel'):
 				reset_selected(selected)
+				selected = null
 				disable_region_ui()
 				select_next()
 	if event is InputEventMouseButton:

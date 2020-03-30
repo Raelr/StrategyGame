@@ -45,6 +45,11 @@ func change_region_sprite():
 func set_occupied(overlay_color, border_color, delta): 
 	transition_color(delta, $Details/Overlay, occupied_color, border_color)
 
+func on_new_occupant(color):
+	occupied_color = Color(color.r, color.g, color.b, 0.5)
+	elapsed = 0.0
+	update = true
+
 func transition_color(delta, ui, dest_color, border):
 	if elapsed < change_duration:
 		elapsed += delta
