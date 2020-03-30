@@ -10,7 +10,7 @@ export (float) var zoom_speed
 const VELOCITY_DELTA = 0.01
 const MAX_ACCELERATION = 50
 const MAX_ZOOM_ACCELERATION = 1
-const MIN_ZOOM_FACTOR = 0.5
+const MIN_ZOOM_FACTOR = 0.75
 const MAX_ZOOM_FACTOR = 1.1
 
 onready var screen = get_viewport().size
