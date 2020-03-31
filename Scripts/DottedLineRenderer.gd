@@ -1,7 +1,8 @@
 extends Node2D
 
 export (Texture) var dot_sprite
-export (Texture) var arrow_end
+export (Array) var arrow_end
+export (bool) var is_pixel_art_arrow
 export (Array) var segments
 export (float) var dot_radius
 export (float) var gap 
@@ -25,14 +26,32 @@ func set_destination(dest, line_color):
 		var dot_pos = get_next_step(prev_pos, direction * dot_gap)
 		var sprite = dot_sprite
 		var dir = null
-		if arrow_end and i == dot_max - 1:
-			sprite = arrow_end
-			dir = dest
+		if is_pixel_art_arrow and i == dot_max - 1:
+			dir = direction
+			sprite = get_arrow_direction(dir)
 		create_dot(dot_pos, sprite, line_color, dir)
 		prev_pos = dot_pos
 
 func get_next_step(pos, direction):
 	return pos + direction
+
+func get_arrow_direction(dir):
+	if (abs(dir.x) < 0.3 and (abs(dir.y) > 0.3) and sign(dir.y) == -1):
+		return arrow_end[0]
+	elif abs(dir.x) > 0.3 and abs(dir.y) > 0.3 and (sign(dir.x) == 1 and sign(dir.y) == -1):
+		return arrow_end[1]
+	elif abs(dir.x) > 0.3 and abs(dir.y) < 0.3 and sign(dir.x) == 1:
+		return arrow_end[2]
+	elif abs(dir.x) > 0.3 and abs(dir.y) > 0.3 and (sign(dir.x) == 1 and sign(dir.y) == 1):
+		return arrow_end[3]
+	elif abs(dir.x) < 0.3 and abs(dir.y) > 0.3 and (sign(dir.x) == -1 and sign(dir.y) == 1):
+		return arrow_end[4]
+	elif abs(dir.x) > 0.3 and abs(dir.y) > 0.3 and (sign(dir.x) == -1 and sign(dir.y) == 1):
+		return arrow_end[5]
+	elif abs(dir.x) > 0.3 and abs(dir.y) < 0.3 and (sign(dir.x) == -1):
+		return arrow_end[6]
+	elif abs(dir.x) > 0.3 and abs(dir.y) > 0.3 and (sign(dir.x) == -1 and sign(dir.y) == -1):
+		return arrow_end[7]
 
 func reset_line():
 	for segment in segments:
@@ -47,7 +66,4 @@ func create_dot(dot_pos, sprite, line_color, direction):
 	add_child(node)
 	node.scale = Vector2(dot_radius, dot_radius)
 	node.position = dot_pos
-	if direction:
-		node.rotation = direction.angle()
-		print(node.rotation_degrees)
 	segments.push_back(node)

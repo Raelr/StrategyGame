@@ -1,9 +1,17 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Sprites/SkeletonUnit.png" type="Texture" id=1]
 [ext_resource path="res://Shaders/outline_shader_pixel_perfect.shader" type="Shader" id=2]
 [ext_resource path="res://Scripts/Unit.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/DottedLineRenderer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Sprites/PathArrows/Arrow0.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/PathArrows/Arrow315.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/PathArrows/Arrow270.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/PathArrows/Arrow45.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/PathArrows/Arrow90.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/PathArrows/Arrow135.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/PathArrows/Arrow180.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/PathArrows/Arrow225.png" type="Texture" id=12]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
@@ -28,6 +36,8 @@ polygon = PoolVector2Array( -26.1108, 6.03195, -26.0228, -17.97, -21.9792, -18.0
 
 [node name="Line" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, 0.654984 )
+arrow_end = [ ExtResource( 7 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ) ]
+is_pixel_art_arrow = true
 dot_radius = 4.0
 gap = 5.0
 [connection signal="area_entered" from="." to="." method="_on_Unit_area_entered"]
