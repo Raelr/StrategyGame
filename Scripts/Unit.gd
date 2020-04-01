@@ -42,21 +42,22 @@ func _on_Unit_area_entered(area):
 func move_unit(region):
 	position = region.position
 	set_current_region(region)
-	highlight_paths()
 
 func set_current_region(region):
 	current_region = region
 	current_region.on_new_occupant(faction_color)
 
-func process_action(moused_element):
+func process_action(moused_element, line_manager):
 	var n = get_possible_paths()
 	for region in n:
 		if region == moused_element:
+			line_manager.reset()
 			move_unit(moused_element)
+			highlight_paths(line_manager)
 			break
 
 func get_possible_paths():
 	return current_region.get_neighbours()
 
-func highlight_paths():
-	pass
+func highlight_paths(line_manager):
+	line_manager.draw_lines(position, get_possible_paths())

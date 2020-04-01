@@ -40,7 +40,6 @@ func select_element():
 					populate_ui(details["name"], details["wealth"], details["region type"])
 					selected_type = SELECTED.region
 				"unit":
-					$LineManager.position = selected.position
 					$LineManager.draw_lines(selected.position, selected.get_possible_paths())
 					selected_type = SELECTED.unit
 
@@ -48,6 +47,9 @@ func reset_selected(selected_item):
 	if selected:
 		selected_item.set_deselected()
 		selected_item.reset()
+		if selected_type == SELECTED.unit:
+			$LineManager.reset()
+		selected_type = null
 
 func get_latest_element():
 	return moused_elements.back()
@@ -71,4 +73,4 @@ func _input(event):
 			if event.is_action_pressed("rmb"):
 				if selected_type == SELECTED.unit:
 					var element = get_latest_element()
-					selected.process_action(element)
+					selected.process_action(element, $LineManager)
