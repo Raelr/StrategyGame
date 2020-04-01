@@ -41,7 +41,7 @@ func select_element():
 					selected_type = SELECTED.region
 				"unit":
 					$LineManager.position = selected.position
-					$LineManager.spawn_line(selected.position, selected.get_possible_paths()[0].global_position, Color.crimson)
+					$LineManager.draw_lines(selected.position, selected.get_possible_paths())
 					selected_type = SELECTED.unit
 
 func reset_selected(selected_item):

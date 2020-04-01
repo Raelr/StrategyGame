@@ -11,8 +11,9 @@ var arrows = Array()
 
 # Get a list of positions.
 # Iterate over them and instatiate new lindes accordingly
-func draw_lines():
-	pass
+func draw_lines(origin, destinations):
+	for place in destinations:
+		spawn_line(origin, place.global_position, Color.crimson)
 
 func spawn_line(origin, dest, color):
 	var node = loaded_asset.instance()
