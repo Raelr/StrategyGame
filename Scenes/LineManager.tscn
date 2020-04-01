@@ -1,0 +1,20 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scripts/LineManager.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/PathArrows/Arrow315.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/PathArrows/Arrow135.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/PathArrows/Arrow45.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/PathArrows/Arrow90.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Dot.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/PathArrows/Arrow225.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/PathArrows/Arrow0.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/PathArrows/Arrow270.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/PathArrows/Arrow180.png" type="Texture" id=10]
+
+[node name="LineManager" type="Node2D"]
+script = ExtResource( 1 )
+arrow_end_sprites = [ ExtResource( 9 ), ExtResource( 2 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 7 ) ]
+segment_sprite = ExtResource( 6 )
+is_pixel_art = true
+dot_radius = 4.0
+gap = 5.0

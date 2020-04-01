@@ -24,7 +24,6 @@ func get_details():
 	}
 
 func reset():
-	$Line.reset_line()
 	set_deselected()
 
 func change_outline(color):
@@ -42,7 +41,6 @@ func _on_Unit_area_entered(area):
 
 func move_unit(region):
 	position = region.position
-	$Line.reset_line()
 	set_current_region(region)
 	highlight_paths()
 
@@ -61,8 +59,4 @@ func get_possible_paths():
 	return current_region.get_neighbours()
 
 func highlight_paths():
-	var line = $Line
-	line.reset_line()
-	var n = current_region.get_neighbours()
-	for region in n:
-		line.set_destination(region.global_position - global_position, Color.crimson)
+	pass

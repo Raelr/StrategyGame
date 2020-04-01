@@ -40,7 +40,8 @@ func select_element():
 					populate_ui(details["name"], details["wealth"], details["region type"])
 					selected_type = SELECTED.region
 				"unit":
-					selected.highlight_paths()
+					$LineManager.position = selected.position
+					$LineManager.spawn_line(selected.position, selected.get_possible_paths()[0].global_position, Color.crimson)
 					selected_type = SELECTED.unit
 
 func reset_selected(selected_item):

@@ -14,8 +14,8 @@ var dot_diameter
 var dot_max = 0
 var elapsed = 0.0
 
-func set_destination(dest, line_color):
-	var heading = dest - position
+func set_destination(origin, dest, line_color):
+	var heading = dest - origin
 	var distance = heading.length()
 	var direction = Vector2(heading.x / distance, heading.y / distance)
 	dot_diameter = dot_radius * 2
@@ -67,3 +67,11 @@ func create_dot(dot_pos, sprite, line_color, direction):
 	node.scale = Vector2(dot_radius, dot_radius)
 	node.position = dot_pos
 	segments.push_back(node)
+
+func on_init(arrows, segment, is_pixel, radius, gap):
+	arrow_end = arrows
+	dot_sprite = segment
+	is_pixel_art_arrow = is_pixel
+	dot_radius = radius
+	self.gap = gap
+	
