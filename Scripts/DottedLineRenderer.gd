@@ -7,13 +7,12 @@ export (Array) var segments
 export (float) var dot_radius
 export (float) var gap 
 export (float, 0.0, 1.0) var revealed
-export (float) var reveal_duration
+export (float) var spawn_interval
 
 var loaded_asset = preload("res://Scenes/Dot.tscn")
 var dot_diameter
 var dot_max = 0
-var elapsed_total = 0.0
-var elapsed_temp = 0.0
+var elapsed = 0.0
 var update = false
 
 func set_destination(origin, dest, line_color):
@@ -36,28 +35,21 @@ func set_destination(origin, dest, line_color):
 
 func _process(delta):
 	if update:
-		if elapsed_total < reveal_duration:
-			elapsed_total += delta
-			elapsed_temp += delta
-			var dot_spawn_duration = reveal_duration / dot_max
-			if elapsed_temp >= dot_spawn_duration:
+		if dot_max > 0:
+			elapsed += delta
+			if elapsed >= spawn_interval:
+				var is_back = segments.size() == 1
 				var details = segments.pop_front()
 				var dir = null
 				var sprite = dot_sprite
-				if is_pixel_art_arrow and segments.back() == details:
+				if is_pixel_art_arrow and is_back:
 					dir = details["dir"]
 					sprite = get_arrow_direction(dir)
 				create_dot(details["pos"], sprite, Color.crimson, dir)
-				elapsed_temp = 0.0
-		elif elapsed_total >= reveal_duration:
-			elapsed_total = 0.0
+				elapsed = 0.0
+				dot_max -= 1
+		else:
 			update = false
-		#var sprite = dot_sprite
-		#var dir = null
-		#if is_pixel_art_arrow:
-		#	dir = direction
-		#	sprite = get_arrow_direction(dir)
-		#create_dot(dot_pos, sprite, line_color, dir)
 
 func get_next_step(pos, direction):
 	return pos + direction
@@ -100,4 +92,4 @@ func on_init(arrows, segment, is_pixel, radius, gap, duration):
 	is_pixel_art_arrow = is_pixel
 	dot_radius = radius
 	self.gap = gap
-	reveal_duration = duration
+	spawn_interval = duration
