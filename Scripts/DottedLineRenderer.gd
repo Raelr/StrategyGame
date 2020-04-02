@@ -50,6 +50,7 @@ func _process(delta):
 				dot_max -= 1
 		else:
 			update = false
+			set_process(false)
 
 func get_next_step(pos, direction):
 	return pos + direction
@@ -83,7 +84,6 @@ func create_dot(dot_pos, sprite, line_color, direction):
 	node.texture = sprite
 	node.set_name("dot")
 	add_child(node)
-	node.scale = Vector2(dot_radius, dot_radius)
 	node.position = dot_pos
 
 func on_init(arrows, segment, is_pixel, radius, gap, duration):

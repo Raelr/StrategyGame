@@ -1,7 +1,31 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
+[ext_resource path="res://Scripts/Dot.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Dot.png" type="Texture" id=2]
 
+[sub_resource type="Animation" id=1]
+resource_name = "expand"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.01, 0.01 ), Vector2( 1, 1 ), Vector2( 2, 2 ), Vector2( 3, 3 ), Vector2( 4, 4 ) ]
+}
+
 [node name="Dot" type="Sprite"]
+modulate = Color( 0.811765, 0.792157, 0.247059, 1 )
 position = Vector2( -0.0337563, 0 )
+scale = Vector2( 0.01, 0.01 )
 texture = ExtResource( 2 )
+script = ExtResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 1.5
+anims/expand = SubResource( 1 )

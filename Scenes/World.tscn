@@ -289,7 +289,7 @@ unitColor = Color( 1, 1, 1, 1 )
 faction_color = Color( 0.152941, 0, 0.423529, 1 )
 
 [node name="LineManager" parent="." instance=ExtResource( 3 )]
-dot_spawn_duration = 0.1
+dot_spawn_duration = 0.075
 
 [editable path="Water"]
 
