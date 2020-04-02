@@ -5,6 +5,7 @@ export (Texture) var segment_sprite
 export (bool) var is_pixel_art
 export (float) var dot_radius
 export (float) var gap
+export (float) var dot_spawn_duration
 
 var loaded_asset = preload("res://Scenes/DottedLineRenderer.tscn")
 var lines = Array()
@@ -21,7 +22,7 @@ func spawn_line(origin, dest, color):
 	node.set_name("Line")
 	add_child(node)
 	lines.push_back(node)
-	node.on_init(arrow_end_sprites, segment_sprite, is_pixel_art, dot_radius, gap)
+	node.on_init(arrow_end_sprites, segment_sprite, is_pixel_art, dot_radius, gap, dot_spawn_duration)
 	node.set_destination(origin, dest, color)
 
 func reset():
