@@ -5,12 +5,28 @@ export (Color) var unitColor
 export (Color) var outline_color
 export (Color) var faction_color
 export (bool) var update
+export (float) var move_speed
 var current_region = null
+var destination = null
+var elapsed = 0.0
+var line_manager = null
 
 func _process(delta):
 	if update:
 		if Engine.editor_hint:
 			$Unit.material.set_shader_param("unit_color", unitColor)
+		if destination:
+			if elapsed < move_speed:
+				elapsed += delta
+				var fraction = elapsed / move_speed
+				position = position.linear_interpolate(destination.position, fraction)
+				if fraction >= 0.4 and fraction < 0.45:
+					position = destination.position
+					set_current_region(destination)
+			elif elapsed >= move_speed:
+				
+				elapsed = 0.0
+				destination = null
 
 func set_selected():
 	change_outline(Color.yellow)
@@ -46,14 +62,17 @@ func move_unit(region):
 func set_current_region(region):
 	current_region = region
 	current_region.on_new_occupant(faction_color)
+	if line_manager:
+		highlight_paths(line_manager)
 
 func process_action(moused_element, line_manager):
 	var n = get_possible_paths()
 	for region in n:
 		if region == moused_element:
 			line_manager.reset()
-			move_unit(moused_element)
-			highlight_paths(line_manager)
+			self.line_manager = line_manager
+			destination = region
+			update = true
 			break
 
 func get_possible_paths():

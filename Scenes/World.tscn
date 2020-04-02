@@ -287,6 +287,7 @@ texture = ExtResource( 15 )
 position = Vector2( 338.542, 288.968 )
 unitColor = Color( 1, 1, 1, 1 )
 faction_color = Color( 0.152941, 0, 0.423529, 1 )
+move_speed = 0.5
 
 [node name="LineManager" parent="." instance=ExtResource( 3 )]
 dot_spawn_duration = 0.075
