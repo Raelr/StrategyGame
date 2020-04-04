@@ -12,6 +12,7 @@ var elapsed = 0.0
 var line_manager = null
 
 func _ready():
+	$Unit.material.set_shader_param("unit_color", faction_color)
 	$Unit/AnimationPlayer.play("idle")
 
 func _process(delta):

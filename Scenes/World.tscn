@@ -29,6 +29,9 @@ shader = ExtResource( 28 )
 shader_param/width = 1.0
 shader_param/outline_color = null
 shader_param/unit_color = Color( 1, 1, 1, 1 )
+shader_param/target_color = null
+shader_param/target_color_2 = null
+shader_param/tolerance = null
 
 [sub_resource type="ShaderMaterial" id=2]
 resource_local_to_scene = true
@@ -36,6 +39,9 @@ shader = ExtResource( 28 )
 shader_param/width = 1.0
 shader_param/outline_color = null
 shader_param/unit_color = Color( 1, 1, 1, 1 )
+shader_param/target_color = null
+shader_param/target_color_2 = null
+shader_param/tolerance = null
 
 [sub_resource type="ShaderMaterial" id=3]
 resource_local_to_scene = true
@@ -43,6 +49,9 @@ shader = ExtResource( 28 )
 shader_param/width = 1.0
 shader_param/outline_color = Color( 0, 0, 0, 1 )
 shader_param/unit_color = Color( 1, 1, 1, 1 )
+shader_param/target_color = null
+shader_param/target_color_2 = null
+shader_param/tolerance = null
 
 [sub_resource type="ShaderMaterial" id=4]
 resource_local_to_scene = true
@@ -50,6 +59,9 @@ shader = ExtResource( 28 )
 shader_param/width = 1.0
 shader_param/outline_color = null
 shader_param/unit_color = Color( 1, 1, 1, 1 )
+shader_param/target_color = null
+shader_param/target_color_2 = null
+shader_param/tolerance = null
 
 [sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
@@ -57,6 +69,9 @@ shader = ExtResource( 28 )
 shader_param/width = 1.0
 shader_param/outline_color = null
 shader_param/unit_color = Color( 1, 1, 1, 1 )
+shader_param/target_color = null
+shader_param/target_color_2 = null
+shader_param/tolerance = null
 
 [sub_resource type="ShaderMaterial" id=6]
 resource_local_to_scene = true
@@ -64,6 +79,9 @@ shader = ExtResource( 28 )
 shader_param/width = 1.0
 shader_param/outline_color = null
 shader_param/unit_color = Color( 1, 1, 1, 1 )
+shader_param/target_color = null
+shader_param/target_color_2 = null
+shader_param/tolerance = null
 
 [sub_resource type="ShaderMaterial" id=7]
 resource_local_to_scene = true
@@ -71,6 +89,9 @@ shader = ExtResource( 28 )
 shader_param/width = 1.0
 shader_param/outline_color = null
 shader_param/unit_color = Color( 1, 1, 1, 1 )
+shader_param/target_color = null
+shader_param/target_color_2 = null
+shader_param/tolerance = null
 
 [node name="World" type="Node2D"]
 script = ExtResource( 26 )
@@ -80,10 +101,10 @@ layer = -1
 follow_viewport_enable = true
 
 [node name="ColorRect" type="ColorRect" parent="ColorBackground"]
-margin_left = -152.0
-margin_top = -186.0
-margin_right = 1284.0
-margin_bottom = 808.0
+margin_left = -44.1786
+margin_top = -186.233
+margin_right = 1391.82
+margin_bottom = 807.767
 mouse_filter = 2
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
@@ -286,8 +307,8 @@ texture = ExtResource( 15 )
 [node name="Unit" parent="." instance=ExtResource( 27 )]
 position = Vector2( 338.542, 288.968 )
 unitColor = Color( 1, 1, 1, 1 )
-faction_color = Color( 0.152941, 0, 0.423529, 1 )
-move_speed = 0.5
+faction_color = Color( 0.290196, 0, 0.670588, 1 )
+move_speed = 0.4
 
 [node name="LineManager" parent="." instance=ExtResource( 3 )]
 dot_spawn_duration = 0.075
@@ -307,3 +328,5 @@ dot_spawn_duration = 0.075
 [editable path="SouthEastLakeRegion"]
 
 [editable path="EastLakeRegion"]
+
+[editable path="Unit"]

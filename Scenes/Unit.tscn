@@ -8,7 +8,10 @@
 shader = ExtResource( 2 )
 shader_param/width = 1.0
 shader_param/outline_color = Color( 0, 0, 0, 1 )
-shader_param/unit_color = Color( 1, 1, 1, 1 )
+shader_param/unit_color = Color( 0.188235, 0, 0.443137, 1 )
+shader_param/target_color = Color( 1, 1, 1, 1 )
+shader_param/target_color_2 = Color( 0.831373, 0.831373, 0.831373, 1 )
+shader_param/tolerance = 0.1
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
@@ -38,7 +41,6 @@ scale = Vector2( 3, 3 )
 z_index = 1
 texture = ExtResource( 1 )
 hframes = 5
-frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Unit"]
 anims/idle = SubResource( 2 )
