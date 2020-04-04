@@ -11,6 +11,9 @@ var destination = null
 var elapsed = 0.0
 var line_manager = null
 
+func _ready():
+	$Unit/AnimationPlayer.play("idle")
+
 func _process(delta):
 	if update:
 		if Engine.editor_hint:
@@ -24,7 +27,6 @@ func _process(delta):
 					position = destination.position
 					set_current_region(destination)
 			elif elapsed >= move_speed:
-				
 				elapsed = 0.0
 				destination = null
 
