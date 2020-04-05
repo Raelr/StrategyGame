@@ -101,6 +101,8 @@ layer = -1
 follow_viewport_enable = true
 
 [node name="ColorRect" type="ColorRect" parent="ColorBackground"]
+anchor_left = -0.000293374
+anchor_right = -0.000293374
 margin_left = -44.1786
 margin_top = -186.233
 margin_right = 1391.82
@@ -123,8 +125,8 @@ max_distance = 75.0
 zoom_speed = 0.5
 
 [node name="Water" parent="." instance=ExtResource( 11 )]
-position = Vector2( 568.625, 328.429 )
-scale = Vector2( 4.09953, 4.40288 )
+position = Vector2( 568.292, 327.635 )
+scale = Vector2( 4.20039, 4.34862 )
 z_index = -1
 
 [node name="WestRegion" parent="." instance=ExtResource( 1 )]
@@ -309,6 +311,9 @@ position = Vector2( 338.542, 288.968 )
 unitColor = Color( 1, 1, 1, 1 )
 faction_color = Color( 0.290196, 0, 0.670588, 1 )
 move_speed = 0.4
+
+[node name="Unit" parent="Unit" index="0"]
+frame = 1
 
 [node name="LineManager" parent="." instance=ExtResource( 3 )]
 dot_spawn_duration = 0.075

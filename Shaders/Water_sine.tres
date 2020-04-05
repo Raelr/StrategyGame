@@ -55,7 +55,7 @@ void fragment() {
 shader = SubResource( 1 )
 shader_param/shadow_color = Color( 0.27451, 0.4, 0.741176, 1 )
 shader_param/tiled_factor = Vector2( 1, 1 )
-shader_param/aspect_ratio = 1.02259
+shader_param/aspect_ratio = 1.03529
 shader_param/uv_offset_scale = Vector2( 1, 1 )
 shader_param/uv_wave_size = Vector2( 0.02, 0.02 )
 shader_param/time_scale = Vector2( 0.01, 0.01 )
