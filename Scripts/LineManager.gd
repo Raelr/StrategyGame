@@ -6,6 +6,7 @@ export (bool) var is_pixel_art
 export (float) var dot_radius
 export (float) var gap
 export (float) var dot_spawn_duration
+export (Color) var default_line_color
 
 var loaded_asset = preload("res://Scenes/DottedLineRenderer.tscn")
 var lines = Array()
@@ -15,20 +16,41 @@ var lines = Array()
 func draw_lines(origin, destinations):
 	position = origin
 	for place in destinations:
-		spawn_line(origin, place.global_position, Color.crimson)
+		var line_details = {
+			"dest_name" : place.region_name,
+			"line" : null
+		}
+		spawn_line(origin, place.global_position, line_details)
 
 func draw_single_line(origin, destination):
-	spawn_line(origin, destination.global_position, Color.crimson)
+	var line_details = {
+		"dest_name" : destination.region_name,
+		"line" : null
+	}
+	spawn_line(origin, destination.global_position, line_details)
 
-func spawn_line(origin, dest, color):
+func spawn_line(origin, dest, details, color = null):
 	var node = loaded_asset.instance()
 	node.set_name("Line")
 	add_child(node)
-	lines.push_back(node)
-	node.on_init(arrow_end_sprites, segment_sprite, is_pixel_art, dot_radius, gap, dot_spawn_duration)
+	details["line"] = node
+	lines.push_back(details)
+	node.on_init(arrow_end_sprites, segment_sprite, is_pixel_art, dot_radius, gap, dot_spawn_duration, default_line_color)
 	node.set_destination(origin, dest, color)
+
+func reset_exception(region_name):
+	var lines_to_delete = Array()
+	for line in lines:
+		if line["dest_name"] == region_name:
+			line["line"].change_color(Color.white)
+		else:
+			lines_to_delete.push_back(line)
+	
+	for line in lines_to_delete:
+		lines.erase(line)
+		line["line"].queue_free()
 
 func reset():
 	for line in lines:
-		line.queue_free()
+		line["line"].queue_free()
 	lines.clear()

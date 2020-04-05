@@ -317,6 +317,7 @@ frame = 1
 
 [node name="LineManager" parent="." instance=ExtResource( 3 )]
 dot_spawn_duration = 0.075
+default_line_color = Color( 0.811765, 0.792157, 0.247059, 1 )
 
 [editable path="Water"]
 

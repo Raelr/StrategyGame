@@ -9,6 +9,8 @@ export (float) var gap
 export (float, 0.0, 1.0) var revealed
 export (float) var spawn_interval
 
+var existing_segments = Array()
+var dot_color = null
 var loaded_asset = preload("res://Scenes/Dot.tscn")
 var dot_diameter
 var dot_max = 0
@@ -45,7 +47,7 @@ func _process(delta):
 				if is_pixel_art_arrow and is_back:
 					dir = details["dir"]
 					sprite = get_arrow_direction(dir)
-				create_dot(details["pos"], sprite, Color.crimson, dir)
+				create_dot(details["pos"], sprite, Color.crimson, dir, dot_color)
 				elapsed = 0.0
 				dot_max -= 1
 		else:
@@ -77,19 +79,27 @@ func reset_line():
 	for segment in segments:
 		segment.queue_free()
 	segments.clear()
+	existing_segments.clear()
 	dot_max = 0
 
-func create_dot(dot_pos, sprite, line_color, direction):
+func create_dot(dot_pos, sprite, line_color, direction, color):
 	var node = loaded_asset.instance()
 	node.texture = sprite
 	node.set_name("dot")
 	add_child(node)
+	node.modulate = color
 	node.position = dot_pos
+	existing_segments.push_back(node)
 
-func on_init(arrows, segment, is_pixel, radius, gap, duration):
+func change_color(color):
+	for segment in existing_segments:
+		segment.modulate = color
+
+func on_init(arrows, segment, is_pixel, radius, gap, duration, color):
 	arrow_end = arrows
 	dot_sprite = segment
 	is_pixel_art_arrow = is_pixel
 	dot_radius = radius
 	self.gap = gap
 	spawn_interval = duration
+	dot_color = color

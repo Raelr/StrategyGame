@@ -50,6 +50,7 @@ func select_element():
 
 func on_unit_selected():
 	$LineManager.draw_lines(selected.position, selected.get_possible_paths())
+	selected.destination = null
 	selected_type = SELECTED.unit
 
 func reset_selected():
