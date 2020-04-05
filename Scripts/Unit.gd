@@ -33,9 +33,12 @@ func _process(delta):
 
 func set_selected():
 	change_outline(Color.yellow)
+	$Unit/AnimationPlayer.play("salute")
 
 func set_deselected():
 	change_outline(Color.black)
+	$Unit/AnimationPlayer.play("desalute")
+	$Unit/AnimationPlayer.queue("idle")
 
 func get_details():
 	return {
