@@ -80,7 +80,7 @@ func move_command(moused_element, line_manager):
 	var n = get_possible_paths()
 	for region in n:
 		if region == moused_element:
-			line_manager.reset_exception(moused_element.region_name)
+			line_manager.select_arrow(moused_element.region_name)
 			self.line_manager = line_manager
 			destination = region
 			break

@@ -54,6 +54,16 @@ func reset_exception(region_name):
 		line["line"].queue_free()
 	all_drawn = false
 
+func select_arrow(region_name):
+	for line in lines:
+		if line["dest_name"] == region_name:
+			if not line["line"].visible:
+				line["line"].visible = true
+			line["line"].change_color(Color.white)
+		else:
+			line["line"].visible = false
+	all_drawn = false
+
 func reset():
 	for line in lines:
 		line["line"].queue_free()
