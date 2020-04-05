@@ -70,8 +70,9 @@ func move():
 	if destination:
 		if line_manager:
 			line_manager.reset()
-		path.queue_free()
-		path = null
+		if path:
+			path.queue_free()
+			path = null
 		update = true
 
 func set_current_region(region):
@@ -103,6 +104,7 @@ func get_possible_paths():
 	return current_region.get_neighbours()
 
 func highlight_paths(line_manager):
+	destination = null
 	if path:
 		path.queue_free()
 		path = null
