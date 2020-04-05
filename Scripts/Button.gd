@@ -15,7 +15,7 @@ func _input_event(viewport, event, shape_idx):
 			if Input.is_action_just_pressed("lmb"):
 				retracting = true
 				set_color(fill_click, border_click)
-				get_parent().get_parent().deactivate_panel()
+				get_parent().get_parent().get_parent().get_parent().get_parent().disable_region_ui()
 
 func on_mouse_exit():
 	if not retracting:

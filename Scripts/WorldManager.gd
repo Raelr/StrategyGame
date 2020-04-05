@@ -7,6 +7,8 @@ var selected_type
 
 func disable_region_ui():
 	$Camera2D/CanvasLayer/RegionPanel.deactivate_panel()
+	if selected_type == SELECTED.region:
+		reset_selected()
 
 func populate_ui(region_name, wealth, region_type):
 	$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, region_type)
@@ -15,7 +17,8 @@ func moused_over(object):
 	if not moused_elements.empty():
 		if moused_elements.back() != selected:
 			moused_elements.back().set_deselected()
-	object.set_selected()
+	if object != selected:
+		object.set_selected()
 	moused_elements.push_back(object)
 
 func mouse_left(object):
@@ -27,12 +30,13 @@ func mouse_left(object):
 func select_element():
 	if not moused_elements.empty():
 		var details = null
-		if selected != moused_elements.back():
-			reset_selected(selected)
+		var new_selected = selected != moused_elements.back()
+		if new_selected:
+			reset_selected()
 			selected = moused_elements.back()
 		if selected:
 			details = selected.get_details()
-		if details:
+		if details and new_selected:
 			selected.outline_color = Color.yellow
 			selected.set_selected()
 			match details["type"]:
@@ -43,13 +47,14 @@ func select_element():
 					$LineManager.draw_lines(selected.position, selected.get_possible_paths())
 					selected_type = SELECTED.unit
 
-func reset_selected(selected_item):
+func reset_selected():
 	if selected:
-		selected_item.set_deselected()
-		selected_item.reset()
+		selected.set_deselected()
+		selected.reset()
 		if selected_type == SELECTED.unit:
 			$LineManager.reset()
 		selected_type = null
+		selected = null
 
 func get_latest_element():
 	return moused_elements.back()
@@ -62,8 +67,7 @@ func _input(event):
 	if event is InputEventKey:
 		if event.pressed:
 			if Input.is_action_just_pressed('ui_cancel'):
-				reset_selected(selected)
-				selected = null
+				reset_selected()
 				disable_region_ui()
 				select_next()
 	if event is InputEventMouseButton:

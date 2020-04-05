@@ -313,7 +313,7 @@ faction_color = Color( 0.290196, 0, 0.670588, 1 )
 move_speed = 0.4
 
 [node name="Unit" parent="Unit" index="0"]
-frame = 0
+frame = 1
 
 [node name="LineManager" parent="." instance=ExtResource( 3 )]
 dot_spawn_duration = 0.075
