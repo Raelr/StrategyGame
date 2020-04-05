@@ -26,43 +26,37 @@ func draw_lines(origin, destinations):
 			spawn_line(origin, place.global_position, line_details)
 		all_drawn = true
 
-func draw_single_line(origin, destination):
+func draw_single_line(origin, destination, color = default_line_color):
 	var line_details = {
 		"dest_name" : destination.region_name,
 		"line" : null
 	}
-	spawn_line(origin, destination.global_position, line_details)
+	spawn_line(origin, destination.global_position, line_details, color)
 
-func spawn_line(origin, dest, details, color = null):
+func spawn_line(origin, dest, details, color = default_line_color):
 	var node = loaded_asset.instance()
 	node.set_name("Line")
 	add_child(node)
 	details["line"] = node
 	lines.push_back(details)
-	node.on_init(arrow_end_sprites, segment_sprite, is_pixel_art, dot_radius, gap, dot_spawn_duration, default_line_color)
+	node.on_init(arrow_end_sprites, segment_sprite, is_pixel_art, dot_radius, gap, dot_spawn_duration, color)
 	node.set_destination(origin, dest, color)
 
-func reset_exception(region_name):
-	var lines_to_delete = Array()
-	for line in lines:
-		if line["dest_name"] == region_name:
-			line["line"].change_color(Color.white)
-		else:
-			lines_to_delete.push_back(line)
-	for line in lines_to_delete:
-		lines.erase(line)
-		line["line"].queue_free()
-	all_drawn = false
-
 func select_arrow(region_name):
+	var target = null
 	for line in lines:
 		if line["dest_name"] == region_name:
 			if not line["line"].visible:
 				line["line"].visible = true
 			line["line"].change_color(Color.white)
+			target = line
 		else:
 			line["line"].visible = false
 	all_drawn = false
+	if target:
+		lines.erase(target)
+		remove_child(target["line"])
+		return target["line"]
 
 func reset():
 	for line in lines:

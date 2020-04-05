@@ -49,7 +49,7 @@ func select_element():
 					on_unit_selected()
 
 func on_unit_selected():
-	$LineManager.draw_lines(selected.position, selected.get_possible_paths())
+	selected.highlight_paths($LineManager)
 	selected_type = SELECTED.unit
 
 func reset_selected():

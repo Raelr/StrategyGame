@@ -6,10 +6,12 @@ export (Color) var outline_color
 export (Color) var faction_color
 export (bool) var update
 export (float) var move_speed
+
 var current_region = null
 var destination = null
 var elapsed = 0.0
 var line_manager = null
+var path = null
 
 func _ready():
 	$Unit.material.set_shader_param("unit_color", faction_color)
@@ -68,6 +70,8 @@ func move():
 	if destination:
 		if line_manager:
 			line_manager.reset()
+		path.queue_free()
+		path = null
 		update = true
 
 func set_current_region(region):
@@ -80,7 +84,17 @@ func move_command(moused_element, line_manager):
 	var n = get_possible_paths()
 	for region in n:
 		if region == moused_element:
-			line_manager.select_arrow(moused_element.region_name)
+			if region == destination:
+				return
+			else:
+				if path:
+					path.queue_free()
+					path = null
+			if not path:
+				line_manager.draw_single_line(position, moused_element, Color.white)
+			path = line_manager.select_arrow(moused_element.region_name)
+			if path:
+				add_child(path)
 			self.line_manager = line_manager
 			destination = region
 			break
@@ -89,4 +103,7 @@ func get_possible_paths():
 	return current_region.get_neighbours()
 
 func highlight_paths(line_manager):
+	if path:
+		path.queue_free()
+		path = null
 	line_manager.draw_lines(position, get_possible_paths())
