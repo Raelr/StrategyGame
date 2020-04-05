@@ -33,7 +33,8 @@ func _process(delta):
 
 func set_selected():
 	change_outline(Color.yellow)
-	$Unit/AnimationPlayer.play("salute")
+	if $Unit/AnimationPlayer.current_animation == "idle":
+		$Unit/AnimationPlayer.play("salute")
 
 func set_deselected():
 	change_outline(Color.black)
