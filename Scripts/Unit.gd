@@ -14,6 +14,7 @@ var line_manager = null
 func _ready():
 	$Unit.material.set_shader_param("unit_color", faction_color)
 	$Unit/AnimationPlayer.play("idle")
+	get_parent().register_unit(self)
 
 func _process(delta):
 	if update:
@@ -30,10 +31,11 @@ func _process(delta):
 			elif elapsed >= move_speed:
 				elapsed = 0.0
 				destination = null
+				update = false
 
 func set_selected():
 	change_outline(Color.yellow)
-	if $Unit/AnimationPlayer.current_animation == "idle":
+	if not $Unit/AnimationPlayer.current_animation == "salute" and not $Unit/AnimationPlayer.current_animation == "":
 		$Unit/AnimationPlayer.play("salute")
 
 func set_deselected():
@@ -62,24 +64,26 @@ func _on_Unit_area_entered(area):
 	if not current_region:
 		set_current_region(area)
 
-func move_unit(region):
-	position = region.position
-	set_current_region(region)
+func move():
+	if destination:
+		if line_manager:
+			line_manager.reset()
+		update = true
 
 func set_current_region(region):
 	current_region = region
 	current_region.on_new_occupant(faction_color)
 	if line_manager:
-		highlight_paths(line_manager)
+		line_manager.reset()
 
-func process_action(moused_element, line_manager):
+func move_command(moused_element, line_manager):
 	var n = get_possible_paths()
 	for region in n:
 		if region == moused_element:
 			line_manager.reset()
 			self.line_manager = line_manager
+			line_manager.draw_single_line(position, region)
 			destination = region
-			update = true
 			break
 
 func get_possible_paths():

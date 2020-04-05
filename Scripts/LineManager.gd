@@ -17,6 +17,9 @@ func draw_lines(origin, destinations):
 	for place in destinations:
 		spawn_line(origin, place.global_position, Color.crimson)
 
+func draw_single_line(origin, destination):
+	spawn_line(origin, destination.global_position, Color.crimson)
+
 func spawn_line(origin, dest, color):
 	var node = loaded_asset.instance()
 	node.set_name("Line")

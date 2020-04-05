@@ -5,6 +5,8 @@ var moused_elements = Array()
 var selected = null
 var selected_type
 
+var units = Array()
+
 func disable_region_ui():
 	$Camera2D/CanvasLayer/RegionPanel.deactivate_panel()
 	if selected_type == SELECTED.region:
@@ -44,14 +46,17 @@ func select_element():
 					populate_ui(details["name"], details["wealth"], details["region type"])
 					selected_type = SELECTED.region
 				"unit":
-					$LineManager.draw_lines(selected.position, selected.get_possible_paths())
-					selected_type = SELECTED.unit
+					on_unit_selected()
+
+func on_unit_selected():
+	$LineManager.draw_lines(selected.position, selected.get_possible_paths())
+	selected_type = SELECTED.unit
 
 func reset_selected():
 	if selected:
 		selected.set_deselected()
 		selected.reset()
-		if selected_type == SELECTED.unit:
+		if selected_type == SELECTED.unit and selected.destination == null:
 			$LineManager.reset()
 		selected_type = null
 		selected = null
@@ -63,6 +68,17 @@ func select_next():
 	if not moused_elements.empty():
 		moused_elements.back().set_selected()
 
+func register_unit(unit):
+	units.push_back(unit)
+
+func execute_commands():
+	for unit in units:
+		unit.move()
+
+func process_turn():
+	reset_selected()
+	execute_commands()
+
 func _input(event):
 	if event is InputEventKey:
 		if event.pressed:
@@ -70,6 +86,8 @@ func _input(event):
 				reset_selected()
 				disable_region_ui()
 				select_next()
+			elif Input.is_action_just_pressed("ui_select"):
+				process_turn()
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.is_action_pressed("lmb"):
@@ -77,4 +95,4 @@ func _input(event):
 			if event.is_action_pressed("rmb"):
 				if selected_type == SELECTED.unit:
 					var element = get_latest_element()
-					selected.process_action(element, $LineManager)
+					selected.move_command(element, $LineManager)
