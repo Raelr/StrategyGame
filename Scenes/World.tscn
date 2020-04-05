@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Scenes/Region.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Region1Details.png" type="Texture" id=2]
@@ -92,6 +92,54 @@ shader_param/unit_color = Color( 1, 1, 1, 1 )
 shader_param/target_color = null
 shader_param/target_color_2 = null
 shader_param/tolerance = null
+
+[sub_resource type="Animation" id=8]
+resource_name = "desalute"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 13, 14, 15, 16, 17 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "idle"
+length = 0.9
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 1, 1, 0 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "salute"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 5, 6, 7, 8, 9, 11, 12, 13 ]
+}
 
 [node name="World" type="Node2D"]
 script = ExtResource( 26 )
@@ -313,7 +361,21 @@ faction_color = Color( 0.290196, 0, 0.670588, 1 )
 move_speed = 0.4
 
 [node name="Unit" parent="Unit" index="0"]
-frame = 1
+frame = 0
+
+[node name="Unit2" parent="." instance=ExtResource( 27 )]
+position = Vector2( 699.921, 300.324 )
+unitColor = Color( 1, 1, 1, 1 )
+faction_color = Color( 0.290196, 0, 0.670588, 1 )
+move_speed = 0.4
+
+[node name="Unit" parent="Unit2" index="0"]
+frame = 0
+
+[node name="AnimationPlayer" parent="Unit2/Unit" index="0"]
+anims/desalute = SubResource( 8 )
+anims/idle = SubResource( 9 )
+anims/salute = SubResource( 10 )
 
 [node name="LineManager" parent="." instance=ExtResource( 3 )]
 dot_spawn_duration = 0.075
@@ -336,3 +398,5 @@ default_line_color = Color( 0.811765, 0.792157, 0.247059, 1 )
 [editable path="EastLakeRegion"]
 
 [editable path="Unit"]
+
+[editable path="Unit2"]
