@@ -10,17 +10,21 @@ export (Color) var default_line_color
 
 var loaded_asset = preload("res://Scenes/DottedLineRenderer.tscn")
 var lines = Array()
+var all_drawn = false
 
 # Get a list of positions.
 # Iterate over them and instatiate new lindes accordingly
 func draw_lines(origin, destinations):
-	position = origin
-	for place in destinations:
-		var line_details = {
-			"dest_name" : place.region_name,
-			"line" : null
-		}
-		spawn_line(origin, place.global_position, line_details)
+	if not all_drawn:
+		reset()
+		position = origin
+		for place in destinations:
+			var line_details = {
+				"dest_name" : place.region_name,
+				"line" : null
+			}
+			spawn_line(origin, place.global_position, line_details)
+		all_drawn = true
 
 func draw_single_line(origin, destination):
 	var line_details = {
@@ -45,12 +49,13 @@ func reset_exception(region_name):
 			line["line"].change_color(Color.white)
 		else:
 			lines_to_delete.push_back(line)
-	
 	for line in lines_to_delete:
 		lines.erase(line)
 		line["line"].queue_free()
+	all_drawn = false
 
 func reset():
 	for line in lines:
 		line["line"].queue_free()
 	lines.clear()
+	all_drawn = false

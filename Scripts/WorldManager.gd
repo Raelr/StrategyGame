@@ -38,7 +38,7 @@ func select_element():
 			selected = moused_elements.back()
 		if selected:
 			details = selected.get_details()
-		if details and new_selected:
+		if details:
 			selected.outline_color = Color.yellow
 			selected.set_selected()
 			match details["type"]:
@@ -50,7 +50,6 @@ func select_element():
 
 func on_unit_selected():
 	$LineManager.draw_lines(selected.position, selected.get_possible_paths())
-	selected.destination = null
 	selected_type = SELECTED.unit
 
 func reset_selected():
