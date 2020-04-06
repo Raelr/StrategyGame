@@ -5,6 +5,8 @@ var moused_elements = Array()
 var selected = null
 var selected_type
 
+signal on_turn_changed
+
 var units = Array()
 
 func disable_region_ui():
@@ -78,6 +80,7 @@ func execute_commands():
 func process_turn():
 	reset_selected()
 	execute_commands()
+	emit_signal("on_turn_changed")
 
 func _input(event):
 	if event is InputEventKey:
