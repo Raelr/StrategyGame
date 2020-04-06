@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/RTSCamera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/TurnTimer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Sprites/TopBar.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/RegionPanel.tscn" type="PackedScene" id=5]
 
 [node name="Camera2D" type="Camera2D"]
@@ -25,8 +26,14 @@ rect_scale = Vector2( 4, 4 )
 [node name="TurnTimer" parent="CanvasLayer" instance=ExtResource( 2 )]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -20.0
-margin_top = 60.308
-margin_right = 20.0
-margin_bottom = 100.308
+margin_left = 1.09467
+margin_top = 72.8583
+margin_right = 41.0947
+margin_bottom = 112.858
 rect_pivot_offset = Vector2( 36.3593, 99.2701 )
+
+[node name="TopBar" type="Sprite" parent="CanvasLayer"]
+position = Vector2( 513.091, 81.592 )
+scale = Vector2( 4, 4 )
+z_index = -1
+texture = ExtResource( 3 )
