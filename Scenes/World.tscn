@@ -393,7 +393,7 @@ move_speed = 0.4
 
 [node name="Unit" parent="Unit" index="0"]
 material = SubResource( 11 )
-frame = 0
+frame = 1
 
 [node name="Unit2" parent="." instance=ExtResource( 27 )]
 position = Vector2( 699.921, 300.324 )
@@ -403,7 +403,7 @@ move_speed = 0.4
 
 [node name="Unit" parent="Unit2" index="0"]
 material = SubResource( 12 )
-frame = 0
+frame = 1
 
 [node name="AnimationPlayer" parent="Unit2/Unit" index="0"]
 anims/desalute = SubResource( 8 )

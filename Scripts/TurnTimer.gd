@@ -8,7 +8,9 @@ func _ready():
 	world.connect("on_turn_changed", self, "increment_turn")
 
 func increment_turn():
+	$BleedingShield/AnimationPlayer.play("TurnChange")
+	$BleedingShield/AnimationPlayer.queue("Idle")
 	turn += 1
-	$TurnLabel.text = str(turn)
+	$BleedingShield/TurnLabel.text = str(turn)
 
 
