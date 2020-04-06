@@ -6,6 +6,7 @@ uniform vec4 unit_color: hint_color;
 uniform vec4 target_color: hint_color;
 uniform vec4 target_color_2: hint_color;
 uniform float tolerance;
+uniform bool darken = false;
 
 vec3 get_sprite_color_change(vec4 original_color) {
 	vec3 color = original_color.rgb;
@@ -15,7 +16,7 @@ vec3 get_sprite_color_change(vec4 original_color) {
 	float m2 = max(max(abs(diff2.r), abs(diff2.g)), abs(diff2.b));
 	float brightness = length(color);
 	color = mix(color, unit_color.rgb * brightness, step(m, tolerance));
-	color = mix(color, mix(unit_color.rgb, target_color_2.rgb, 0.35) * brightness, step(m2, tolerance));
+	color = mix(color, mix(unit_color.rgb, target_color_2.rgb, 1) * brightness, step(m2, tolerance));
 	return color;
 }
 
@@ -29,7 +30,12 @@ void fragment() {
 	alpha += texture(TEXTURE, UV + vec2(-size.x, 0.0)).a;
 	alpha += texture(TEXTURE, UV + vec2(0.0, size.y)).a;
 	alpha += texture(TEXTURE, UV + vec2(0.0, -size.y)).a;
-	
-	vec3 final_color = mix(outline_color.rgb, sprite_color.rgb * unit_color_change.rgb, sprite_color.a);
+	vec3 mixed_sprites;
+	if (darken) {
+		mixed_sprites = sprite_color.rgb * unit_color_change.rgb;
+	} else {
+		mixed_sprites = mix(sprite_color.rgb, unit_color_change.rgb, sprite_color.a);
+	}
+	vec3 final_color = mix(outline_color.rgb, mixed_sprites.rgb, sprite_color.a);
 	COLOR = vec4(final_color.rgb, clamp(alpha, 0.0, 1.0));
 }

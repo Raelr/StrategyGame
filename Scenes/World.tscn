@@ -32,6 +32,7 @@ shader_param/unit_color = Color( 1, 1, 1, 1 )
 shader_param/target_color = null
 shader_param/target_color_2 = null
 shader_param/tolerance = null
+shader_param/darken = false
 
 [sub_resource type="ShaderMaterial" id=2]
 resource_local_to_scene = true
@@ -42,6 +43,7 @@ shader_param/unit_color = Color( 1, 1, 1, 1 )
 shader_param/target_color = null
 shader_param/target_color_2 = null
 shader_param/tolerance = null
+shader_param/darken = false
 
 [sub_resource type="ShaderMaterial" id=3]
 resource_local_to_scene = true
@@ -52,6 +54,7 @@ shader_param/unit_color = Color( 1, 1, 1, 1 )
 shader_param/target_color = null
 shader_param/target_color_2 = null
 shader_param/tolerance = null
+shader_param/darken = false
 
 [sub_resource type="ShaderMaterial" id=4]
 resource_local_to_scene = true
@@ -62,6 +65,7 @@ shader_param/unit_color = Color( 1, 1, 1, 1 )
 shader_param/target_color = null
 shader_param/target_color_2 = null
 shader_param/tolerance = null
+shader_param/darken = false
 
 [sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
@@ -72,6 +76,7 @@ shader_param/unit_color = Color( 1, 1, 1, 1 )
 shader_param/target_color = null
 shader_param/target_color_2 = null
 shader_param/tolerance = null
+shader_param/darken = false
 
 [sub_resource type="ShaderMaterial" id=6]
 resource_local_to_scene = true
@@ -82,6 +87,7 @@ shader_param/unit_color = Color( 1, 1, 1, 1 )
 shader_param/target_color = null
 shader_param/target_color_2 = null
 shader_param/tolerance = null
+shader_param/darken = false
 
 [sub_resource type="ShaderMaterial" id=7]
 resource_local_to_scene = true
@@ -92,6 +98,7 @@ shader_param/unit_color = Color( 1, 1, 1, 1 )
 shader_param/target_color = null
 shader_param/target_color_2 = null
 shader_param/tolerance = null
+shader_param/darken = false
 
 [sub_resource type="ShaderMaterial" id=11]
 resource_local_to_scene = true
@@ -102,16 +109,18 @@ shader_param/unit_color = Color( 0.290196, 0, 0.670588, 1 )
 shader_param/target_color = Color( 1, 1, 1, 1 )
 shader_param/target_color_2 = Color( 0.831373, 0.831373, 0.831373, 1 )
 shader_param/tolerance = 0.1
+shader_param/darken = true
 
 [sub_resource type="ShaderMaterial" id=12]
 resource_local_to_scene = true
 shader = ExtResource( 28 )
 shader_param/width = 1.0
 shader_param/outline_color = Color( 0, 0, 0, 1 )
-shader_param/unit_color = Color( 0.290196, 0, 0.670588, 1 )
+shader_param/unit_color = Color( 1, 0.0666667, 0, 1 )
 shader_param/target_color = Color( 1, 1, 1, 1 )
 shader_param/target_color_2 = Color( 0.831373, 0.831373, 0.831373, 1 )
 shader_param/tolerance = 0.1
+shader_param/darken = true
 
 [sub_resource type="Animation" id=8]
 resource_name = "desalute"
@@ -170,11 +179,13 @@ follow_viewport_enable = true
 
 [node name="ColorRect" type="ColorRect" parent="ColorBackground"]
 anchor_left = -0.000293374
+anchor_top = -0.000401103
 anchor_right = -0.000293374
-margin_left = -44.1786
-margin_top = -186.233
-margin_right = 1391.82
-margin_bottom = 807.767
+anchor_bottom = -0.000401103
+margin_left = -309.7
+margin_top = -185.759
+margin_right = 1392.3
+margin_bottom = 808.241
 mouse_filter = 2
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
@@ -382,17 +393,17 @@ move_speed = 0.4
 
 [node name="Unit" parent="Unit" index="0"]
 material = SubResource( 11 )
-frame = 1
+frame = 0
 
 [node name="Unit2" parent="." instance=ExtResource( 27 )]
 position = Vector2( 699.921, 300.324 )
 unitColor = Color( 1, 1, 1, 1 )
-faction_color = Color( 0.290196, 0, 0.670588, 1 )
+faction_color = Color( 1, 0.0666667, 0, 1 )
 move_speed = 0.4
 
 [node name="Unit" parent="Unit2" index="0"]
 material = SubResource( 12 )
-frame = 1
+frame = 0
 
 [node name="AnimationPlayer" parent="Unit2/Unit" index="0"]
 anims/desalute = SubResource( 8 )
