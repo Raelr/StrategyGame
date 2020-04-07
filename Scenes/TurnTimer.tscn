@@ -1,8 +1,19 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Sprites/BleedingShield.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/TurnTimer.gd" type="Script" id=2]
 [ext_resource path="res://fonts/PixelArtFont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Shaders/outline_shader_pixel_perfect.shader" type="Shader" id=4]
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 4 )
+shader_param/width = 1.0
+shader_param/outline_color = null
+shader_param/unit_color = null
+shader_param/target_color = null
+shader_param/target_color_2 = null
+shader_param/tolerance = null
+shader_param/darken = false
 
 [sub_resource type="Animation" id=1]
 resource_name = "Idle"
@@ -58,6 +69,7 @@ __meta__ = {
 }
 
 [node name="BleedingShield" type="Sprite" parent="."]
+material = SubResource( 3 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
 hframes = 34
