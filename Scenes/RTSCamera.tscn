@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/RTSCamera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/TurnTimer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sprites/TopBar.png" type="Texture" id=3]
+[ext_resource path="res://Shaders/outline_shader_pixel_perfect.shader" type="Shader" id=4]
 [ext_resource path="res://Scenes/RegionPanel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Popup.tscn" type="PackedScene" id=6]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 4 )
+shader_param/width = 1.0
+shader_param/outline_color = Color( 0.172549, 0.172549, 0.172549, 1 )
+shader_param/unit_color = Color( 0, 0, 0, 1 )
+shader_param/target_color = null
+shader_param/target_color_2 = null
+shader_param/tolerance = null
+shader_param/darken = false
 
 [node name="Camera2D" type="Camera2D"]
 anchor_mode = 0
@@ -33,7 +45,18 @@ margin_bottom = 100.184
 rect_pivot_offset = Vector2( 36.3593, 99.2701 )
 
 [node name="TopBar" type="Sprite" parent="CanvasLayer"]
-position = Vector2( 513.091, 52.0773 )
+material = SubResource( 1 )
+position = Vector2( 512.792, 52.0773 )
 scale = Vector2( 4, 4 )
 z_index = -1
 texture = ExtResource( 3 )
+
+[node name="Control" parent="CanvasLayer" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = 20.7267
+margin_right = 20.0
+margin_bottom = 60.7267
