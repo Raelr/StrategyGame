@@ -26,14 +26,14 @@ rect_scale = Vector2( 4, 4 )
 [node name="TurnTimer" parent="CanvasLayer" instance=ExtResource( 2 )]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = 1.09467
-margin_top = 72.8583
-margin_right = 41.0947
-margin_bottom = 112.858
+margin_left = 0.0808716
+margin_top = 60.1841
+margin_right = 40.0809
+margin_bottom = 100.184
 rect_pivot_offset = Vector2( 36.3593, 99.2701 )
 
 [node name="TopBar" type="Sprite" parent="CanvasLayer"]
-position = Vector2( 513.091, 81.592 )
+position = Vector2( 513.091, 52.0773 )
 scale = Vector2( 4, 4 )
 z_index = -1
 texture = ExtResource( 3 )
