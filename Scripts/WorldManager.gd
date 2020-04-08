@@ -105,7 +105,7 @@ func _input(event):
 				disable_region_ui()
 				select_next()
 			elif Input.is_action_just_pressed("ui_select"):
-				$Camera2D/CanvasLayer/Popup.visible = true
+				$Camera2D/CanvasLayer/Popup.set_enabled(true)
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.is_action_pressed("lmb"):

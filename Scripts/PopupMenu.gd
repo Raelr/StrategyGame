@@ -13,15 +13,16 @@ func _ready():
 
 func set_enabled(status):
 	visible = status
-	set_process(status)
 
 func on_confirm():
 	var world = get_tree().get_root().get_child(0)
 	world.process_turn()
 	set_enabled(false)
+	set_process(false)
 
 func on_decline():
 	set_enabled(false)
+	set_process(false)
 
 func on_hover():
 	emit_signal("on_button_mouseover")
