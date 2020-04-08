@@ -38,6 +38,7 @@ func set_ui_moused_over():
 
 func set_ui_moused_exit():
 	ui_moused_over = false
+	select_next()
 
 func mouse_left(object):
 	if not ui_moused_over:
