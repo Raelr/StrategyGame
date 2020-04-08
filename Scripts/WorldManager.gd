@@ -10,12 +10,14 @@ signal on_turn_changed
 var units = Array()
 
 func disable_region_ui():
-	$Camera2D/CanvasLayer/RegionPanel.deactivate_panel()
+	#$Camera2D/CanvasLayer/RegionPanel.deactivate_panel()
 	if selected_type == SELECTED.region:
 		reset_selected()
+	pass
 
 func populate_ui(region_name, wealth, region_type):
-	$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, region_type)
+	pass
+	#$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, region_type)
 
 func moused_over(object):
 	if not moused_elements.empty():
@@ -90,7 +92,7 @@ func _input(event):
 				disable_region_ui()
 				select_next()
 			elif Input.is_action_just_pressed("ui_select"):
-				process_turn()
+				$Camera2D/CanvasLayer/Popup.visible = true
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.is_action_pressed("lmb"):

@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Control",
+"class": "Menu",
+"language": "GDScript",
+"path": "res://Scripts/Menu.gd"
+}, {
+"base": "Area2D",
+"class": "UIButtonIcon",
+"language": "GDScript",
+"path": "res://Scripts/UIButton.gd"
+} ]
 _global_script_class_icons={
-
+"Menu": "",
+"UIButtonIcon": ""
 }
 
 [application]
