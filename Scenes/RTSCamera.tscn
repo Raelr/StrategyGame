@@ -60,6 +60,7 @@ margin_left = -20.0
 margin_top = 20.7267
 margin_right = 20.0
 margin_bottom = 60.7267
+mouse_filter = 2
 
 [node name="ButtonSprite" parent="CanvasLayer/Popup/ConfirmButton" index="0"]
 material = SubResource( 1 )
