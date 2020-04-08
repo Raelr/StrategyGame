@@ -33,6 +33,7 @@ func _on_UIButtonIcon_mouse_entered():
 	emit_signal("on_hover")
 	$ButtonSprite.material.set_shader_param("outline_color", Color.yellow)
 	$ButtonSprite/Icon.material.set_shader_param("outline_color", Color.yellow)
+	
 
 func _on_UIButtonIcon_mouse_exited():
 	emit_signal("on_hover_exit")

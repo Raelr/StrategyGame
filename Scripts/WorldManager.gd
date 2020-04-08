@@ -4,10 +4,15 @@ enum SELECTED {region, unit}
 var moused_elements = Array()
 var selected = null
 var selected_type
+var ui_moused_over = false
 
 signal on_turn_changed
 
 var units = Array()
+
+func _ready():
+	$Camera2D/CanvasLayer/Popup.connect("on_button_mouseover", self, "set_ui_moused_over")
+	$Camera2D/CanvasLayer/Popup.connect("on_button_exit", self, "set_ui_moused_exit")
 
 func disable_region_ui():
 	#$Camera2D/CanvasLayer/RegionPanel.deactivate_panel()
@@ -20,18 +25,26 @@ func populate_ui(region_name, wealth, region_type):
 	#$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, region_type)
 
 func moused_over(object):
-	if not moused_elements.empty():
-		if moused_elements.back() != selected:
-			moused_elements.back().set_deselected()
-	if object != selected:
-		object.set_selected()
-	moused_elements.push_back(object)
+	if not ui_moused_over:
+		if not moused_elements.empty():
+			if moused_elements.back() != selected:
+				moused_elements.back().set_deselected()
+		if object != selected:
+			object.set_selected()
+		moused_elements.push_back(object)
+
+func set_ui_moused_over():
+	ui_moused_over = true
+
+func set_ui_moused_exit():
+	ui_moused_over = false
 
 func mouse_left(object):
-	if object != selected:
-		object.set_deselected()
-	moused_elements.erase(object)
-	select_next()
+	if not ui_moused_over:
+		if object != selected:
+			object.set_deselected()
+		moused_elements.erase(object)
+		select_next()
 
 func select_element():
 	if not moused_elements.empty():
@@ -96,8 +109,10 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.is_action_pressed("lmb"):
-				select_element()
+				if not ui_moused_over:
+					select_element()
 			if event.is_action_pressed("rmb"):
-				if selected_type == SELECTED.unit:
-					var element = get_latest_element()
-					selected.move_command(element, $LineManager)
+				if not ui_moused_over:
+					if selected_type == SELECTED.unit:
+						var element = get_latest_element()
+						selected.move_command(element, $LineManager)
