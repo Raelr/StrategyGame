@@ -5,6 +5,9 @@ class_name UIButtonIcon
 export (Texture) var button
 export (Texture) var icon
 export (Color) var buttonColor
+export (Color) var outline_idle
+export (Color) var outline_active
+export (bool) var show_icon_outline
 export (bool) var update
 
 signal on_press
@@ -21,6 +24,9 @@ func _process(delta):
 			$ButtonSprite.texture = button
 			$ButtonSprite/Icon.texture = icon
 			$ButtonSprite.material.set_shader_param("unit_color", buttonColor)
+			$ButtonSprite.material.set_shader_param("outline_color", outline_idle)
+			if not show_icon_outline:
+				$ButtonSprite/Icon.material.set_shader_param("width", 0)
 
 # When the button is pressed, call the signla on the parent. 
 func _on_UIButtonIcon_input_event(viewport, event, shape_idx):
@@ -31,11 +37,13 @@ func _on_UIButtonIcon_input_event(viewport, event, shape_idx):
 
 func _on_UIButtonIcon_mouse_entered():
 	emit_signal("on_hover")
-	$ButtonSprite.material.set_shader_param("outline_color", Color.yellow)
-	$ButtonSprite/Icon.material.set_shader_param("outline_color", Color.yellow)
+	$ButtonSprite.material.set_shader_param("outline_color", outline_active)
+	if show_icon_outline:
+		$ButtonSprite/Icon.material.set_shader_param("outline_color", outline_active)
 	
 
 func _on_UIButtonIcon_mouse_exited():
 	emit_signal("on_hover_exit")
-	$ButtonSprite.material.set_shader_param("outline_color", Color.black)
-	$ButtonSprite/Icon.material.set_shader_param("outline_color", Color.yellow)
+	$ButtonSprite.material.set_shader_param("outline_color", outline_idle)
+	if show_icon_outline:
+		$ButtonSprite/Icon.material.set_shader_param("outline_color", outline_idle)

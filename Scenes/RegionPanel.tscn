@@ -1,9 +1,24 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Sprites/RegionPanelV2.png" type="Texture" id=1]
 [ext_resource path="res://fonts/PixelArtFont.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Scripts/RegionPanel.gd" type="Script" id=3]
+[ext_resource path="res://Sprites/RegionExportButton.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/PlainsIcon.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/ExitIcon.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/UIButton.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Shaders/outline_shader_pixel_perfect.shader" type="Shader" id=8]
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = ExtResource( 8 )
+shader_param/width = 1.0
+shader_param/outline_color = Color( 0.270588, 0.156863, 0.235294, 1 )
+shader_param/unit_color = Color( 0.22, 0.12276, 0.1056, 1 )
+shader_param/target_color = Color( 1, 1, 1, 1 )
+shader_param/target_color_2 = Color( 0, 0, 0, 1 )
+shader_param/tolerance = null
+shader_param/darken = true
 
 [sub_resource type="Animation" id=1]
 resource_name = "activated"
@@ -103,6 +118,22 @@ __meta__ = {
 position = Vector2( -0.162323, 0 )
 texture = ExtResource( 1 )
 
+[node name="UIButtonIcon" parent="RegionPanel" instance=ExtResource( 7 )]
+position = Vector2( -0.0207787, 54.9991 )
+scale = Vector2( 0.25, 0.25 )
+button = ExtResource( 4 )
+icon = ExtResource( 6 )
+buttonColor = Color( 0.22, 0.12276, 0.1056, 1 )
+outline_idle = Color( 0.270588, 0.156863, 0.235294, 1 )
+outline_active = Color( 0.356863, 0.364706, 0.113725, 1 )
+
+[node name="ButtonSprite" parent="RegionPanel/UIButtonIcon" index="0"]
+material = SubResource( 4 )
+texture = ExtResource( 4 )
+
+[node name="Icon" parent="RegionPanel/UIButtonIcon/ButtonSprite" index="0"]
+texture = ExtResource( 6 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RegionPanel"]
 method_call_mode = 1
 anims/activated = SubResource( 1 )
@@ -176,3 +207,5 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[editable path="RegionPanel/UIButtonIcon"]
