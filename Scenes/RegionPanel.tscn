@@ -1,12 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Sprites/RegionPanel.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/RegionPanelV2.png" type="Texture" id=1]
 [ext_resource path="res://fonts/PixelArtFont.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Scripts/RegionPanel.gd" type="Script" id=3]
-[ext_resource path="res://Scenes/Button.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Sprites/PlainsIcon.png" type="Texture" id=5]
-[ext_resource path="res://Sprites/HillsIcon.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/MountainsIcon.png" type="Texture" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "activated"
@@ -101,7 +98,6 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-region_icons = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ]
 
 [node name="RegionPanel" type="Sprite" parent="."]
 position = Vector2( -0.162323, 0 )
@@ -114,12 +110,13 @@ anims/deactivated = SubResource( 2 )
 anims/idle = SubResource( 3 )
 
 [node name="NameText" type="Label" parent="RegionPanel"]
-margin_left = -39.0
-margin_top = -52.0
-margin_right = 49.0
-margin_bottom = -36.0
+modulate = Color( 0.929412, 0.654902, 0.47451, 1 )
+margin_left = -24.0
+margin_top = -44.2757
+margin_right = 69.0
+margin_bottom = -27.2757
 grow_vertical = 2
-rect_scale = Vector2( 0.644166, 0.644166 )
+rect_scale = Vector2( 0.508129, 0.508129 )
 custom_fonts/font = ExtResource( 2 )
 text = "Region"
 align = 1
@@ -129,12 +126,13 @@ __meta__ = {
 }
 
 [node name="WealthText" type="Label" parent="RegionPanel"]
-margin_left = 1.12768
-margin_top = -5.61103
-margin_right = 20.1277
-margin_bottom = 8.38897
+modulate = Color( 0.929412, 0.654902, 0.47451, 1 )
+margin_left = -7.0
+margin_top = -3.0
+margin_right = 26.0
+margin_bottom = 13.0
 grow_vertical = 2
-rect_scale = Vector2( 1.07006, 1.07006 )
+rect_scale = Vector2( 0.660602, 0.660602 )
 custom_fonts/font = ExtResource( 2 )
 text = "1"
 align = 1
@@ -143,25 +141,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" parent="RegionPanel" instance=ExtResource( 4 )]
-position = Vector2( 0, 46.921 )
-border_idle = Color( 0.780392, 0.686275, 0.54902, 1 )
-fill_idle = Color( 0.411765, 0.415686, 0.415686, 1 )
-border_hover = Color( 0.780392, 0.686275, 0.54902, 1 )
-fill_hover = Color( 0.25098, 0.243137, 0.247059, 1 )
-border_click = Color( 0.411765, 0.415686, 0.415686, 1 )
-
 [node name="RegionTypeIcon" type="Sprite" parent="RegionPanel"]
-position = Vector2( -24.0007, 22.9875 )
+position = Vector2( -18.0468, 24.0214 )
 texture = ExtResource( 5 )
 
 [node name="RegionType" type="Label" parent="RegionPanel/RegionTypeIcon"]
-margin_left = 17.2993
-margin_top = -7.19129
-margin_right = 109.299
-margin_bottom = 8.80871
+modulate = Color( 0.929412, 0.654902, 0.47451, 1 )
+margin_left = 14.3104
+margin_top = -4.78687
+margin_right = 106.31
+margin_bottom = 11.2131
 grow_vertical = 2
-rect_scale = Vector2( 0.402584, 0.402584 )
+rect_scale = Vector2( 0.287186, 0.287186 )
 custom_fonts/font = ExtResource( 2 )
 text = "Grasslands"
 align = 1
@@ -171,12 +162,13 @@ __meta__ = {
 }
 
 [node name="Effect" type="Label" parent="RegionPanel/RegionTypeIcon"]
-margin_left = 17.2394
-margin_top = 3.15032
-margin_right = 109.239
-margin_bottom = 19.1503
+modulate = Color( 0.929412, 0.654902, 0.47451, 1 )
+margin_left = 14.9695
+margin_top = 1.4114
+margin_right = 106.969
+margin_bottom = 17.4114
 grow_vertical = 2
-rect_scale = Vector2( 0.388653, 0.388653 )
+rect_scale = Vector2( 0.26786, 0.26786 )
 custom_fonts/font = ExtResource( 2 )
 text = "+0 defence"
 align = 1
