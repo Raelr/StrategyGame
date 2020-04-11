@@ -13,18 +13,16 @@ var units = Array()
 func _ready():
 	$Camera2D/CanvasLayer/Popup.connect("on_button_mouseover", self, "set_ui_moused_over")
 	$Camera2D/CanvasLayer/Popup.connect("on_button_exit", self, "set_ui_moused_exit")
-	$Camera2D/CanvasLayer/Control.connect("on_button_mouseover", self, "set_ui_moused_over")
-	$Camera2D/CanvasLayer/Control.connect("on_button_exit", self, "set_ui_moused_exit")
+	$Camera2D/CanvasLayer/RegionPanel.connect("on_button_mouseover", self, "set_ui_moused_over")
+	$Camera2D/CanvasLayer/RegionPanel.connect("on_button_exit", self, "set_ui_moused_exit")
 
 func disable_region_ui():
-	#$Camera2D/CanvasLayer/RegionPanel.deactivate_panel()
+	$Camera2D/CanvasLayer/RegionPanel.deactivate_panel()
 	if selected_type == SELECTED.region:
 		reset_selected()
-	pass
 
 func populate_ui(region_name, wealth, region_type):
-	pass
-	#$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, region_type)
+	$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, region_type)
 
 func moused_over(object):
 	if not ui_moused_over:
@@ -108,7 +106,7 @@ func _input(event):
 				disable_region_ui()
 				select_next()
 			elif Input.is_action_just_pressed("ui_select"):
-				$Camera2D/CanvasLayer/Popup.set_enabled(true)
+				$Camera2D/CanvasLayer/Popup.set_visible(true)
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.is_action_pressed("lmb"):

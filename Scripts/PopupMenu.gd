@@ -8,15 +8,12 @@ func _ready():
 	$ConfirmButton.connect("on_hover_exit", self, "on_hover_exit")
 	$ExitButton.connect("on_hover_exit", self, "on_hover_exit")
 
-func set_enabled(status):
-	visible = status
-
 func on_confirm():
 	var world = get_tree().get_root().get_child(0)
 	world.process_turn()
-	set_enabled(false)
+	set_visible(false)
 	set_process(false)
 
 func on_decline():
-	set_enabled(false)
+	set_visible(false)
 	set_process(false)

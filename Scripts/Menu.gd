@@ -10,3 +10,6 @@ func on_hover():
 
 func on_hover_exit():
 	emit_signal("on_button_exit")
+
+func set_visible(status):
+	visible = status
