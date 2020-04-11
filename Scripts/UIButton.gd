@@ -7,7 +7,9 @@ export (Texture) var icon
 export (Color) var buttonColor
 export (Color) var outline_idle
 export (Color) var outline_active
+export (Color) var icon_idle
 export (bool) var show_icon_outline
+export (bool) var change_icon_color
 export (bool) var update
 
 signal on_press
@@ -40,6 +42,8 @@ func _on_UIButtonIcon_mouse_entered():
 	$ButtonSprite.material.set_shader_param("outline_color", outline_active)
 	if show_icon_outline:
 		$ButtonSprite/Icon.material.set_shader_param("outline_color", outline_active)
+	if change_icon_color:
+		$ButtonSprite/Icon.material.set_shader_param("unit_color", outline_active)
 	
 
 func _on_UIButtonIcon_mouse_exited():
@@ -47,3 +51,5 @@ func _on_UIButtonIcon_mouse_exited():
 	$ButtonSprite.material.set_shader_param("outline_color", outline_idle)
 	if show_icon_outline:
 		$ButtonSprite/Icon.material.set_shader_param("outline_color", outline_idle)
+	if change_icon_color:
+		$ButtonSprite/Icon.material.set_shader_param("unit_color", icon_idle)

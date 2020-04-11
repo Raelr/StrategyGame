@@ -20,11 +20,11 @@ shader_param/darken = true
 shader = ExtResource( 3 )
 shader_param/width = 0
 shader_param/outline_color = null
-shader_param/unit_color = Color( 1, 1, 1, 1 )
-shader_param/target_color = Color( 0, 0, 0, 1 )
+shader_param/unit_color = Color( 0.168627, 0.0980392, 0.14902, 1 )
+shader_param/target_color = Color( 1, 1, 1, 1 )
 shader_param/target_color_2 = null
 shader_param/tolerance = null
-shader_param/darken = false
+shader_param/darken = true
 
 [node name="UIButtonIcon" type="Area2D"]
 script = ExtResource( 4 )

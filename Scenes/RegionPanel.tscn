@@ -16,7 +16,7 @@ resource_local_to_scene = true
 shader = ExtResource( 8 )
 shader_param/width = 1.0
 shader_param/outline_color = Color( 0.270588, 0.156863, 0.235294, 1 )
-shader_param/unit_color = Color( 0.23, 0.126385, 0.1081, 1 )
+shader_param/unit_color = Color( 0.22, 0.12276, 0.1056, 1 )
 shader_param/target_color = Color( 1, 1, 1, 1 )
 shader_param/target_color_2 = Color( 0, 0, 0, 1 )
 shader_param/tolerance = null
@@ -123,19 +123,22 @@ position = Vector2( -0.162323, 0 )
 texture = ExtResource( 1 )
 
 [node name="UIButtonIcon" parent="RegionPanel" instance=ExtResource( 10 )]
-position = Vector2( -0.0207787, 54.9991 )
+position = Vector2( -0.0207787, 54.005 )
 scale = Vector2( 0.25, 0.25 )
 button = ExtResource( 4 )
 icon = ExtResource( 9 )
 buttonColor = Color( 0.22, 0.12276, 0.1056, 1 )
 outline_idle = Color( 0.270588, 0.156863, 0.235294, 1 )
 outline_active = Color( 1, 0.984314, 0, 1 )
+icon_idle = Color( 0.168627, 0.0980392, 0.14902, 1 )
+change_icon_color = true
 
 [node name="ButtonSprite" parent="RegionPanel/UIButtonIcon" index="0"]
 material = SubResource( 4 )
 texture = ExtResource( 4 )
 
 [node name="Icon" parent="RegionPanel/UIButtonIcon/ButtonSprite" index="0"]
+position = Vector2( -2.97962, -0.00234604 )
 texture = ExtResource( 9 )
 
 [node name="CollisionPolygon2D" parent="RegionPanel/UIButtonIcon" index="1"]

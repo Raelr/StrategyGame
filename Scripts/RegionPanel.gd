@@ -3,6 +3,8 @@ extends Menu
 export (Array) var region_icons
 var is_active = false
 
+signal on_button_close
+
 var types = [
 	{
 		'name' : 'Grasslands',
@@ -39,3 +41,4 @@ func deactivate_panel():
 	if is_active:
 		$RegionPanel/AnimationPlayer.play("deactivated")
 		is_active = false
+	emit_signal("on_button_close")

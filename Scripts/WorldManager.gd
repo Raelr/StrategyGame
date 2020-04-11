@@ -15,9 +15,9 @@ func _ready():
 	$Camera2D/CanvasLayer/Popup.connect("on_button_exit", self, "set_ui_moused_exit")
 	$Camera2D/CanvasLayer/RegionPanel.connect("on_button_mouseover", self, "set_ui_moused_over")
 	$Camera2D/CanvasLayer/RegionPanel.connect("on_button_exit", self, "set_ui_moused_exit")
+	$Camera2D/CanvasLayer/RegionPanel.connect("on_button_close", self, "disable_region_ui")
 
 func disable_region_ui():
-	$Camera2D/CanvasLayer/RegionPanel.deactivate_panel()
 	if selected_type == SELECTED.region:
 		reset_selected()
 
