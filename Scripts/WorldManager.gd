@@ -13,6 +13,8 @@ var units = Array()
 func _ready():
 	$Camera2D/CanvasLayer/Popup.connect("on_button_mouseover", self, "set_ui_moused_over")
 	$Camera2D/CanvasLayer/Popup.connect("on_button_exit", self, "set_ui_moused_exit")
+	$Camera2D/CanvasLayer/Control.connect("on_button_mouseover", self, "set_ui_moused_over")
+	$Camera2D/CanvasLayer/Control.connect("on_button_exit", self, "set_ui_moused_exit")
 
 func disable_region_ui():
 	#$Camera2D/CanvasLayer/RegionPanel.deactivate_panel()

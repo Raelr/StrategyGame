@@ -4,14 +4,14 @@
 [ext_resource path="res://Scenes/TurnTimer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sprites/TopBar.png" type="Texture" id=3]
 [ext_resource path="res://Shaders/outline_shader_pixel_perfect.shader" type="Shader" id=4]
-[ext_resource path="res://Sprites/RegionPanelV2.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/RegionPanel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Popup.tscn" type="PackedScene" id=6]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/width = 1.0
-shader_param/outline_color = null
+shader_param/outline_color = Color( 0.270588, 0.156863, 0.235294, 1 )
 shader_param/unit_color = Color( 0.152941, 0.0784314, 0.129412, 1 )
 shader_param/target_color = Color( 1, 1, 1, 1 )
 shader_param/target_color_2 = Color( 0, 0, 0, 1 )
@@ -22,7 +22,7 @@ shader_param/darken = true
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/width = 1.0
-shader_param/outline_color = null
+shader_param/outline_color = Color( 0.270588, 0.156863, 0.235294, 1 )
 shader_param/unit_color = Color( 0.152941, 0.0784314, 0.129412, 1 )
 shader_param/target_color = Color( 1, 1, 1, 1 )
 shader_param/target_color_2 = Color( 0, 0, 0, 1 )
@@ -77,11 +77,11 @@ material = SubResource( 2 )
 visible = true
 polygon = PoolVector2Array( -43.9238, -31.6431, -40.219, -31.6431, -40.0625, -35.7654, -35.9924, -35.7654, -35.9924, -39.5745, 31.988, -39.5643, 32.0402, -35.8595, 35.9537, -35.8595, 36.1102, -31.8938, 40.0238, -31.946, 39.9404, 28.1864, 35.8704, 28.2386, 36.0269, 32.1521, 32.0612, 32.3087, 32.1134, 36.3787, -36.034, 36.3265, -36.1905, 32.2043, -40.104, 32.0999, -40.0518, 28.2386, -44.1219, 28.2386 )
 
-[node name="RegionPanelV2" type="Sprite" parent="CanvasLayer"]
-visible = false
-position = Vector2( 895.708, 338.631 )
-scale = Vector2( 4, 4 )
-texture = ExtResource( 5 )
+[node name="Control" parent="CanvasLayer" instance=ExtResource( 5 )]
+margin_left = 898.251
+margin_top = 310.245
+margin_right = 898.251
+margin_bottom = 310.245
 
 [editable path="CanvasLayer/Popup"]
 

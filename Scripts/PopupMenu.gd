@@ -1,8 +1,5 @@
 extends Menu
 
-signal on_button_mouseover
-signal on_button_exit
-
 func _ready():
 	$ConfirmButton.connect("on_press", self, "on_confirm")
 	$ExitButton.connect("on_press", self, "on_decline")
@@ -23,9 +20,3 @@ func on_confirm():
 func on_decline():
 	set_enabled(false)
 	set_process(false)
-
-func on_hover():
-	emit_signal("on_button_mouseover")
-
-func on_hover_exit():
-	emit_signal("on_button_exit")

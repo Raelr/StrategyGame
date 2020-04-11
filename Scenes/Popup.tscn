@@ -13,7 +13,7 @@
 resource_local_to_scene = true
 shader = ExtResource( 8 )
 shader_param/width = 1.0
-shader_param/outline_color = null
+shader_param/outline_color = Color( 0.270588, 0.156863, 0.235294, 1 )
 shader_param/unit_color = Color( 0.152941, 0.0784314, 0.129412, 1 )
 shader_param/target_color = Color( 1, 1, 1, 1 )
 shader_param/target_color_2 = Color( 0, 0, 0, 1 )
@@ -24,7 +24,7 @@ shader_param/darken = true
 resource_local_to_scene = true
 shader = ExtResource( 8 )
 shader_param/width = 1.0
-shader_param/outline_color = null
+shader_param/outline_color = Color( 0.270588, 0.156863, 0.235294, 1 )
 shader_param/unit_color = Color( 0.152941, 0.0784314, 0.129412, 1 )
 shader_param/target_color = Color( 1, 1, 1, 1 )
 shader_param/target_color_2 = Color( 0, 0, 0, 1 )
@@ -49,6 +49,8 @@ position = Vector2( -51.8628, 28.0714 )
 button = ExtResource( 4 )
 icon = ExtResource( 3 )
 buttonColor = Color( 0.152941, 0.0784314, 0.129412, 1 )
+outline_idle = Color( 0.270588, 0.156863, 0.235294, 1 )
+outline_active = Color( 0.952941, 1, 0, 1 )
 update = true
 
 [node name="ButtonSprite" parent="ConfirmButton" index="0"]
@@ -63,6 +65,9 @@ position = Vector2( 55.891, 28.0714 )
 button = ExtResource( 4 )
 icon = ExtResource( 5 )
 buttonColor = Color( 0.152941, 0.0784314, 0.129412, 1 )
+outline_idle = Color( 0.270588, 0.156863, 0.235294, 1 )
+outline_active = Color( 0.952941, 1, 0, 1 )
+update = true
 
 [node name="ButtonSprite" parent="ExitButton" index="0"]
 material = SubResource( 2 )
