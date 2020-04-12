@@ -7,6 +7,12 @@ export (Color) var faction_color
 export (bool) var update
 export (float) var move_speed
 
+export (int) var defence
+export (int) var attack
+export (int) var max_health
+export (int) var current_health
+export (String) var unit_name
+
 var current_region = null
 var destination = null
 var elapsed = 0.0
@@ -47,7 +53,15 @@ func set_deselected():
 
 func get_details():
 	return {
-		"type": "unit"
+		"type": "unit",
+		"name": unit_name,
+		"attack": attack,
+		"defence": defence,
+		"health" : {
+			"current" : current_health,
+			"max" : max_health
+		},
+		"color" : faction_color
 	}
 
 func reset():

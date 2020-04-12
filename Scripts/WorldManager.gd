@@ -21,8 +21,11 @@ func disable_region_ui():
 	if selected_type == SELECTED.region:
 		reset_selected()
 
-func populate_ui(region_name, wealth, region_type):
+func populate_region_ui(region_name, wealth, region_type):
 	$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, region_type)
+
+func populate_unit_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color):
+	$Camera2D/CanvasLayer/UnitPanel.populate_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color)
 
 func moused_over(object):
 	if not ui_moused_over:
@@ -61,10 +64,12 @@ func select_element():
 			selected.set_selected()
 			match details["type"]:
 				"region":
-					populate_ui(details["name"], details["wealth"], details["region type"])
+					populate_region_ui(details["name"], details["wealth"], details["region type"])
 					selected_type = SELECTED.region
 				"unit":
 					on_unit_selected()
+					populate_unit_ui(details["name"], details["attack"], details["defence"], details["health"], details["color"])
+					
 
 func on_unit_selected():
 	selected.highlight_paths($LineManager)
