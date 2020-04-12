@@ -79,12 +79,14 @@ visible = true
 polygon = PoolVector2Array( -43.9238, -31.6431, -40.219, -31.6431, -40.0625, -35.7654, -35.9924, -35.7654, -35.9924, -39.5745, 31.988, -39.5643, 32.0402, -35.8595, 35.9537, -35.8595, 36.1102, -31.8938, 40.0238, -31.946, 39.9404, 28.1864, 35.8704, 28.2386, 36.0269, 32.1521, 32.0612, 32.3087, 32.1134, 36.3787, -36.034, 36.3265, -36.1905, 32.2043, -40.104, 32.0999, -40.0518, 28.2386, -44.1219, 28.2386 )
 
 [node name="UnitPanel" parent="CanvasLayer" instance=ExtResource( 7 )]
-margin_left = 138.338
-margin_top = 731.559
-margin_right = 178.338
-margin_bottom = 771.559
+visible = false
+margin_left = 137.807
+margin_top = 729.979
+margin_right = 177.807
+margin_bottom = 769.979
 
 [node name="RegionPanel" parent="CanvasLayer" instance=ExtResource( 5 )]
+visible = false
 margin_left = 1212.28
 margin_top = 310.245
 margin_right = 1212.28
@@ -95,3 +97,5 @@ margin_bottom = 310.245
 [editable path="CanvasLayer/Popup/ConfirmButton"]
 
 [editable path="CanvasLayer/Popup/ExitButton"]
+
+[editable path="CanvasLayer/UnitPanel"]
