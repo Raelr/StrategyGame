@@ -18,8 +18,7 @@ func _ready():
 	$Camera2D/CanvasLayer/RegionPanel.connect("on_button_close", self, "disable_region_ui")
 
 func disable_region_ui():
-	if selected_type == SELECTED.region:
-		reset_selected()
+	reset_selected()
 
 func populate_region_ui(region_name, wealth, region_type):
 	$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, region_type)

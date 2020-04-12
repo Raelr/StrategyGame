@@ -46,7 +46,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 0.5, 2 ),
 "update": 0,
 "values": [ Vector2( 0, -350 ), Vector2( 0, 0 ) ]
@@ -70,12 +70,12 @@ tracks/1/keys = {
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/width = 1.0
-shader_param/outline_color = Color( 0, 0, 0, 1 )
+shader_param/outline_color = Color( 0.270588, 0.156863, 0.235294, 1 )
 shader_param/unit_color = Color( 0, 0, 0, 1 )
 shader_param/target_color = Color( 1, 1, 1, 1 )
 shader_param/target_color_2 = Color( 0, 0, 0, 1 )
 shader_param/tolerance = null
-shader_param/darken = true
+shader_param/darken = false
 
 [sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
@@ -99,6 +99,7 @@ __meta__ = {
 }
 
 [node name="AnchorNode" type="Sprite" parent="."]
+position = Vector2( 0, -350 )
 
 [node name="UnitPanel" type="Sprite" parent="AnchorNode"]
 position = Vector2( 2.91258, 10.9214 )
@@ -151,11 +152,11 @@ __meta__ = {
 
 [node name="HealthValue" type="Label" parent="AnchorNode"]
 modulate = Color( 0.929412, 0.654902, 0.47451, 1 )
-margin_left = 54.3896
-margin_top = 30.6654
-margin_right = 85.3896
-margin_bottom = 54.6654
-rect_scale = Vector2( 1.69751, 1.69751 )
+margin_left = 54.0
+margin_top = 32.7758
+margin_right = 89.0
+margin_bottom = 59.7758
+rect_scale = Vector2( 1.49829, 1.49829 )
 custom_fonts/font = ExtResource( 2 )
 text = "3"
 align = 1
@@ -192,14 +193,16 @@ anims/activated = SubResource( 3 )
 anims/deactivated = SubResource( 4 )
 
 [node name="UnitPanelExitButton" parent="AnchorNode" instance=ExtResource( 7 )]
-position = Vector2( 8.93901, 182.769 )
+position = Vector2( 8.70921, 182.539 )
 button = ExtResource( 8 )
 icon = ExtResource( 9 )
-update = true
+buttonColor = Color( 0.968627, 0.968627, 0.968627, 1 )
+outline_idle = Color( 0.270588, 0.156863, 0.235294, 1 )
+outline_active = Color( 1, 0.984314, 0, 1 )
+icon_idle = Color( 0.168627, 0.0980392, 0.14902, 1 )
 
 [node name="ButtonSprite" parent="AnchorNode/UnitPanelExitButton" index="0"]
 material = SubResource( 2 )
-use_parent_material = true
 position = Vector2( 7.08646, -7.87894 )
 texture = ExtResource( 8 )
 

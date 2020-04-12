@@ -112,6 +112,12 @@ margin_top = 729.979
 margin_right = 177.807
 margin_bottom = 769.979
 
+[node name="AnchorNode" parent="CanvasLayer/UnitPanel" index="0"]
+position = Vector2( 0, 0 )
+
+[node name="UnitPanelExitButton" parent="CanvasLayer/UnitPanel/AnchorNode" index="8"]
+change_icon_color = true
+
 [node name="RegionPanel" parent="CanvasLayer" instance=ExtResource( 5 )]
 visible = false
 margin_left = 1212.28
