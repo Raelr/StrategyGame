@@ -102,9 +102,11 @@ func execute_commands():
 		unit.move()
 
 func process_turn():
+	disable_ui()
 	reset_selected()
 	execute_commands()
 	emit_signal("on_turn_changed")
+	select_next()
 
 func _input(event):
 	if event is InputEventKey:
