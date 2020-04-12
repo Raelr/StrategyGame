@@ -24,6 +24,10 @@ func disable_ui():
 	$Camera2D/CanvasLayer/RegionPanel.deactivate_panel()
 	reset_selected()
 
+func disable_panel(panel):
+	panel.deactivate_panel()
+	reset_selected()
+
 func populate_region_ui(region_name, wealth, region_type):
 	$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, region_type)
 

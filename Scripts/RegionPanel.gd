@@ -23,7 +23,7 @@ var types = [
 func _ready():
 	$RegionPanel/UIButtonIcon.connect("on_hover", self, "on_hover")
 	$RegionPanel/UIButtonIcon.connect("on_hover_exit", self, "on_hover_exit")
-	$RegionPanel/UIButtonIcon.connect("on_press", self, "deactivate_panel")
+	$RegionPanel/UIButtonIcon.connect("on_press", self, "on_close")
 
 func update_panel(regionName, wealth, region_type):
 	$RegionPanel/NameText.text = regionName
@@ -36,6 +36,9 @@ func update_panel(regionName, wealth, region_type):
 		$RegionPanel/AnimationPlayer.play("activated")
 		$RegionPanel/AnimationPlayer.queue("idle")
 		is_active = true
+
+func on_close():
+	get_tree().get_root().get_child(0).disable_panel(self)
 
 func deactivate_panel():
 	if is_active:
