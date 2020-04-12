@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/RTSCamera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/TurnTimer.tscn" type="PackedScene" id=2]
@@ -19,6 +19,17 @@ shader_param/target_color_2 = Color( 0, 0, 0, 1 )
 shader_param/tolerance = null
 shader_param/darken = true
 
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = ExtResource( 4 )
+shader_param/width = 0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 0.168627, 0.0980392, 0.14902, 1 )
+shader_param/target_color = Color( 1, 1, 1, 1 )
+shader_param/target_color_2 = null
+shader_param/tolerance = null
+shader_param/darken = true
+
 [sub_resource type="ShaderMaterial" id=2]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
@@ -27,6 +38,17 @@ shader_param/outline_color = Color( 0.270588, 0.156863, 0.235294, 1 )
 shader_param/unit_color = Color( 0.152941, 0.0784314, 0.129412, 1 )
 shader_param/target_color = Color( 1, 1, 1, 1 )
 shader_param/target_color_2 = Color( 0, 0, 0, 1 )
+shader_param/tolerance = null
+shader_param/darken = true
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = ExtResource( 4 )
+shader_param/width = 0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 0.168627, 0.0980392, 0.14902, 1 )
+shader_param/target_color = Color( 1, 1, 1, 1 )
+shader_param/target_color_2 = null
 shader_param/tolerance = null
 shader_param/darken = true
 
@@ -67,6 +89,9 @@ mouse_filter = 2
 [node name="ButtonSprite" parent="CanvasLayer/Popup/ConfirmButton" index="0"]
 material = SubResource( 1 )
 
+[node name="Icon" parent="CanvasLayer/Popup/ConfirmButton/ButtonSprite" index="0"]
+material = SubResource( 3 )
+
 [node name="CollisionPolygon2D" parent="CanvasLayer/Popup/ConfirmButton" index="1"]
 visible = true
 polygon = PoolVector2Array( -43.877, 28.624, -40.2475, 28.624, -40.2475, 32.2095, -36.343, 32.2535, -36.3431, 36.1689, 31.9024, 36.1139, 31.8474, 32.4294, 35.8618, 32.4844, 35.9718, 28.58, 39.9312, 28.58, 40.0739, -31.7136, 36.0594, -31.7136, 36.0594, -35.618, 31.99, -35.838, 31.99, -39.6324, -36.1454, -39.5775, -36.0355, -35.893, -39.9399, -35.893, -39.9399, -31.9885, -44.1193, -31.9885 )
@@ -74,12 +99,14 @@ polygon = PoolVector2Array( -43.877, 28.624, -40.2475, 28.624, -40.2475, 32.2095
 [node name="ButtonSprite" parent="CanvasLayer/Popup/ExitButton" index="0"]
 material = SubResource( 2 )
 
+[node name="Icon" parent="CanvasLayer/Popup/ExitButton/ButtonSprite" index="0"]
+material = SubResource( 4 )
+
 [node name="CollisionPolygon2D" parent="CanvasLayer/Popup/ExitButton" index="1"]
 visible = true
 polygon = PoolVector2Array( -43.9238, -31.6431, -40.219, -31.6431, -40.0625, -35.7654, -35.9924, -35.7654, -35.9924, -39.5745, 31.988, -39.5643, 32.0402, -35.8595, 35.9537, -35.8595, 36.1102, -31.8938, 40.0238, -31.946, 39.9404, 28.1864, 35.8704, 28.2386, 36.0269, 32.1521, 32.0612, 32.3087, 32.1134, 36.3787, -36.034, 36.3265, -36.1905, 32.2043, -40.104, 32.0999, -40.0518, 28.2386, -44.1219, 28.2386 )
 
 [node name="UnitPanel" parent="CanvasLayer" instance=ExtResource( 7 )]
-visible = false
 margin_left = 137.807
 margin_top = 729.979
 margin_right = 177.807
