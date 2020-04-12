@@ -21,8 +21,11 @@ func populate_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color):
 		is_active = true
 
 func deactivate_panel():
+	var progress = 0.0
 	if $AnchorNode/AnimationPlayer.current_animation != "":
-		print($AnchorNode/AnimationPlayer.current_animation_position)
+		progress = $AnchorNode/AnimationPlayer.current_animation_position
 	if is_active:
-		$AnchorNode/AnimationPlayer.play("deactivated")
+		$AnchorNode/AnimationPlayer.current_animation = "deactivated"
+		$AnchorNode/AnimationPlayer.seek($AnchorNode/AnimationPlayer.current_animation_length - progress)
+		$AnchorNode/AnimationPlayer.play()
 		is_active = false

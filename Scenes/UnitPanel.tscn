@@ -99,7 +99,6 @@ __meta__ = {
 }
 
 [node name="AnchorNode" type="Sprite" parent="."]
-position = Vector2( 0, -350 )
 
 [node name="UnitPanel" type="Sprite" parent="AnchorNode"]
 position = Vector2( 2.91258, 10.9214 )
