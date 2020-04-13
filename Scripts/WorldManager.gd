@@ -150,23 +150,51 @@ func detect_combat():
 		if moving_units.size() > 1:
 			if region_details["factions"].size() > 1:
 				var units_by_faction = {}
-				var evaluated_stack = Array()
+				var victor = null
 				for faction in region_details["factions"]:
-					units_by_faction[faction] = get_units_from_faction(faction, moving_units)
+					var units = get_units_from_faction(faction, moving_units)
+					units_by_faction[faction] = get_combined_stats(units)
+					var curr_faction = region_details["factions"][0]
 					var stack = units_by_faction[region_details["factions"][0]]
 					for other_stack in units_by_faction.values():
 						if other_stack != stack:
-							print("damaging enemy unit!")
-							other_stack["health"] -= stack["attack"] - other_stack["defence"]
-							print("taking damage")
-							stack["health"] -= other_stack["attack"] - stack["defence"]
-							print("Stack health = " + str(stack["health"]))
+							var damage = stack["attack"] - other_stack["defence"]
+							other_stack["health"] -= damage
+							other_stack["damage_taken"] += damage
+							damage = other_stack["attack"] - stack["defence"]
+							stack["health"] -= damage
+							stack["damage_taken"] += damage
+							print("stack health: " + str(stack["health"]))
+							if other_stack["health"] == 0 and stack["health"] > 0:
+								victor = stack
+							elif other_stack["health"] > 0 and stack["health"] == 0:
+								victor = other_stack
+							if victor: 
+								break
+				for faction in units_by_faction.keys():
+					var stack = units_by_faction[faction]
+					var units = get_units_from_faction(faction, moving_units)
+					print(units)
+					var damage = stack["damage_taken"]
+					var idx = 0
+					print(damage)
+					while damage > 0:
+						var unit = units[idx]
+						var projected_damage = unit.current_health - damage
+						if projected_damage <= 0:
+							print(unit.name + " is dead!")
+							damage -= unit.current_health
+						else:
+							unit.current_health -= damage
+							damage -= unit.current_health
 
 func get_combined_stats(unit_array):
 	var unit_stack = {
+		"faction" : unit_array[0].faction,
 		"defence" : 0,
 		"attack" : 0,
-		"health" : 0
+		"health" : 0,
+		"damage_taken" : 0
 	}
 	for unit in unit_array:
 		unit_stack["defence"] += unit.defence
@@ -179,7 +207,7 @@ func get_units_from_faction(faction, unit_array):
 	for unit in unit_array:
 		if unit.faction == faction:
 			units.push_back(unit)
-	return get_combined_stats(units)
+	return units
 
 func process_turn():
 	disable_ui()
