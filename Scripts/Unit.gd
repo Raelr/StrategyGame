@@ -27,7 +27,6 @@ signal on_move_command(region, faction, unit)
 func _ready():
 	$Unit.material.set_shader_param("unit_color", faction_color)
 	$Unit/AnimationPlayer.play("idle")
-	get_parent().register_unit(self)
 
 func _process(delta):
 	if update:
