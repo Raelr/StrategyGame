@@ -1,8 +1,5 @@
 extends Node2D
 
-
-# ----------> MOVE BELOW CODE TO A NEW NODE vvvvvv
-
 func process_command(regions):
 	# Get the regions that need to be evaluated
 	var evaluated_regions = regions.keys()
@@ -27,59 +24,31 @@ func process_command(regions):
 						for other_stack in units_by_faction.values():
 							# Stop unit from damaging itself and from damaging units that have already been damaged
 							if other_stack != stack and not evaluated.has(other_stack):
-								# Damage other stack
-								var damage = stack["attack"] - other_stack["defence"]
-								other_stack["health"] -= damage
-								other_stack["damage_taken"] += damage
-								# Take damage from the other stack
-								damage = other_stack["attack"] - stack["defence"]
-								stack["health"] -= damage
-								stack["damage_taken"] += damage
+								victor = deal_reciprocal_damage(stack, other_stack)
 								# Set the current stack as damaged already
 								evaluated.push_back(stack)
-								# Check if a side has won. 
-								if other_stack["health"] == 0 and stack["health"] > 0:
-									victor = stack
-								elif other_stack["health"] > 0 and stack["health"] == 0:
-									victor = other_stack
-								if victor: 
-									break
 					# Now take the damage taken and subtract it from all units in the stack
 					for faction in units_by_faction.keys():
 						# Get the current faction. 
-						var stack = units_by_faction[faction]
 						var faction_units = get_units_from_faction(faction, moving_units)
-						var damage = stack["damage_taken"]
+						var damage = units_by_faction[faction]["damage_taken"]
 						var idx = 0
 						# Make sure all damage is distributed amongst units
 						while damage > 0:
-							if faction_units.empty():
-								break
 							var unit = faction_units[idx]
-							# Get an estimate on whether the damage will kill the unit or not
-							var projected_damage = unit.current_health - damage
-							# if the damage will kill the unit
-							if projected_damage <= 0:
-								damage -= unit.current_health
-								unit.current_health = 0
-								# Make sure to remove the unit from the game
-								unit.on_death()
-							else:
-								# Remove the damage from the unit's health and move on
-								unit.current_health -= damage
-								damage -= unit.current_health
+							damage = unit.on_damage_dealt(damage)
 							idx += 1
 				if victor:
 					# If there is a victor then move the units of the victor over.
 					var victor_units = get_units_from_faction(victor["faction"], moving_units)
-					for unit in victor_units:
-						unit.destination = region
-						unit.move()
-		# If not combat has occurred then just move the units
+					move_units_in_group(victor_units, region)
 		else:
-			for unit in moving_units:
-				unit.destination = region
-				unit.move()
+			# If not combat has occurred then just move the units
+			move_units_in_group(moving_units, region)
+
+func move_units_in_group(unit_array, destination):
+	for unit in unit_array:
+		unit.move(destination)
 
 func get_combined_stats(unit_array):
 	var unit_stack = {
@@ -102,4 +71,21 @@ func get_units_from_faction(faction, unit_array):
 			faction_units.push_back(unit)
 	return faction_units
 
-# -------------> MOVE ABOVE CODE TO A NEW NODE ^^^^^
+func damage_stack(stack, damage):
+	stack["health"] -= damage
+	stack["damage_taken"] += damage
+
+func deal_reciprocal_damage(stack_a, stack_b):
+	var victor = null
+	# Damage other stack
+	damage_stack(stack_b, stack_a["attack"] - stack_b["defence"])
+	# Take damage from the other stack
+	damage_stack(stack_a, stack_b["attack"] - stack_a["defence"])
+	if is_defeated(stack_a) and not is_defeated(stack_b):
+		victor = stack_b
+	if is_defeated(stack_b) and not is_defeated(stack_a):
+		victor = stack_a
+	return victor
+
+func is_defeated(stack):
+	return stack["health"] <= 0

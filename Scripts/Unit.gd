@@ -84,14 +84,14 @@ func _on_Unit_area_entered(area):
 	if not current_region:
 		set_current_region(area)
 
-func move():
-	if destination:
-		if line_manager:
-			line_manager.reset()
-		if path:
-			path.queue_free()
-			path = null
-		update = true
+func move(dest):
+	destination = dest
+	if line_manager:
+		line_manager.reset()
+	if path:
+		path.queue_free()
+		path = null
+	update = true
 
 func set_current_region(region):
 	current_region = region
@@ -132,6 +132,14 @@ func highlight_paths(line_manager):
 		path.queue_free()
 		path = null
 	line_manager.draw_lines(position, get_possible_paths())
+
+func on_damage_dealt(damage):
+	var remaining_damage = damage - current_health
+	current_health -= damage
+	if current_health <= 0:
+		current_health = 0
+		on_death()
+	return remaining_damage
 
 func on_death():
 	# Do something
