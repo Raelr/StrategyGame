@@ -32,28 +32,39 @@ func disable_panel(panel):
 	reset_selected()
 
 func register_move_command(region, faction, unit):
-	var faction_details = {
-		faction : [unit]
-	}
 	if not regions.has(region):
-		regions[region] = faction_details
+		regions[region] = {
+			"factions" : [faction],
+			"occupying" : Array(),
+			"moving" : [unit]
+		}
 	else:
 		var region_details = regions[region]
-		if region_details.has(faction):
-			if not region_details[faction].has(unit):
-				region_details[faction].push_back(unit)
-		else: 
-			region_details[faction] = faction_details
-	print(regions)
+		if not region_details["moving"].has(unit):
+			region_details["moving"].push_back(unit)
+			if not region_details["factions"].has(faction):
+				region_details["factions"].push_back(faction)
+	#print(regions)
+
+func register_unit_position(unit, faction, region):
+	if not regions.has(region):
+		regions[region] = {
+			"factions" : [faction],
+			"occupying" : [unit],
+			"moving" : Array()
+		}
+	else:
+		var region_details = regions[region]
+		if not region_details["occupying"].has(unit):
+			region_details["occupying"].push_back(unit)
+			if not region_details["factions"].has(faction):
+				region_details["factions"].push_back(faction)
 
 func deregister_move(region, faction, unit):
 	if regions.has(region):
-		if regions[region].has(faction):
-			if regions[region][faction].has(unit):
-				regions[region][faction].erase(unit)
-			if regions[region][faction].empty():
-				regions[region].erase(faction)
-			if regions[region].empty():
+		if regions[region]["moving"].has(unit):
+			regions[region]["moving"].erase(unit)
+			if regions[region]["moving"].empty() and regions[region]["occupying"].empty():
 				regions.erase(region)
 
 func populate_region_ui(region_name, wealth, region_type):
@@ -131,12 +142,53 @@ func execute_commands():
 	for unit in units:
 		unit.move()
 
+func detect_combat():
+	var evaluated_regions = regions.keys()
+	for region in evaluated_regions:
+		var region_details = regions[region]
+		var moving_units = region_details["moving"]
+		if moving_units.size() > 1:
+			if region_details["factions"].size() > 1:
+				var units_by_faction = {}
+				var evaluated_stack = Array()
+				for faction in region_details["factions"]:
+					units_by_faction[faction] = get_units_from_faction(faction, moving_units)
+					var stack = units_by_faction[region_details["factions"][0]]
+					for other_stack in units_by_faction.values():
+						if other_stack != stack:
+							print("damaging enemy unit!")
+							other_stack["health"] -= stack["attack"] - other_stack["defence"]
+							print("taking damage")
+							stack["health"] -= other_stack["attack"] - stack["defence"]
+							print("Stack health = " + str(stack["health"]))
+
+func get_combined_stats(unit_array):
+	var unit_stack = {
+		"defence" : 0,
+		"attack" : 0,
+		"health" : 0
+	}
+	for unit in unit_array:
+		unit_stack["defence"] += unit.defence
+		unit_stack["attack"] += unit.attack
+		unit_stack["health"] += unit.current_health
+	return unit_stack
+
+func get_units_from_faction(faction, unit_array):
+	var units = Array()
+	for unit in unit_array:
+		if unit.faction == faction:
+			units.push_back(unit)
+	return get_combined_stats(units)
+
 func process_turn():
 	disable_ui()
 	reset_selected()
+	detect_combat()
 	execute_commands()
 	emit_signal("on_turn_changed")
 	select_next()
+	regions.clear()
 
 func _input(event):
 	if event is InputEventKey:

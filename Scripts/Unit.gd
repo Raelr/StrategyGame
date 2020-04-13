@@ -99,6 +99,7 @@ func set_current_region(region):
 	current_region.on_new_occupant(faction_color)
 	if line_manager:
 		line_manager.reset()
+	register_position()
 
 func move_command(moused_element, line_manager):
 	var n = get_possible_paths()
@@ -120,6 +121,9 @@ func move_command(moused_element, line_manager):
 			destination = region
 			get_parent().register_move_command(region, faction, self)
 			break
+
+func register_position():
+	get_parent().register_unit_position(self, faction, current_region)
 
 func get_possible_paths():
 	return current_region.get_neighbours()
