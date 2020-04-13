@@ -1,6 +1,9 @@
 tool
 extends Area2D
 
+const enums = preload('res://Scripts/FactionData.gd')
+
+export (enums.FACTION) var faction
 export (Color) var unitColor
 export (Color) var outline_color
 export (Color) var faction_color
@@ -18,6 +21,8 @@ var destination = null
 var elapsed = 0.0
 var line_manager = null
 var path = null
+
+signal on_move_command(region, faction, unit)
 
 func _ready():
 	$Unit.material.set_shader_param("unit_color", faction_color)
@@ -99,6 +104,7 @@ func move_command(moused_element, line_manager):
 	var n = get_possible_paths()
 	for region in n:
 		if region == moused_element:
+			get_parent().deregister_move(destination, faction, self)
 			if region == destination:
 				return
 			else:
@@ -112,6 +118,7 @@ func move_command(moused_element, line_manager):
 				add_child(path)
 			self.line_manager = line_manager
 			destination = region
+			get_parent().register_move_command(region, faction, self)
 			break
 
 func get_possible_paths():

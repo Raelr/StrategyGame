@@ -1,0 +1,4 @@
+enum FACTION {
+	undead,
+	neutral
+}

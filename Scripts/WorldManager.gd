@@ -1,6 +1,7 @@
 extends Node2D
 
 enum SELECTED {region, unit}
+enum FACTIONS {player, neutral}
 var moused_elements = Array()
 var selected = null
 var selected_type
@@ -9,6 +10,8 @@ var ui_moused_over = false
 signal on_turn_changed
 
 var units = Array()
+
+var regions = {}
 
 func _ready():
 	$Camera2D/CanvasLayer/Popup.connect("on_button_mouseover", self, "set_ui_moused_over")
@@ -28,6 +31,31 @@ func disable_panel(panel):
 	panel.deactivate_panel()
 	reset_selected()
 
+func register_move_command(region, faction, unit):
+	var faction_details = {
+		faction : [unit]
+	}
+	if not regions.has(region):
+		regions[region] = faction_details
+	else:
+		var region_details = regions[region]
+		if region_details.has(faction):
+			if not region_details[faction].has(unit):
+				region_details[faction].push_back(unit)
+		else: 
+			region_details[faction] = faction_details
+	print(regions)
+
+func deregister_move(region, faction, unit):
+	if regions.has(region):
+		if regions[region].has(faction):
+			if regions[region][faction].has(unit):
+				regions[region][faction].erase(unit)
+			if regions[region][faction].empty():
+				regions[region].erase(faction)
+			if regions[region].empty():
+				regions.erase(region)
+
 func populate_region_ui(region_name, wealth, region_type):
 	$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, region_type)
 
@@ -35,13 +63,12 @@ func populate_unit_ui(unit_name, unit_attack, unit_defence, unit_health, unit_co
 	$Camera2D/CanvasLayer/UnitPanel.populate_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color)
 
 func moused_over(object):
-	if not ui_moused_over:
-		if not moused_elements.empty():
-			if moused_elements.back() != selected:
-				moused_elements.back().set_deselected()
-		if object != selected:
-			object.set_selected()
-		moused_elements.push_back(object)
+	if not moused_elements.empty():
+		if moused_elements.back() != selected:
+			moused_elements.back().set_deselected()
+	if object != selected and not ui_moused_over:
+		object.set_selected()
+	moused_elements.push_back(object)
 
 func set_ui_moused_over():
 	ui_moused_over = true
@@ -51,11 +78,10 @@ func set_ui_moused_exit():
 	select_next()
 
 func mouse_left(object):
-	if not ui_moused_over:
-		if object != selected:
-			object.set_deselected()
-		moused_elements.erase(object)
-		select_next()
+	if object != selected and not ui_moused_over:
+		object.set_deselected()
+	moused_elements.erase(object)
+	select_next()
 
 func select_element():
 	if not moused_elements.empty():
