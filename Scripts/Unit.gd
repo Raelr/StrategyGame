@@ -118,7 +118,6 @@ func move_command(moused_element, line_manager):
 			if path:
 				add_child(path)
 			self.line_manager = line_manager
-			destination = region
 			get_parent().register_move_command(region, faction, self)
 			break
 
