@@ -113,7 +113,6 @@ func select_element():
 				"unit":
 					on_unit_selected()
 					populate_unit_ui(details["name"], details["attack"], details["defence"], details["health"], details["color"])
-					
 
 func on_unit_selected():
 	selected.highlight_paths($LineManager)
@@ -138,9 +137,8 @@ func select_next():
 func register_unit(unit):
 	units.push_back(unit)
 
-func execute_commands():
-	for unit in units:
-		unit.move()
+func remove_unit(unit):
+	units.erase(unit)
 
 func detect_combat():
 	var evaluated_regions = regions.keys()
@@ -164,7 +162,6 @@ func detect_combat():
 							damage = other_stack["attack"] - stack["defence"]
 							stack["health"] -= damage
 							stack["damage_taken"] += damage
-							print("stack health: " + str(stack["health"]))
 							if other_stack["health"] == 0 and stack["health"] > 0:
 								victor = stack
 							elif other_stack["health"] > 0 and stack["health"] == 0:
@@ -174,19 +171,26 @@ func detect_combat():
 				for faction in units_by_faction.keys():
 					var stack = units_by_faction[faction]
 					var units = get_units_from_faction(faction, moving_units)
-					print(units)
 					var damage = stack["damage_taken"]
 					var idx = 0
-					print(damage)
 					while damage > 0:
 						var unit = units[idx]
 						var projected_damage = unit.current_health - damage
 						if projected_damage <= 0:
-							print(unit.name + " is dead!")
 							damage -= unit.current_health
+							unit.current_health = 0
+							remove_unit(unit)
+							unit.on_death()
 						else:
 							unit.current_health -= damage
 							damage -= unit.current_health
+				if victor:
+					var victor_units = get_units_from_faction(victor["faction"], moving_units)
+					for unit in victor_units:
+						unit.move()
+		else:
+			for unit in moving_units:
+				unit.move()
 
 func get_combined_stats(unit_array):
 	var unit_stack = {
@@ -213,7 +217,6 @@ func process_turn():
 	disable_ui()
 	reset_selected()
 	detect_combat()
-	execute_commands()
 	emit_signal("on_turn_changed")
 	select_next()
 	regions.clear()

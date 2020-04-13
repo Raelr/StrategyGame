@@ -134,3 +134,8 @@ func highlight_paths(line_manager):
 		path.queue_free()
 		path = null
 	line_manager.draw_lines(position, get_possible_paths())
+
+func on_death():
+	# Do something
+	print("I AM DEAD")
+	queue_free()
