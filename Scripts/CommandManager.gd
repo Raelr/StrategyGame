@@ -10,7 +10,8 @@ func process_command(regions):
 		var region_details = regions[region]
 		var moving_units = region_details["moving"]
 		var occupying_units = region_details["occupying"]
-		#print("Units occupying region: " + region.region_name + " " + str(occupying_units))
+		print("Units occupying region: " + region.region_name + " " + str(occupying_units))
+		print("Units moving to region: " + region.region_name + " " + str(moving_units))
 		var factions = region_details["factions"]
 		# Check if there is more than one faction involved in this region.
 		# If there is then there is most likely going to be a combat.
@@ -52,6 +53,7 @@ func process_command(regions):
 		else:
 			# If not combat has occurred then just move the units
 			move_units_in_group(moving_units, region)
+	print("Combat ended")
 	emit_signal("combat_ended")
 
 func move_units_in_group(unit_array, destination):

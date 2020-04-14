@@ -6,6 +6,7 @@ var moused_elements = Array()
 var selected = null
 var selected_type
 var ui_moused_over = false
+var turn_over = false
 
 signal on_turn_changed
 signal on_turn_ended
@@ -138,13 +139,14 @@ func select_next():
 		moused_elements.back().set_selected()
 
 func process_turn():
+	turn_over = true
 	emit_signal("on_turn_changed")
 	disable_ui()
 	$CommandManager.process_command(regions)
-	yield($CommandManager, "combat_ended")
 	select_next()
 	regions.clear()
 	emit_signal("on_turn_ended")
+	turn_over = false
 
 func _input(event):
 	if event is InputEventKey:
@@ -160,7 +162,7 @@ func _input(event):
 			if event.is_action_pressed("lmb"):
 				if not ui_moused_over:
 					select_element()
-			if event.is_action_pressed("rmb"):
+			if event.is_action_pressed("rmb") and not turn_over:
 				if not ui_moused_over:
 					if selected_type == SELECTED.unit:
 						var element = get_latest_element()
