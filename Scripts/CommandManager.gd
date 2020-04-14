@@ -32,23 +32,30 @@ func process_command(regions):
 								victor = deal_reciprocal_damage(stack, other_stack)
 								# Set the current stack as damaged already
 								evaluated.push_back(stack)
+			# CASE 2: A player attacks a unit occupying a region
 			elif not occupying_units.empty() and not moving_units.empty():
+				# Get the information about the defending faction. 
 				var defending_faction = occupying_units[0].faction
 				print("Defender: " + str(defending_faction))
 				var reinforcements = get_units_from_faction(defending_faction, moving_units)
-				print(occupying_units)
 				units_by_faction[defending_faction] = get_combined_stats(get_units_from_faction(defending_faction, occupying_units))
 				var defending_stack = units_by_faction[defending_faction]
+				# Get the attacking factions
 				var attacking_factions = Array()
 				for faction in factions:
 					if faction != defending_faction:
 						attacking_factions.push_back(faction)
+				# Attack with the attacking factions
 				for faction in attacking_factions:
 					units_by_faction[faction] = get_combined_stats(get_units_from_faction(faction, moving_units))
 					var attacking_stack = units_by_faction[faction]
 					print("Attacking with damage: " + str(attacking_stack["attack"] - defending_stack["defence"]))
+					# TODO: Add region defence bonus to the defending unit. 
 					damage_stack(defending_stack, attacking_stack["attack"] - defending_stack["defence"])
 					victor = get_victor(attacking_stack, defending_stack)
+				# TODO: Calculate damage after the initial attacker damage has been dealt
+				# TODO: Once the attack has been made, the defender can now gather all of
+				# the units that were sent to reinforce them and counter-attack. 
 			# Now take the damage taken and subtract it from all units in the stack
 			for faction in units_by_faction.keys():
 				# Get the current faction. 
