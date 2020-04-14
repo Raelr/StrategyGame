@@ -10,8 +10,8 @@ func process_command(regions):
 		var region_details = regions[region]
 		var moving_units = region_details["moving"]
 		var occupying_units = region_details["occupying"]
-		print("Units occupying region: " + region.region_name + " " + str(occupying_units))
-		print("Units moving to region: " + region.region_name + " " + str(moving_units))
+		#print("Units occupying region: " + region.region_name + " " + str(occupying_units))
+		#print("Units moving to region: " + region.region_name + " " + str(moving_units))
 		var factions = region_details["factions"]
 		# Check if there is more than one faction involved in this region.
 		# If there is then there is most likely going to be a combat.
@@ -35,14 +35,28 @@ func process_command(regions):
 			elif not occupying_units.empty() and not moving_units.empty():
 				var defending_faction = occupying_units[0].faction
 				print("Defender: " + str(defending_faction))
+				var reinforcements = get_units_from_faction(defending_faction, moving_units)
+				print(occupying_units)
+				units_by_faction[defending_faction] = get_combined_stats(get_units_from_faction(defending_faction, occupying_units))
+				var defending_stack = units_by_faction[defending_faction]
+				var attacking_factions = Array()
+				for faction in factions:
+					if faction != defending_faction:
+						attacking_factions.push_back(faction)
+				for faction in attacking_factions:
+					units_by_faction[faction] = get_combined_stats(get_units_from_faction(faction, moving_units))
+					var attacking_stack = units_by_faction[faction]
+					print("Attacking with damage: " + str(attacking_stack["attack"] - defending_stack["defence"]))
+					damage_stack(defending_stack, attacking_stack["attack"] - defending_stack["defence"])
+					victor = get_victor(attacking_stack, defending_stack)
 			# Now take the damage taken and subtract it from all units in the stack
 			for faction in units_by_faction.keys():
 				# Get the current faction. 
-				var faction_units = get_units_from_faction(faction, moving_units)
+				var faction_units = get_units_from_faction(faction, moving_units) + get_units_from_faction(faction, occupying_units)
 				var damage = units_by_faction[faction]["damage_taken"]
 				var idx = 0
 				# Make sure all damage is distributed amongst units
-				while damage > 0:
+				while damage > 0 and not faction_units.empty():
 					var unit = faction_units[idx]
 					damage = unit.on_damage_dealt(damage)
 					idx += 1
@@ -53,7 +67,6 @@ func process_command(regions):
 		else:
 			# If not combat has occurred then just move the units
 			move_units_in_group(moving_units, region)
-	print("Combat ended")
 	emit_signal("combat_ended")
 
 func move_units_in_group(unit_array, destination):
@@ -67,7 +80,7 @@ func get_combined_stats(unit_array):
 		"defence" : 0,
 		"attack" : 0,
 		"health" : 0,
-		"damage_taken" : 0
+		"damage_taken" : 0,
 	}
 	for unit in unit_array:
 		unit_stack["defence"] += unit.defence
