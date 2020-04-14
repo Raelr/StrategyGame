@@ -8,6 +8,7 @@ var selected_type
 var ui_moused_over = false
 
 signal on_turn_changed
+signal on_turn_ended
 
 var regions = {}
 
@@ -45,6 +46,7 @@ func register_move_command(region, faction, unit):
 	#print(regions)
 
 func register_unit_position(unit, faction, region):
+	#print("Registering unit: " + unit.name + " of faction: " + str(faction) + " in region: " + region.region_name)
 	if not regions.has(region):
 		regions[region] = {
 			"factions" : [faction],
@@ -57,6 +59,8 @@ func register_unit_position(unit, faction, region):
 			region_details["occupying"].push_back(unit)
 			if not region_details["factions"].has(faction):
 				region_details["factions"].push_back(faction)
+		regions[region] = region_details
+	#print(region.region_name + " is now being occupied by: " + str(regions[region]["occupying"]))
 
 func deregister_move(region, faction, unit):
 	if regions.has(region):
@@ -133,12 +137,14 @@ func select_next():
 		moused_elements.back().set_selected()
 
 func process_turn():
+	emit_signal("on_turn_changed")
 	disable_ui()
 	reset_selected()
 	$CommandManager.process_command(regions)
-	emit_signal("on_turn_changed")
+	yield($CommandManager, "combat_ended")
 	select_next()
 	regions.clear()
+	emit_signal("on_turn_ended")
 
 func _input(event):
 	if event is InputEventKey:

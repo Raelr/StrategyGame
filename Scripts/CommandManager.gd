@@ -1,5 +1,7 @@
 extends Node2D
 
+signal combat_ended
+
 func process_command(regions):
 	# Get the regions that need to be evaluated
 	var evaluated_regions = regions.keys()
@@ -8,15 +10,17 @@ func process_command(regions):
 		var region_details = regions[region]
 		var moving_units = region_details["moving"]
 		var occupying_units = region_details["occupying"]
+		print("Units occupying region: " + region.region_name + " " + str(occupying_units))
+		var factions = region_details["factions"]
 		# Check if there is more than one faction involved in this region.
 		# If there is then there is most likely going to be a combat.
-		if region_details["factions"].size() > 1:
+		if factions.size() > 1:
 			var victor = null
 			var units_by_faction = {}
 			# CASE 1: Two opposing players are moving into the same region
 			if moving_units.size() > 1:
 				# For each faction - get their units and combine their stats. 
-				for faction in region_details["factions"]:
+				for faction in factions:
 					var evaluated = Array()
 					units_by_faction[faction] = get_combined_stats(get_units_from_faction(faction, moving_units))
 					for stack in units_by_faction.values():
@@ -27,8 +31,9 @@ func process_command(regions):
 								victor = deal_reciprocal_damage(stack, other_stack)
 								# Set the current stack as damaged already
 								evaluated.push_back(stack)
-			elif occupying_units.size() > 0 and moving_units > 0:
-				pass
+			elif not occupying_units.empty() and not moving_units.empty():
+				var defending_faction = occupying_units[0].faction
+				print("Defender: " + str(defending_faction))
 			# Now take the damage taken and subtract it from all units in the stack
 			for faction in units_by_faction.keys():
 				# Get the current faction. 
@@ -47,10 +52,12 @@ func process_command(regions):
 		else:
 			# If not combat has occurred then just move the units
 			move_units_in_group(moving_units, region)
+	emit_signal("combat_ended")
 
 func move_units_in_group(unit_array, destination):
 	for unit in unit_array:
 		unit.move(destination)
+		yield(unit, "finished_move")
 
 func get_combined_stats(unit_array):
 	var unit_stack = {

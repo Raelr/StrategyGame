@@ -21,12 +21,16 @@ var destination = null
 var elapsed = 0.0
 var line_manager = null
 var path = null
+var is_dead = false
 
 signal on_move_command(region, faction, unit)
+signal finished_move
 
 func _ready():
 	$Unit.material.set_shader_param("unit_color", faction_color)
 	$Unit/AnimationPlayer.play("idle")
+	var world = get_tree().get_root().get_child(0)
+	world.connect("on_turn_ended", self, "register_position")
 
 func _process(delta):
 	if update:
@@ -99,6 +103,7 @@ func set_current_region(region):
 	if line_manager:
 		line_manager.reset()
 	register_position()
+	emit_signal("finished_move")
 
 func move_command(moused_element, line_manager):
 	var n = get_possible_paths()
@@ -121,7 +126,8 @@ func move_command(moused_element, line_manager):
 			break
 
 func register_position():
-	get_parent().register_unit_position(self, faction, current_region)
+	if not is_dead:
+		get_parent().register_unit_position(self, faction, current_region)
 
 func get_possible_paths():
 	return current_region.get_neighbours()
@@ -142,6 +148,5 @@ func on_damage_dealt(damage):
 	return remaining_damage
 
 func on_death():
-	# Do something
-	print("I AM DEAD")
+	is_dead = true
 	queue_free()
