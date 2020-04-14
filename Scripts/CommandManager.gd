@@ -10,7 +10,7 @@ func process_command(regions):
 		var region_details = regions[region]
 		var moving_units = region_details["moving"]
 		var occupying_units = region_details["occupying"]
-		print("Units occupying region: " + region.region_name + " " + str(occupying_units))
+		#print("Units occupying region: " + region.region_name + " " + str(occupying_units))
 		var factions = region_details["factions"]
 		# Check if there is more than one faction involved in this region.
 		# If there is then there is most likely going to be a combat.

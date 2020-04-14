@@ -75,6 +75,11 @@ func get_details():
 func reset():
 	set_deselected()
 
+func reset_move():
+	var neighbours = get_possible_paths()
+	for neighbour in neighbours:
+		get_parent().deregister_move(neighbour, self)
+
 func change_outline(color):
 	$Unit.material.set_shader_param("outline_color", color)
 
@@ -109,7 +114,7 @@ func move_command(moused_element, line_manager):
 	var n = get_possible_paths()
 	for region in n:
 		if region == moused_element:
-			get_parent().deregister_move(destination, faction, self)
+			get_parent().deregister_move(destination, self)
 			if region == destination:
 				return
 			else:

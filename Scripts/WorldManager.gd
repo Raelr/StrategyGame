@@ -62,7 +62,7 @@ func register_unit_position(unit, faction, region):
 		regions[region] = region_details
 	#print(region.region_name + " is now being occupied by: " + str(regions[region]["occupying"]))
 
-func deregister_move(region, faction, unit):
+func deregister_move(region, unit):
 	if regions.has(region):
 		if regions[region]["moving"].has(unit):
 			regions[region]["moving"].erase(unit)
@@ -117,6 +117,7 @@ func select_element():
 					populate_unit_ui(details["name"], details["attack"], details["defence"], details["health"], details["color"])
 
 func on_unit_selected():
+	selected.reset_move()
 	selected.highlight_paths($LineManager)
 	selected_type = SELECTED.unit
 
@@ -139,7 +140,6 @@ func select_next():
 func process_turn():
 	emit_signal("on_turn_changed")
 	disable_ui()
-	reset_selected()
 	$CommandManager.process_command(regions)
 	yield($CommandManager, "combat_ended")
 	select_next()
