@@ -90,7 +90,7 @@ func _on_Area2D_mouse_exited():
 	get_parent().mouse_left(self)
 
 func _on_Unit_area_entered(area):
-	if not current_region:
+	if not current_region and not area is UIButtonIcon:
 		set_current_region(area)
 
 func move(dest):

@@ -19,7 +19,7 @@ func process_command(regions):
 			var victor = null
 			var units_by_faction = {}
 			# CASE 1: Two opposing players are moving into the same region
-			if moving_units.size() > 1:
+			if moving_units.size() > 1 and occupying_units.empty():
 				# For each faction - get their units and combine their stats. 
 				for faction in factions:
 					var evaluated = Array()
@@ -141,7 +141,8 @@ func is_defeated(stack):
 
 func distribute_damage(units, damage):
 	var idx = 0
-	while damage > 0 and not units.empty():
+	var size = units.size()
+	while damage > 0 and idx != size:
 		var unit = units[idx]
 		damage = unit.on_damage_dealt(damage)
 		idx += 1
