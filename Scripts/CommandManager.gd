@@ -54,8 +54,26 @@ func process_command(regions):
 					damage_stack(defending_stack, attacking_stack["attack"] - defending_stack["defence"])
 					victor = get_victor(attacking_stack, defending_stack)
 				# TODO: Calculate damage after the initial attacker damage has been dealt
+				var init_damage = defending_stack["damage_taken"]
+				distribute_damage(occupying_units, init_damage)
 				# TODO: Once the attack has been made, the defender can now gather all of
 				# the units that were sent to reinforce them and counter-attack. 
+				# If the attacker was unable to kill the defending unit...
+				if not victor:
+					print("Defenders have held on! Reinforcements are en-route!")
+					if not reinforcements.empty():
+						for unit in reinforcements:
+							defending_stack["attack"] += unit.attack
+							defending_stack["defence"] += unit.defence
+							defending_stack["health"] += unit.current_health
+				# Defender counterattacks...
+				print("defender counterattacks with damage: " + str(defending_stack["attack"]))
+				for faction in attacking_factions:
+					units_by_faction[faction] = get_combined_stats(get_units_from_faction(faction, moving_units))
+					var attacking_stack = units_by_faction[faction]
+					damage_stack(attacking_stack, defending_stack["attack"] - attacking_stack["defence"])
+					victor = get_victor(attacking_stack, defending_stack)
+					units_by_faction.erase(defending_faction)
 			# Now take the damage taken and subtract it from all units in the stack
 			for faction in units_by_faction.keys():
 				# Get the current faction. 
@@ -63,10 +81,7 @@ func process_command(regions):
 				var damage = units_by_faction[faction]["damage_taken"]
 				var idx = 0
 				# Make sure all damage is distributed amongst units
-				while damage > 0 and not faction_units.empty():
-					var unit = faction_units[idx]
-					damage = unit.on_damage_dealt(damage)
-					idx += 1
+				distribute_damage(faction_units, damage)
 			if victor:
 				# If there is a victor then move the units of the victor over.
 				var victor_units = get_units_from_faction(victor["faction"], moving_units)
@@ -123,3 +138,10 @@ func get_victor(stack_a, stack_b):
 
 func is_defeated(stack):
 	return stack["health"] <= 0
+
+func distribute_damage(units, damage):
+	var idx = 0
+	while damage > 0 and not units.empty():
+		var unit = units[idx]
+		damage = unit.on_damage_dealt(damage)
+		idx += 1
