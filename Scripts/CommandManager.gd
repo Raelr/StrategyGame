@@ -53,15 +53,15 @@ func process_command(regions, types):
 							defending_stack["attack"] += unit.attack
 							defending_stack["defence"] += unit.defence
 							defending_stack["health"] += unit.current_health
-				# Defender counterattacks...
-				victor = process_attack(units_by_faction, attacking_factions, defending_stack, moving_units, 0, true)
-				units_by_faction.erase(defending_faction)
-			for faction in units_by_faction.keys():
-				# Get the current faction. 
-				var faction_units = get_units_from_faction(faction, moving_units) + get_units_from_faction(faction, occupying_units)
-				var damage = units_by_faction[faction]["damage_taken"]
-				# Make sure all damage is distributed amongst units
-				distribute_damage(faction_units, damage)
+					# Defender counterattacks...
+					victor = process_attack(units_by_faction, attacking_factions, defending_stack, moving_units, 0, true)
+					units_by_faction.erase(defending_faction)
+				for faction in units_by_faction.keys():
+					# Get the current faction. 
+					var faction_units = get_units_from_faction(faction, moving_units) + get_units_from_faction(faction, occupying_units)
+					var damage = units_by_faction[faction]["damage_taken"]
+					# Make sure all damage is distributed amongst units
+					distribute_damage(faction_units, damage)
 			if victor:
 				# If there is a victor then move the units of the victor over.
 				move_units_in_group(get_units_from_faction(victor["faction"], moving_units), region)
@@ -72,7 +72,6 @@ func process_command(regions, types):
 
 func move_units_in_group(unit_array, destination):
 	for unit in unit_array:
-		print(unit.name)
 		unit.move(destination)
 		yield(unit, "finished_move")
 

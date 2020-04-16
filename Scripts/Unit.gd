@@ -22,6 +22,7 @@ var elapsed = 0.0
 var line_manager = null
 var path = null
 var is_dead = false
+var init = false
 
 signal on_move_command(region, faction, unit)
 signal finished_move
@@ -90,8 +91,9 @@ func _on_Area2D_mouse_exited():
 	get_parent().mouse_left(self)
 
 func _on_Unit_area_entered(area):
-	if not current_region and not area is UIButtonIcon:
+	if not current_region and not area is UIButtonIcon and not init:
 		set_current_region(area)
+		init = true
 
 func move(dest):
 	destination = dest

@@ -157,10 +157,12 @@ func select_next():
 		moused_elements.back().set_selected()
 
 func process_turn():
+	var command_manager = $CommandManager
 	turn_over = true
 	emit_signal("on_turn_changed")
 	disable_ui()
-	$CommandManager.process_command(regions, types)
+	command_manager.process_command(regions, types)
+	yield(get_tree().create_timer(0.5), "timeout")
 	select_next()
 	regions.clear()
 	emit_signal("on_turn_ended")
