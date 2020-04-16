@@ -2,7 +2,7 @@ extends Node2D
 
 signal combat_ended
 
-func process_command(regions):
+func process_command(regions, types):
 	# Get the regions that need to be evaluated
 	var evaluated_regions = regions.keys()
 	# Iterate over all regions
@@ -49,9 +49,10 @@ func process_command(regions):
 				for faction in attacking_factions:
 					units_by_faction[faction] = get_combined_stats(get_units_from_faction(faction, moving_units))
 					var attacking_stack = units_by_faction[faction]
-					print("Attacking with damage: " + str(attacking_stack["attack"] - defending_stack["defence"]))
+					var damage = clamp(attacking_stack["attack"] - (defending_stack["defence"] + types[region.region_type].bonus), 0, attacking_stack["attack"])
+					print("Attacking with damage: " + str(attacking_stack["attack"] - (defending_stack["defence"] + types[region.region_type].bonus)))
 					# TODO: Add region defence bonus to the defending unit. 
-					damage_stack(defending_stack, attacking_stack["attack"] - defending_stack["defence"])
+					damage_stack(defending_stack, damage)
 					victor = get_victor(attacking_stack, defending_stack)
 				# TODO: Calculate damage after the initial attacker damage has been dealt
 				var init_damage = defending_stack["damage_taken"]

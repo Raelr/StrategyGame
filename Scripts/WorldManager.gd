@@ -11,6 +11,24 @@ var turn_over = false
 signal on_turn_changed
 signal on_turn_ended
 
+var types = [
+	{
+		'idx' : 0,
+		'name' : 'Grasslands',
+		'bonus': 0
+	},
+	{
+		'idx' : 1,
+		'name': 'Hills',
+		'bonus': 1
+	}, 
+	{
+		'idx' : 2,
+		'name': 'Mountains',
+		'bonus' : 2
+	}
+]
+
 var regions = {}
 
 func _ready():
@@ -71,7 +89,7 @@ func deregister_move(region, unit):
 				regions.erase(region)
 
 func populate_region_ui(region_name, wealth, region_type):
-	$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, region_type)
+	$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, types[region_type])
 
 func populate_unit_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color):
 	$Camera2D/CanvasLayer/UnitPanel.populate_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color)
@@ -142,7 +160,7 @@ func process_turn():
 	turn_over = true
 	emit_signal("on_turn_changed")
 	disable_ui()
-	$CommandManager.process_command(regions)
+	$CommandManager.process_command(regions, types)
 	select_next()
 	regions.clear()
 	emit_signal("on_turn_ended")
