@@ -17,7 +17,6 @@ export (Array) var neighbours
 export (String) var region_name
 export (int) var wealth
 
-
 onready var outline_color = Color(0,0,0,1)
 onready var current_outline_color = Color(0,0,0,1)
 var elapsed = 0.0
