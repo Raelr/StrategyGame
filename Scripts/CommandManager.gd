@@ -46,25 +46,18 @@ func process_command(regions, types):
 				for faction in factions:
 					if faction != defending_faction:
 						attacking_factions.push_back(faction)
-				process_attack(units_by_faction, attacking_factions, defending_stack, moving_units, types[region.region_type].bonus)
+				victor = process_attack(units_by_faction, attacking_factions, defending_stack, moving_units, occupying_units, types[region.region_type].bonus)
 				# If the attacker was unable to kill the defending unit...
-				if not distribute_damage(occupying_units, defending_stack["damage_taken"], types[region.region_type].bonus):
+				if not victor:
 					if not reinforcements.empty():
 						for unit in reinforcements:
 							defending_stack["attack"] += unit.attack
 							defending_stack["health"] += unit.current_health
 					# Defender counterattacks...
-					print("Counterattack!")
-					process_attack(units_by_faction, attacking_factions, defending_stack, moving_units, 0, true)
+					process_counterattack(units_by_faction, attacking_factions, defending_stack, moving_units)
 					units_by_faction.erase(defending_faction)
 					# Since the defender was not defeated, the defender has 'won' the engagement
-					victor = get_units_from_faction(defending_faction, occupying_units + moving_units)
-				for faction in units_by_faction.keys():
-					# Get the current faction. 
-					var faction_units = get_units_from_faction(faction, moving_units) + get_units_from_faction(faction, occupying_units)
-					var damage = units_by_faction[faction]["damage_taken"]
-					# Make sure all damage is distributed amongst units
-					distribute_damage(faction_units, damage)
+					victor = get_units_from_faction(defending_faction, moving_units)
 			if victor:
 				# If there is a victor then move the units of the victor over.
 				move_units_in_group(victor, region)
@@ -112,18 +105,19 @@ func is_defeated(stack):
 
 func distribute_damage(units, damage, defence_bonus = 0):
 	var idx = 0
-	var size = units.size()
-	var dead_units = Array()
-	var damage_by_unit = damage / size
-	if damage_by_unit == 0:
-		damage_by_unit = 1
-	while idx != size:
-		var unit = units[idx]
-		if unit.on_damage_dealt(damage_by_unit, defence_bonus):
-			dead_units.push_back(unit)
-		idx += 1
-	for unit in dead_units:
-		units.erase(unit)
+	if not units.empty():
+		var size = units.size()
+		var dead_units = Array()
+		var damage_by_unit = damage / size
+		if damage_by_unit == 0:
+			damage_by_unit = 1
+		while idx != size:
+			var unit = units[idx]
+			if unit.on_damage_dealt(damage_by_unit, defence_bonus):
+				dead_units.push_back(unit)
+			idx += 1
+		for unit in dead_units:
+			units.erase(unit)
 	return units.empty()
 
 func process_battle(unit_array, units_by_faction):
@@ -140,12 +134,21 @@ func process_battle(unit_array, units_by_faction):
 		victor = remaining[0]
 	return victor
 
-func process_attack(units_by_faction, factions, defender, units, defender_bonus = 0, is_counterattack = false):
+func process_counterattack(units_by_faction, factions, defender, attacking_units):
 	# Attack with the attacking factions
 	for faction in factions:
-		units_by_faction[faction] = get_combined_stats(get_units_from_faction(faction, units))
+		units_by_faction[faction] = get_combined_stats(get_units_from_faction(faction, attacking_units))
 		var attacking_stack = units_by_faction[faction]
-		if is_counterattack:
-			damage_stack(attacking_stack, defender["attack"])
-		else:
-			damage_stack(defender, attacking_stack["attack"])
+		damage_stack(attacking_stack, defender["attack"])
+		distribute_damage(attacking_units, defender["damage_taken"])
+
+func process_attack(units_by_faction, factions, defender, attacking_units, occupying_units, defence_bonus = 0):
+	var victor = null
+	# Attack with the attacking factions
+	for faction in factions:
+		units_by_faction[faction] = get_combined_stats(get_units_from_faction(faction, attacking_units))
+		var attacking_stack = units_by_faction[faction]
+		damage_stack(defender, attacking_stack["attack"])
+		if distribute_damage(occupying_units, defender["damage_taken"], defence_bonus):
+			victor = get_units_from_faction(faction, attacking_units)
+	return victor

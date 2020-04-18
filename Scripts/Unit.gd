@@ -38,6 +38,7 @@ func _process(delta):
 		if Engine.editor_hint:
 			$Unit.material.set_shader_param("unit_color", unitColor)
 		if destination:
+			print(name + " is being moved")
 			if elapsed < move_speed:
 				elapsed += delta
 				var fraction = elapsed / move_speed
@@ -103,6 +104,7 @@ func move(dest):
 		path.queue_free()
 		path = null
 	update = true
+	print(name + " is being moved")
 
 func set_current_region(region):
 	current_region = region
