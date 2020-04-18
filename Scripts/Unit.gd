@@ -149,13 +149,15 @@ func highlight_paths(line_manager):
 		path = null
 	line_manager.draw_lines(position, get_possible_paths())
 
-func on_damage_dealt(damage):
-	var remaining_damage = damage - current_health
-	current_health -= damage
+func on_damage_dealt(damage, bonus = 0):
+	
+	var unit_defence = defence + bonus
+	var damage_dealt = clamp(damage - unit_defence, 0, damage)
+	current_health -= damage_dealt
+	print(current_health)
 	if current_health <= 0:
 		current_health = 0
 		on_death()
-	return remaining_damage
 
 func on_death():
 	is_dead = true

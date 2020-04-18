@@ -45,13 +45,12 @@ func process_command(regions, types):
 					if faction != defending_faction:
 						attacking_factions.push_back(faction)
 				victor = process_attack(units_by_faction, attacking_factions, defending_stack, moving_units, types[region.region_type].bonus)
-				distribute_damage(occupying_units, defending_stack["damage_taken"])
+				distribute_damage(occupying_units, defending_stack["damage_taken"], types[region.region_type].bonus)
 				# If the attacker was unable to kill the defending unit...
 				if not victor:
 					if not reinforcements.empty():
 						for unit in reinforcements:
 							defending_stack["attack"] += unit.attack
-							defending_stack["defence"] += unit.defence
 							defending_stack["health"] += unit.current_health
 					# Defender counterattacks...
 					victor = process_attack(units_by_faction, attacking_factions, defending_stack, moving_units, 0, true)
@@ -78,13 +77,11 @@ func move_units_in_group(unit_array, destination):
 func get_combined_stats(unit_array):
 	var unit_stack = {
 		"faction" : unit_array[0].faction,
-		"defence" : 0,
 		"attack" : 0,
 		"health" : 0,
 		"damage_taken" : 0,
 	}
 	for unit in unit_array:
-		unit_stack["defence"] += unit.defence
 		unit_stack["attack"] += unit.attack
 		unit_stack["health"] += unit.current_health
 	return unit_stack
@@ -102,9 +99,9 @@ func damage_stack(stack, damage):
 
 func deal_reciprocal_damage(stack_a, stack_b):
 	# Damage other stack
-	damage_stack(stack_b, stack_a["attack"] - stack_b["defence"])
+	damage_stack(stack_b, stack_a["attack"])
 	# Take damage from the other stack
-	damage_stack(stack_a, stack_b["attack"] - stack_a["defence"])
+	damage_stack(stack_a, stack_b["attack"])
 	return get_victor(stack_a, stack_b)
 
 func get_victor(stack_a, stack_b):
@@ -118,12 +115,17 @@ func get_victor(stack_a, stack_b):
 func is_defeated(stack):
 	return stack["health"] <= 0
 
-func distribute_damage(units, damage):
+func distribute_damage(units, damage, defence_bonus = 0):
 	var idx = 0
 	var size = units.size()
-	while damage > 0 and idx != size:
+	var damage_by_unit = damage / size
+	if damage_by_unit == 0:
+		damage_by_unit = 1
+	print("Damage: " + str(damage_by_unit))
+	print("defence_bonus: " + str(defence_bonus))
+	while idx != size:
 		var unit = units[idx]
-		damage = unit.on_damage_dealt(damage)
+		unit.on_damage_dealt(damage_by_unit, defence_bonus)
 		idx += 1
 
 func process_attack(units_by_faction, factions, defender, units, defender_bonus = 0, is_counterattack = false):
@@ -133,9 +135,9 @@ func process_attack(units_by_faction, factions, defender, units, defender_bonus 
 		units_by_faction[faction] = get_combined_stats(get_units_from_faction(faction, units))
 		var attacking_stack = units_by_faction[faction]
 		if is_counterattack:
-			damage_stack(attacking_stack, clamp(defender["attack"] - attacking_stack["defence"], 0, defender["attack"]))
+			damage_stack(attacking_stack, defender["attack"])
 			victor = defender
 		else:
-			damage_stack(defender, clamp(attacking_stack["attack"] - (defender["defence"] + defender_bonus), 0, attacking_stack["attack"]))
+			damage_stack(defender, attacking_stack["attack"])
 			victor = get_victor(attacking_stack, defender)
 	return victor
