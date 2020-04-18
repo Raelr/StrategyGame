@@ -28,6 +28,8 @@ shader_param/tolerance = null
 shader_param/darken = true
 
 [node name="UIButtonIcon" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource( 4 )
 
 [node name="ButtonSprite" type="Sprite" parent="."]

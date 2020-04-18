@@ -6,6 +6,7 @@ func _ready():
 	$AnchorNode/UnitPanelExitButton.connect("on_hover", self, "on_hover")
 	$AnchorNode/UnitPanelExitButton.connect("on_hover_exit", self, "on_hover_exit")
 	$AnchorNode/UnitPanelExitButton.connect("on_press", self, "on_close")
+	connect("on_menu_status_change", $AnchorNode/UnitPanelExitButton, "on_button_status_change")
 
 func populate_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color):
 	$AnchorNode/UnitName.text = unit_name

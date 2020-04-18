@@ -9,6 +9,7 @@ func _ready():
 	$RegionPanel/UIButtonIcon.connect("on_hover", self, "on_hover")
 	$RegionPanel/UIButtonIcon.connect("on_hover_exit", self, "on_hover_exit")
 	$RegionPanel/UIButtonIcon.connect("on_press", self, "on_close")
+	connect("on_menu_status_change", $RegionPanel/UIButtonIcon, "on_button_status_change")
 
 func update_panel(regionName, wealth, region_type):
 	$RegionPanel/NameText.text = regionName

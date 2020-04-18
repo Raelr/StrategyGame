@@ -53,3 +53,6 @@ func _on_UIButtonIcon_mouse_exited():
 		$ButtonSprite/Icon.material.set_shader_param("outline_color", outline_idle)
 	if change_icon_color:
 		$ButtonSprite/Icon.material.set_shader_param("unit_color", icon_idle)
+
+func on_button_status_change(status):
+	monitoring = status

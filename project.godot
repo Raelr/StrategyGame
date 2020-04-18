@@ -54,6 +54,12 @@ scroll={
  ]
 }
 
+[layer_names]
+
+2d_physics/UI=true
+2d_physics/Game=true
+2d_physics/Unit=true
+
 [rendering]
 
 quality/2d/use_pixel_snap=true
