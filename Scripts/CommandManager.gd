@@ -32,6 +32,7 @@ func process_command(regions, types):
 								deal_reciprocal_damage(stack, other_stack)
 								# Set the current stack as damaged already
 								evaluated.push_back(stack)
+				# Distribute the damage accordingly and return the victor (if any)
 				process_battle(moving_units, units_by_faction)
 			# CASE 2: A player attacks a unit occupying a region
 			elif not occupying_units.empty() and not moving_units.empty():
@@ -46,17 +47,18 @@ func process_command(regions, types):
 					if faction != defending_faction:
 						attacking_factions.push_back(faction)
 				process_attack(units_by_faction, attacking_factions, defending_stack, moving_units, types[region.region_type].bonus)
-				distribute_damage(occupying_units, defending_stack["damage_taken"], types[region.region_type].bonus)
-				print("Victor: " + str(victor))
 				# If the attacker was unable to kill the defending unit...
-				if not victor:
+				if not distribute_damage(occupying_units, defending_stack["damage_taken"], types[region.region_type].bonus):
 					if not reinforcements.empty():
 						for unit in reinforcements:
 							defending_stack["attack"] += unit.attack
 							defending_stack["health"] += unit.current_health
 					# Defender counterattacks...
-					victor = process_attack(units_by_faction, attacking_factions, defending_stack, moving_units, 0, true)
+					print("Counterattack!")
+					process_attack(units_by_faction, attacking_factions, defending_stack, moving_units, 0, true)
 					units_by_faction.erase(defending_faction)
+					# Since the defender was not defeated, the defender has 'won' the engagement
+					victor = get_units_from_faction(defending_faction, occupying_units + moving_units)
 				for faction in units_by_faction.keys():
 					# Get the current faction. 
 					var faction_units = get_units_from_faction(faction, moving_units) + get_units_from_faction(faction, occupying_units)
@@ -140,13 +142,10 @@ func process_battle(unit_array, units_by_faction):
 
 func process_attack(units_by_faction, factions, defender, units, defender_bonus = 0, is_counterattack = false):
 	# Attack with the attacking factions
-	var victor
 	for faction in factions:
 		units_by_faction[faction] = get_combined_stats(get_units_from_faction(faction, units))
 		var attacking_stack = units_by_faction[faction]
 		if is_counterattack:
 			damage_stack(attacking_stack, defender["attack"])
-			victor = defender
 		else:
 			damage_stack(defender, attacking_stack["attack"])
-	return victor
