@@ -29,9 +29,10 @@ func process_command(regions, types):
 						for other_stack in units_by_faction.values():
 							# Stop unit from damaging itself and from damaging units that have already been damaged
 							if other_stack != stack and not evaluated.has(other_stack):
-								victor = deal_reciprocal_damage(stack, other_stack)
+								deal_reciprocal_damage(stack, other_stack)
 								# Set the current stack as damaged already
 								evaluated.push_back(stack)
+				process_battle(moving_units, units_by_faction)
 			# CASE 2: A player attacks a unit occupying a region
 			elif not occupying_units.empty() and not moving_units.empty():
 				# Get the information about the defending faction. 
@@ -44,8 +45,9 @@ func process_command(regions, types):
 				for faction in factions:
 					if faction != defending_faction:
 						attacking_factions.push_back(faction)
-				victor = process_attack(units_by_faction, attacking_factions, defending_stack, moving_units, types[region.region_type].bonus)
+				process_attack(units_by_faction, attacking_factions, defending_stack, moving_units, types[region.region_type].bonus)
 				distribute_damage(occupying_units, defending_stack["damage_taken"], types[region.region_type].bonus)
+				print("Victor: " + str(victor))
 				# If the attacker was unable to kill the defending unit...
 				if not victor:
 					if not reinforcements.empty():
@@ -63,7 +65,7 @@ func process_command(regions, types):
 					distribute_damage(faction_units, damage)
 			if victor:
 				# If there is a victor then move the units of the victor over.
-				move_units_in_group(get_units_from_faction(victor["faction"], moving_units), region)
+				move_units_in_group(victor, region)
 		else:
 			# If not combat has occurred then just move the units
 			move_units_in_group(moving_units, region)
@@ -102,15 +104,6 @@ func deal_reciprocal_damage(stack_a, stack_b):
 	damage_stack(stack_b, stack_a["attack"])
 	# Take damage from the other stack
 	damage_stack(stack_a, stack_b["attack"])
-	return get_victor(stack_a, stack_b)
-
-func get_victor(stack_a, stack_b):
-	var victor = null
-	if is_defeated(stack_a) and not is_defeated(stack_b):
-		victor = stack_b
-	if is_defeated(stack_b) and not is_defeated(stack_a):
-		victor = stack_a
-	return victor
 
 func is_defeated(stack):
 	return stack["health"] <= 0
@@ -118,15 +111,32 @@ func is_defeated(stack):
 func distribute_damage(units, damage, defence_bonus = 0):
 	var idx = 0
 	var size = units.size()
+	var dead_units = Array()
 	var damage_by_unit = damage / size
 	if damage_by_unit == 0:
 		damage_by_unit = 1
-	print("Damage: " + str(damage_by_unit))
-	print("defence_bonus: " + str(defence_bonus))
 	while idx != size:
 		var unit = units[idx]
-		unit.on_damage_dealt(damage_by_unit, defence_bonus)
+		if unit.on_damage_dealt(damage_by_unit, defence_bonus):
+			dead_units.push_back(unit)
 		idx += 1
+	for unit in dead_units:
+		units.erase(unit)
+	return units.empty()
+
+func process_battle(unit_array, units_by_faction):
+	var remaining = Array()
+	var victor = null
+	for faction in units_by_faction.keys():
+	# Get the current faction. 
+		var faction_units = get_units_from_faction(faction, unit_array)
+		var damage = units_by_faction[faction]["damage_taken"]
+		# Make sure all damage is distributed amongst units
+		if not distribute_damage(faction_units, damage):
+			remaining.push_back(faction_units)
+	if remaining.size() == 1:
+		victor = remaining[0]
+	return victor
 
 func process_attack(units_by_faction, factions, defender, units, defender_bonus = 0, is_counterattack = false):
 	# Attack with the attacking factions
@@ -139,5 +149,4 @@ func process_attack(units_by_faction, factions, defender, units, defender_bonus 
 			victor = defender
 		else:
 			damage_stack(defender, attacking_stack["attack"])
-			victor = get_victor(attacking_stack, defender)
 	return victor
