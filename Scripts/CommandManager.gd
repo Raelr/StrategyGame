@@ -62,22 +62,19 @@ func process_command(regions, types):
 				# If there is a victor then move the units of the victor over.
 				call_deferred("move_units_in_group", victor, region)
 				yield(self, "finished_moving")
-				call_deferred("emit_signal", "combat_ended")
-			else:
-				call_deferred("emit_signal", "combat_ended")
 		else:
 			# If no combat has occurred then just move the units
 			if not moving_units.empty():
 				call_deferred("move_units_in_group", moving_units, region)
 				yield(self, "finished_moving")
-				call_deferred("emit_signal", "combat_ended")
+
+	call_deferred("emit_signal", "combat_ended")
 
 func move_units_in_group(unit_array, destination):
 	for unit in unit_array:
 		unit.call_deferred("move", destination)
 		yield(unit, "finished_move")
 	emit_signal("finished_moving")
-	print("finished moving!")
 
 func get_combined_stats(unit_array):
 	var unit_stack = {

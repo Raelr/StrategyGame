@@ -96,25 +96,28 @@ func populate_unit_ui(unit_name, unit_attack, unit_defence, unit_health, unit_co
 	$Camera2D/CanvasLayer/UnitPanel.populate_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color)
 
 func moused_over(object):
-	if not moused_elements.empty():
-		if moused_elements.back() != selected:
-			moused_elements.back().set_deselected()
-	if object != selected and not ui_moused_over:
-		object.set_selected()
-	moused_elements.push_back(object)
+	if not turn_over:
+		if not moused_elements.empty():
+			if moused_elements.back() != selected:
+				moused_elements.back().set_deselected()
+		if object != selected and not ui_moused_over:
+			object.set_selected()
+		moused_elements.push_back(object)
 
 func set_ui_moused_over():
 	ui_moused_over = true
+	print("Moused over ui")
 
 func set_ui_moused_exit():
 	ui_moused_over = false
 	select_next()
 
 func mouse_left(object):
-	if object != selected and not ui_moused_over:
-		object.set_deselected()
-	moused_elements.erase(object)
-	select_next()
+	if not turn_over:
+		if object != selected and not ui_moused_over:
+			object.set_deselected()
+		moused_elements.erase(object)
+		select_next()
 
 func select_element():
 	if not moused_elements.empty():
