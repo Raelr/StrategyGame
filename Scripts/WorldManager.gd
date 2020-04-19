@@ -39,7 +39,6 @@ func _ready():
 	$Camera2D/CanvasLayer/RegionPanel.connect("on_button_close", self, "disable_region_ui")
 	$Camera2D/CanvasLayer/UnitPanel.connect("on_button_exit", self, "set_ui_moused_exit")
 	$Camera2D/CanvasLayer/UnitPanel.connect("on_button_close", self, "disable_region_ui")
-	
 
 func disable_ui():
 	$Camera2D/CanvasLayer/UnitPanel.deactivate_panel()
@@ -95,7 +94,14 @@ func populate_region_ui(region_name, wealth, region_type):
 func populate_unit_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color):
 	$Camera2D/CanvasLayer/UnitPanel.populate_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color)
 
+# NOTES:
+# This function is causing issues because it selects the latest element first. 
+# If a unit is moused over BEFORE a region, the unit will be selected, then the region, then
+# the unit will be re-selected. This is what was causing the previous issues. 
+# Might need to split all moused over elements into separate collections and process them
+# by selection priority. 
 func moused_over(object):
+	print("Moused over: " + object.name)
 	if not turn_over:
 		if not moused_elements.empty():
 			if moused_elements.back() != selected:
@@ -106,7 +112,6 @@ func moused_over(object):
 
 func set_ui_moused_over():
 	ui_moused_over = true
-	print("Moused over ui")
 
 func set_ui_moused_exit():
 	ui_moused_over = false

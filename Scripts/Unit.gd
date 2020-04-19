@@ -90,7 +90,6 @@ func change_outline(color):
 	$Unit.material.set_shader_param("outline_color", color)
 
 func _on_Area2D_mouse_entered():
-	print("Unit moused over!")
 	get_parent().moused_over(self)
 
 func _on_Area2D_mouse_exited():
