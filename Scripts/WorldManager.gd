@@ -39,6 +39,7 @@ func _ready():
 	$Camera2D/CanvasLayer/RegionPanel.connect("on_button_close", self, "disable_region_ui")
 	$Camera2D/CanvasLayer/UnitPanel.connect("on_button_exit", self, "set_ui_moused_exit")
 	$Camera2D/CanvasLayer/UnitPanel.connect("on_button_close", self, "disable_region_ui")
+	
 
 func disable_ui():
 	$Camera2D/CanvasLayer/UnitPanel.deactivate_panel()

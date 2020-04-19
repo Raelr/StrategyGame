@@ -1,6 +1,7 @@
 extends Node2D
 
 signal combat_ended
+signal finished_moving
 var units_to_move = Array()
 
 func process_command(regions, types):
@@ -59,18 +60,24 @@ func process_command(regions, types):
 					victor = get_units_from_faction(defending_faction, moving_units)
 			if victor:
 				# If there is a victor then move the units of the victor over.
-				move_units_in_group(victor, region)
+				call_deferred("move_units_in_group", victor, region)
+				yield(self, "finished_moving")
+				call_deferred("emit_signal", "combat_ended")
+			else:
+				call_deferred("emit_signal", "combat_ended")
 		else:
 			# If no combat has occurred then just move the units
 			if not moving_units.empty():
-				move_units_in_group(moving_units, region)
+				call_deferred("move_units_in_group", moving_units, region)
+				yield(self, "finished_moving")
+				call_deferred("emit_signal", "combat_ended")
 
 func move_units_in_group(unit_array, destination):
 	for unit in unit_array:
-		unit.move(destination)
+		unit.call_deferred("move", destination)
 		yield(unit, "finished_move")
-	emit_signal("combat_ended")
-	print("Combat is over!")
+	emit_signal("finished_moving")
+	print("finished moving!")
 
 func get_combined_stats(unit_array):
 	var unit_stack = {
