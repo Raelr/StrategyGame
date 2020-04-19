@@ -1,6 +1,9 @@
 tool
 extends Area2D
 
+# TODO: Strip this class of specific functionality and make it more generic for reuse. 
+# Possibly make it a class_name so that it can be used by multiple units. 
+
 const enums = preload('res://Scripts/FactionData.gd')
 
 export (enums.FACTION) var faction
@@ -87,6 +90,7 @@ func change_outline(color):
 	$Unit.material.set_shader_param("outline_color", color)
 
 func _on_Area2D_mouse_entered():
+	print("Unit moused over!")
 	get_parent().moused_over(self)
 
 func _on_Area2D_mouse_exited():
