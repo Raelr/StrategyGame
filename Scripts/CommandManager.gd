@@ -52,10 +52,8 @@ func process_command(regions, types):
 					if not reinforcements.empty():
 						for unit in reinforcements:
 							defending_stack["attack"] += unit.attack
-							defending_stack["health"] += unit.current_health
 					# Defender counterattacks...
 					process_counterattack(units_by_faction, attacking_factions, defending_stack, moving_units)
-					units_by_faction.erase(defending_faction)
 					# Since the defender was not defeated, the defender has 'won' the engagement
 					victor = get_units_from_faction(defending_faction, moving_units)
 			if victor:
@@ -75,12 +73,10 @@ func get_combined_stats(unit_array):
 	var unit_stack = {
 		"faction" : unit_array[0].faction,
 		"attack" : 0,
-		"health" : 0,
 		"damage_taken" : 0,
 	}
 	for unit in unit_array:
 		unit_stack["attack"] += unit.attack
-		unit_stack["health"] += unit.current_health
 	return unit_stack
 
 func get_units_from_faction(faction, unit_array):
@@ -91,7 +87,6 @@ func get_units_from_faction(faction, unit_array):
 	return faction_units
 
 func damage_stack(stack, damage):
-	stack["health"] -= damage
 	stack["damage_taken"] += damage
 
 func deal_reciprocal_damage(stack_a, stack_b):
@@ -140,7 +135,7 @@ func process_counterattack(units_by_faction, factions, defender, attacking_units
 		units_by_faction[faction] = get_combined_stats(get_units_from_faction(faction, attacking_units))
 		var attacking_stack = units_by_faction[faction]
 		damage_stack(attacking_stack, defender["attack"])
-		distribute_damage(attacking_units, defender["damage_taken"])
+		distribute_damage(get_units_from_faction(faction, attacking_units), attacking_stack["damage_taken"])
 
 func process_attack(units_by_faction, factions, defender, attacking_units, occupying_units, defence_bonus = 0):
 	var victor = null
