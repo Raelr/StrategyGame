@@ -162,7 +162,7 @@ func process_turn():
 	emit_signal("on_turn_changed")
 	disable_ui()
 	command_manager.process_command(regions, types)
-	yield(get_tree().create_timer(0.5), "timeout")
+	yield($CommandManager,"combat_ended")
 	select_next()
 	regions.clear()
 	emit_signal("on_turn_ended")

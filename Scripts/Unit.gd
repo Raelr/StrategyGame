@@ -32,6 +32,8 @@ func _ready():
 	$Unit/AnimationPlayer.play("idle")
 	var world = get_tree().get_root().get_child(0)
 	world.connect("on_turn_ended", self, "register_position")
+	$UnitHealth.max_value = max_health
+	$UnitHealth.value = current_health
 
 func _process(delta):
 	if update:
@@ -156,6 +158,7 @@ func on_damage_dealt(damage, bonus = 0):
 	if current_health <= 0:
 		current_health = 0
 		on_death()
+	$UnitHealth.value = current_health
 	return is_dead
 
 func on_death():
