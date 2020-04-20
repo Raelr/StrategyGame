@@ -56,3 +56,4 @@ func _on_UIButtonIcon_mouse_exited():
 
 func on_button_status_change(status):
 	monitoring = status
+	monitorable = status

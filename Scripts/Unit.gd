@@ -4,6 +4,7 @@ extends Area2D
 # TODO: Strip this class of specific functionality and make it more generic for reuse. 
 # Possibly make it a class_name so that it can be used by multiple units. 
 
+# Probably inefficient to preload this onto every unit instance?????
 const enums = preload('res://Scripts/FactionData.gd')
 
 export (enums.FACTION) var faction

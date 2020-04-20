@@ -80,6 +80,8 @@ func process_command(regions, types):
 				yield(self, "finished_moving")
 	call_deferred("emit_signal", "combat_ended")
 
+# TODO: Discover why single units are being moved twice in a turn when moved with a friend
+
 func move_units_in_group(unit_array, destination):
 	for unit in unit_array:
 		unit.call_deferred("move", destination)

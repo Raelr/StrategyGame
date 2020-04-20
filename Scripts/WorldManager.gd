@@ -1,5 +1,7 @@
 extends Node2D
 
+#TODO: Integrate ui into the worldmanager. 
+
 enum SELECTED {region, unit}
 enum FACTIONS {player, neutral}
 var moused_elements = Array()
@@ -51,6 +53,9 @@ func disable_panel(panel):
 	panel.deactivate_panel()
 	reset_selected()
 
+# TODO: Add ability to modify command abilities based on given commands. 
+# I.e: A unit moving from one location to another is no longer 'occupying the original location'
+
 func register_move_command(region, faction, unit):
 	if not regions.has(region):
 		regions[region] = {
@@ -96,26 +101,23 @@ func populate_region_ui(region_name, wealth, region_type):
 func populate_unit_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color):
 	$Camera2D/CanvasLayer/UnitPanel.populate_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color)
 
-# NOTES:
-# This function is causing issues because it selects the latest element first. 
-# If a unit is moused over BEFORE a region, the unit will be selected, then the region, then
-# the unit will be re-selected. This is what was causing the previous issues. 
-# Might need to split all moused over elements into separate collections and process them
-# by selection priority. 
 func moused_over(object):
 	if not turn_over:
-		var type = object.get_type()
-		var container = Array()
-		match type:
-			0:
-				container = moused_units
-			1: 
-				container = moused_elements
+		var container = get_container_by_type(object.get_type()) 
 		if not container.empty():
 			if container.back() != selected:
 				container.back().set_deselected()
 		container.push_back(object)
 		select_latest()
+
+func get_container_by_type(type):
+	var container = Array()
+	match type:
+		0:
+			container = moused_units
+		1: 
+			container = moused_elements
+	return container
 
 func select_latest():
 	var element = get_latest()
@@ -140,13 +142,7 @@ func set_ui_moused_exit():
 
 func mouse_left(object):
 	if not turn_over:
-		var type = object.get_type()
-		var container = Array()
-		match type:
-			0:
-				container = moused_units
-			1: 
-				container = moused_elements
+		var container = get_container_by_type(object.get_type()) 
 		if object != selected and not ui_moused_over:
 			object.set_deselected()
 		container.erase(object)
@@ -194,10 +190,6 @@ func reset_selected():
 func get_latest_element():
 	return moused_elements.back()
 
-func select_next():
-	if not moused_elements.empty():
-		moused_elements.back().set_selected()
-
 func process_turn():
 	var command_manager = $CommandManager
 	turn_over = true
@@ -205,7 +197,7 @@ func process_turn():
 	disable_ui()
 	command_manager.process_command(regions, types)
 	yield($CommandManager,"combat_ended")
-	select_next()
+	select_latest()
 	regions.clear()
 	emit_signal("on_turn_ended")
 	turn_over = false
