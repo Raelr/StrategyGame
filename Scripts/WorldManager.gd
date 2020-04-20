@@ -104,34 +104,62 @@ func populate_unit_ui(unit_name, unit_attack, unit_defence, unit_health, unit_co
 # by selection priority. 
 func moused_over(object):
 	if not turn_over:
-		if not moused_elements.empty():
-			if moused_elements.back() != selected:
-				moused_elements.back().set_deselected()
-		if object != selected and not ui_moused_over:
-			object.set_selected()
-		moused_elements.push_back(object)
+		var type = object.get_type()
+		var container = Array()
+		match type:
+			0:
+				container = moused_units
+			1: 
+				container = moused_elements
+		if not container.empty():
+			if container.back() != selected:
+				container.back().set_deselected()
+		container.push_back(object)
+		select_latest()
+
+func select_latest():
+	var element = get_latest()
+	if element:
+		element.set_selected()
+
+func get_latest():
+	var element = null
+	if not moused_units.empty():
+			element = moused_units.back()
+			deselect_all(moused_elements)
+	elif not moused_elements.empty():
+			element = moused_elements.back()
+	return element
 
 func set_ui_moused_over():
 	ui_moused_over = true
 
 func set_ui_moused_exit():
 	ui_moused_over = false
-	select_next()
+	select_latest()
 
 func mouse_left(object):
 	if not turn_over:
+		var type = object.get_type()
+		var container = Array()
+		match type:
+			0:
+				container = moused_units
+			1: 
+				container = moused_elements
 		if object != selected and not ui_moused_over:
 			object.set_deselected()
-		moused_elements.erase(object)
-		select_next()
+		container.erase(object)
+		select_latest()
 
 func select_element():
-	if not moused_elements.empty():
+	var element = get_latest()
+	if element:
 		var details = null
-		var new_selected = selected != moused_elements.back()
+		var new_selected = selected != element
 		if new_selected:
 			reset_selected()
-			selected = moused_elements.back()
+			selected = element
 		if selected:
 			details = selected.get_details()
 		if details:
@@ -149,6 +177,10 @@ func on_unit_selected():
 	selected.reset_move()
 	selected.highlight_paths($LineManager)
 	selected_type = SELECTED.unit
+
+func deselect_all(container):
+	for element in container:
+		element.set_deselected()
 
 func reset_selected():
 	if selected:
@@ -184,7 +216,7 @@ func _input(event):
 			if Input.is_action_just_pressed('ui_cancel'):
 				reset_selected()
 				disable_ui()
-				select_next()
+				select_latest()
 			elif Input.is_action_just_pressed("ui_select"):
 				$Camera2D/CanvasLayer/Popup.set_visible(true)
 	if event is InputEventMouseButton:
