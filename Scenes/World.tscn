@@ -182,6 +182,7 @@ region_overlay = ExtResource( 4 )
 occupied_color = Color( 1, 1, 1, 0 )
 change_duration = 2.0
 neighbours = [ NodePath("../SouthRegion"), NodePath("../NorthRegion") ]
+selection_type = 1
 region_name = "Weslund"
 wealth = 1
 
@@ -209,6 +210,7 @@ occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_type = 1
 neighbours = [ NodePath("../WestRegion"), NodePath("../NorthRegion"), NodePath("../SouthLakeRegion") ]
+selection_type = 1
 region_name = "Ososia"
 wealth = 2
 
@@ -233,6 +235,7 @@ occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_type = 2
 neighbours = [ NodePath("../WestRegion"), NodePath("../SouthRegion"), NodePath("../EastRegion") ]
+selection_type = 1
 region_name = "Emyn Dur"
 wealth = 1
 
@@ -257,6 +260,7 @@ region_overlay = ExtResource( 14 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 neighbours = [ NodePath("../NorthRegion"), NodePath("../EastLakeRegion") ]
+selection_type = 1
 region_name = "Tuzari"
 wealth = 3
 
@@ -281,6 +285,7 @@ region_overlay = ExtResource( 16 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 neighbours = [ NodePath("../SouthRegion"), NodePath("../SouthEastLakeRegion") ]
+selection_type = 1
 region_name = "Albus"
 wealth = 2
 
@@ -305,6 +310,7 @@ occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_type = 1
 neighbours = [ NodePath("../SouthLakeRegion"), NodePath("../EastLakeRegion") ]
+selection_type = 1
 region_name = "Duvej"
 wealth = 4
 
@@ -328,6 +334,7 @@ region_overlay = ExtResource( 23 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 neighbours = [ NodePath("../EastRegion"), NodePath("../SouthEastLakeRegion") ]
+selection_type = 1
 region_name = "Pietro"
 wealth = 1
 
@@ -360,10 +367,6 @@ move_speed = 0.4
 
 [node name="Unit" parent="Unit" index="0"]
 material = SubResource( 8 )
-frame = 1
-
-[node name="CollisionPolygon2D" parent="Unit" index="1"]
-polygon = PoolVector2Array( -18.3622, -2.8817, -14.9541, -2.95499, -15.0274, -5.99662, -12.0224, -5.95998, -12.2936, -14.264, -9.17865, -14.3373, -9.43517, -20.0541, -6.07838, -20.164, -6.22496, -23.9752, 11.9515, -24.0118, 11.6583, -20.787, 14.9565, -20.7137, 14.8099, -17.8187, 17.8149, -17.7087, 17.7782, -8.73043, 21.0397, -8.62049, 21.0178, 6.55834, 24.4991, 6.52169, 24.4771, 20.286, 21.0691, 20.4326, 21.0617, 33.6325, 23.627, 33.6325, 23.9201, 41.5114, 21.0251, 41.6213, 20.8785, 44.1426, -24.0496, 44.3624, -23.8664, 39.0488, -17.9297, 37.1432, -17.9517, 14.4592, -26.7468, 14.5325, -26.6735, 3.90515, -18.0617, 3.68528 )
 
 [node name="LineManager" parent="." instance=ExtResource( 3 )]
 dot_spawn_duration = 0.075
@@ -376,10 +379,6 @@ move_speed = 0.5
 
 [node name="Unit" parent="Unit2" index="0"]
 material = SubResource( 9 )
-frame = 1
-
-[node name="CollisionPolygon2D" parent="Unit2" index="1"]
-polygon = PoolVector2Array( -18.3622, -2.8817, -14.9541, -2.95499, -15.0274, -5.99662, -12.0224, -5.95998, -12.2936, -14.264, -9.17865, -14.3373, -9.43517, -20.0541, -6.07838, -20.164, -6.22496, -23.9752, 11.9515, -24.0118, 11.6583, -20.787, 14.9565, -20.7137, 14.8099, -17.8187, 17.8149, -17.7087, 17.7782, -8.73043, 21.0397, -8.62049, 21.0178, 6.55834, 24.4991, 6.52169, 24.4771, 20.286, 21.0691, 20.4326, 21.0617, 33.6325, 23.627, 33.6325, 23.9201, 41.5114, 21.0251, 41.6213, 20.8785, 44.1426, -24.0496, 44.3624, -23.8664, 39.0488, -17.9297, 37.1432, -17.9517, 14.4592, -26.7468, 14.5325, -26.6735, 3.90515, -18.0617, 3.68528 )
 
 [node name="Unit3" parent="." instance=ExtResource( 27 )]
 position = Vector2( 461.365, 328.78 )
@@ -389,10 +388,6 @@ move_speed = 0.5
 
 [node name="Unit" parent="Unit3" index="0"]
 material = SubResource( 10 )
-frame = 1
-
-[node name="CollisionPolygon2D" parent="Unit3" index="1"]
-polygon = PoolVector2Array( -18.3622, -2.8817, -14.9541, -2.95499, -15.0274, -5.99662, -12.0224, -5.95998, -12.2936, -14.264, -9.17865, -14.3373, -9.43517, -20.0541, -6.07838, -20.164, -6.22496, -23.9752, 11.9515, -24.0118, 11.6583, -20.787, 14.9565, -20.7137, 14.8099, -17.8187, 17.8149, -17.7087, 17.7782, -8.73043, 21.0397, -8.62049, 21.0178, 6.55834, 24.4991, 6.52169, 24.4771, 20.286, 21.0691, 20.4326, 21.0617, 33.6325, 23.627, 33.6325, 23.9201, 41.5114, 21.0251, 41.6213, 20.8785, 44.1426, -24.0496, 44.3624, -23.8664, 39.0488, -17.9297, 37.1432, -17.9517, 14.4592, -26.7468, 14.5325, -26.6735, 3.90515, -18.0617, 3.68528 )
 
 [editable path="Water"]
 

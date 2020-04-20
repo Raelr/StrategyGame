@@ -3,6 +3,8 @@ extends Node2D
 enum SELECTED {region, unit}
 enum FACTIONS {player, neutral}
 var moused_elements = Array()
+var moused_units = Array()
+var moused_ui = Array()
 var selected = null
 var selected_type
 var ui_moused_over = false
@@ -101,7 +103,6 @@ func populate_unit_ui(unit_name, unit_attack, unit_defence, unit_health, unit_co
 # Might need to split all moused over elements into separate collections and process them
 # by selection priority. 
 func moused_over(object):
-	print("Moused over: " + object.name)
 	if not turn_over:
 		if not moused_elements.empty():
 			if moused_elements.back() != selected:

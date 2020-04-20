@@ -3,6 +3,8 @@ extends Node2D
 
 enum REGIONTYPE { grassLand, hills, mountains }
 
+const enums = preload("res://Scripts/FactionData.gd")
+
 # Configuration Variables
 export (Texture) var region_details
 export (Texture) var region_overlay
@@ -12,6 +14,7 @@ export (float) var change_duration
 export (float) var border_change_duration
 export (REGIONTYPE) var region_type
 export (Array) var neighbours
+export (enums.SELECTION_TYPE) var selection_type
 
 # Region Variables
 export (String) var region_name
@@ -23,6 +26,9 @@ var elapsed = 0.0
 
 func _ready():
 	change_region_sprite()
+
+func get_type():
+	return selection_type
 
 func get_details():
 	return {

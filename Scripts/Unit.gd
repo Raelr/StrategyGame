@@ -18,6 +18,7 @@ export (int) var attack
 export (int) var max_health
 export (int) var current_health
 export (String) var unit_name
+export (enums.SELECTION_TYPE) var selection_type
 
 var current_region = null
 var destination = null
@@ -37,6 +38,9 @@ func _ready():
 	world.connect("on_turn_ended", self, "register_position")
 	$UnitHealth.max_value = max_health
 	$UnitHealth.value = current_health
+
+func get_type():
+	return selection_type
 
 func _process(delta):
 	if update:
