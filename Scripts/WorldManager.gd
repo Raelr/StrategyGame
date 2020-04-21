@@ -55,7 +55,6 @@ func disable_panel(panel):
 
 # TODO: Add ability to modify command abilities based on given commands. 
 # I.e: A unit moving from one location to another is no longer 'occupying the original location'
-
 func register_move_command(region, faction, unit):
 	if not regions.has(region):
 		regions[region] = {
@@ -102,13 +101,12 @@ func populate_unit_ui(unit_name, unit_attack, unit_defence, unit_health, unit_co
 	$Camera2D/CanvasLayer/UnitPanel.populate_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color)
 
 func moused_over(object):
-	if not turn_over:
-		var container = get_container_by_type(object.get_type()) 
-		if not container.empty():
-			if container.back() != selected:
-				container.back().set_deselected()
-		container.push_back(object)
-		select_latest()
+	var container = get_container_by_type(object.get_type()) 
+	if not container.empty():
+		if container.back() != selected:
+			container.back().set_deselected()
+	container.push_back(object)
+	select_latest()
 
 func get_container_by_type(type):
 	var container = Array()
@@ -141,12 +139,11 @@ func set_ui_moused_exit():
 	select_latest()
 
 func mouse_left(object):
-	if not turn_over:
-		var container = get_container_by_type(object.get_type()) 
-		if object != selected and not ui_moused_over:
-			object.set_deselected()
-		container.erase(object)
-		select_latest()
+	var container = get_container_by_type(object.get_type()) 
+	if object != selected and not ui_moused_over:
+		object.set_deselected()
+	container.erase(object)
+	select_latest()
 
 func select_element():
 	var element = get_latest()
@@ -187,9 +184,6 @@ func reset_selected():
 		selected_type = null
 		selected = null
 
-func get_latest_element():
-	return moused_elements.back()
-
 func process_turn():
 	var command_manager = $CommandManager
 	turn_over = true
@@ -199,8 +193,8 @@ func process_turn():
 	yield($CommandManager,"combat_ended")
 	select_latest()
 	regions.clear()
-	emit_signal("on_turn_ended")
 	turn_over = false
+	emit_signal("on_turn_ended")
 
 func _input(event):
 	if event is InputEventKey:
@@ -219,5 +213,5 @@ func _input(event):
 			if event.is_action_pressed("rmb") and not turn_over:
 				if not ui_moused_over:
 					if selected_type == SELECTED.unit:
-						var element = get_latest_element()
+						var element = get_latest()
 						selected.move_command(element, $LineManager)

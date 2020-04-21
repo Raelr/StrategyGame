@@ -19,7 +19,7 @@ shader_param/target_color_2 = Color( 0, 0, 0, 1 )
 shader_param/tolerance = null
 shader_param/darken = true
 
-[sub_resource type="ShaderMaterial" id=3]
+[sub_resource type="ShaderMaterial" id=2]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/width = 0
@@ -30,7 +30,7 @@ shader_param/target_color_2 = null
 shader_param/tolerance = null
 shader_param/darken = true
 
-[sub_resource type="ShaderMaterial" id=2]
+[sub_resource type="ShaderMaterial" id=3]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/width = 1.0
@@ -90,14 +90,14 @@ mouse_filter = 2
 material = SubResource( 1 )
 
 [node name="Icon" parent="CanvasLayer/Popup/ConfirmButton/ButtonSprite" index="0"]
-material = SubResource( 3 )
+material = SubResource( 2 )
 
 [node name="CollisionPolygon2D" parent="CanvasLayer/Popup/ConfirmButton" index="1"]
 visible = true
 polygon = PoolVector2Array( -43.877, 28.624, -40.2475, 28.624, -40.2475, 32.2095, -36.343, 32.2535, -36.3431, 36.1689, 31.9024, 36.1139, 31.8474, 32.4294, 35.8618, 32.4844, 35.9718, 28.58, 39.9312, 28.58, 40.0739, -31.7136, 36.0594, -31.7136, 36.0594, -35.618, 31.99, -35.838, 31.99, -39.6324, -36.1454, -39.5775, -36.0355, -35.893, -39.9399, -35.893, -39.9399, -31.9885, -44.1193, -31.9885 )
 
 [node name="ButtonSprite" parent="CanvasLayer/Popup/ExitButton" index="0"]
-material = SubResource( 2 )
+material = SubResource( 3 )
 
 [node name="Icon" parent="CanvasLayer/Popup/ExitButton/ButtonSprite" index="0"]
 material = SubResource( 4 )
