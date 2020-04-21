@@ -1,15 +1,11 @@
 extends Node2D
 
-#TODO: Integrate ui into the worldmanager. 
-
-enum SELECTED {region, unit}
 enum FACTIONS {player, neutral}
 var moused_elements = Array()
 var moused_units = Array()
 var moused_ui = Array()
 var selected = null
 var selected_type
-var ui_moused_over = false
 var turn_over = false
 
 signal on_turn_changed
@@ -133,7 +129,7 @@ func get_latest():
 
 func mouse_left(object):
 	var container = get_container_by_type(object.get_type()) 
-	if object != selected and not ui_moused_over:
+	if object != selected:
 		object.set_deselected()
 	container.erase(object)
 	select_latest()
@@ -179,11 +175,10 @@ func reset_selected():
 		selected = null
 
 func process_turn():
-	var command_manager = $CommandManager
 	turn_over = true
 	emit_signal("on_turn_changed")
 	disable_ui()
-	command_manager.process_command(regions, types)
+	$CommandManager.process_command(regions, types)
 	yield($CommandManager,"combat_ended")
 	select_latest()
 	regions.clear()

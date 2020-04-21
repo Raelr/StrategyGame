@@ -82,9 +82,6 @@ func get_details():
 		"color" : faction_color
 	}
 
-func reset():
-	set_deselected()
-
 func reset_move():
 	var neighbours = get_possible_paths()
 	for neighbour in neighbours:

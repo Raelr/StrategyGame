@@ -82,9 +82,6 @@ func set_deselected():
 	elapsed = 0.0
 	update = true
 
-func reset():
-	set_deselected()
-
 func _on_Area2D_mouse_entered():
 	get_parent().moused_over(self)
 

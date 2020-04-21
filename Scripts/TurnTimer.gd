@@ -12,5 +12,3 @@ func increment_turn():
 	$BleedingShield/AnimationPlayer.queue("Idle")
 	turn += 1
 	$BleedingShield/TurnLabel.text = str(turn)
-
-
