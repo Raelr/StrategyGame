@@ -101,6 +101,7 @@ func populate_unit_ui(unit_name, unit_attack, unit_defence, unit_health, unit_co
 	$Camera2D/CanvasLayer/UnitPanel.populate_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color)
 
 func moused_over(object):
+	print("moused over" + object.name)
 	var container = get_container_by_type(object.get_type()) 
 	if not container.empty():
 		if container.back() != selected:
@@ -158,18 +159,21 @@ func select_element():
 		if details:
 			selected.outline_color = Color.yellow
 			selected.set_selected()
-			match details["type"]:
-				"region":
-					populate_region_ui(details["name"], details["wealth"], details["region type"])
-					selected_type = SELECTED.region
-				"unit":
-					on_unit_selected()
+			var type = selected.get_type()
+			match type:
+				0:
+					on_unit_selected(type)
 					populate_unit_ui(details["name"], details["attack"], details["defence"], details["health"], details["color"])
+				1:
+					populate_region_ui(details["name"], details["wealth"], details["region type"])
+					selected_type = type
+				2:
+					pass
 
-func on_unit_selected():
+func on_unit_selected(type):
 	selected.reset_move()
 	selected.highlight_paths($LineManager)
-	selected_type = SELECTED.unit
+	selected_type = type
 
 func deselect_all(container):
 	for element in container:
@@ -179,7 +183,7 @@ func reset_selected():
 	if selected:
 		selected.set_deselected()
 		selected.reset()
-		if selected_type == SELECTED.unit and selected.destination == null:
+		if selected_type == 0 and selected.destination == null:
 			$LineManager.reset()
 		selected_type = null
 		selected = null
@@ -212,6 +216,6 @@ func _input(event):
 					select_element()
 			if event.is_action_pressed("rmb") and not turn_over:
 				if not ui_moused_over:
-					if selected_type == SELECTED.unit:
+					if selected_type == 0:
 						var element = get_latest()
 						selected.move_command(element, $LineManager)
