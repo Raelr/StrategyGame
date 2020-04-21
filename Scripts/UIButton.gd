@@ -39,28 +39,28 @@ func _process(delta):
 func get_type():
 	return type
 
-# When the button is pressed, call the signla on the parent. 
-func _on_UIButtonIcon_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton:
-		if event.pressed:
-			if Input.is_action_just_pressed("lmb"):
-				emit_signal("on_press")
+func on_press():
+	emit_signal("on_press")
 
 func _on_UIButtonIcon_mouse_entered():
 	emit_signal("on_hover", self)
-	$ButtonSprite.material.set_shader_param("outline_color", outline_active)
-	if show_icon_outline:
-		$ButtonSprite/Icon.material.set_shader_param("outline_color", outline_active)
-	if change_icon_color:
-		$ButtonSprite/Icon.material.set_shader_param("unit_color", outline_active)
 
 func _on_UIButtonIcon_mouse_exited():
 	emit_signal("on_hover_exit", self)
+
+func set_deselected():
 	$ButtonSprite.material.set_shader_param("outline_color", outline_idle)
 	if show_icon_outline:
 		$ButtonSprite/Icon.material.set_shader_param("outline_color", outline_idle)
 	if change_icon_color:
 		$ButtonSprite/Icon.material.set_shader_param("unit_color", icon_idle)
+
+func set_selected():
+	$ButtonSprite.material.set_shader_param("outline_color", outline_active)
+	if show_icon_outline:
+		$ButtonSprite/Icon.material.set_shader_param("outline_color", outline_active)
+	if change_icon_color:
+		$ButtonSprite/Icon.material.set_shader_param("unit_color", outline_active)
 
 func on_button_status_change(status):
 	monitoring = status

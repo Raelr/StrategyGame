@@ -116,6 +116,8 @@ func get_container_by_type(type):
 			container = moused_units
 		1: 
 			container = moused_elements
+		2: 
+			container = moused_ui
 	return container
 
 func select_latest():
@@ -125,6 +127,10 @@ func select_latest():
 
 func get_latest():
 	var element = null
+	if not moused_ui.empty():
+		element = moused_ui.back()
+		deselect_all(moused_units)
+		deselect_all(moused_elements)
 	if not moused_units.empty():
 			element = moused_units.back()
 			deselect_all(moused_elements)
@@ -154,21 +160,19 @@ func select_element():
 		if new_selected:
 			reset_selected()
 			selected = element
-		if selected:
-			details = selected.get_details()
-		if details:
-			selected.outline_color = Color.yellow
 			selected.set_selected()
 			var type = selected.get_type()
 			match type:
 				0:
+					details = selected.get_details()
 					on_unit_selected(type)
 					populate_unit_ui(details["name"], details["attack"], details["defence"], details["health"], details["color"])
 				1:
+					details = selected.get_details()
 					populate_region_ui(details["name"], details["wealth"], details["region type"])
 					selected_type = type
 				2:
-					pass
+					selected.on_press()
 
 func on_unit_selected(type):
 	selected.reset_move()
@@ -182,7 +186,6 @@ func deselect_all(container):
 func reset_selected():
 	if selected:
 		selected.set_deselected()
-		selected.reset()
 		if selected_type == 0 and selected.destination == null:
 			$LineManager.reset()
 		selected_type = null

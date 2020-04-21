@@ -72,7 +72,6 @@ func set_deselected():
 
 func get_details():
 	return {
-		"type": "unit",
 		"name": unit_name,
 		"attack": attack,
 		"defence": defence,
