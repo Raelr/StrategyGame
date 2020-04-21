@@ -36,12 +36,6 @@ var types = [
 var regions = {}
 
 func _ready():
-	$Camera2D/CanvasLayer/Popup.connect("on_button_mouseover", self, "set_ui_moused_over")
-	$Camera2D/CanvasLayer/Popup.connect("on_button_exit", self, "set_ui_moused_exit")
-	$Camera2D/CanvasLayer/RegionPanel.connect("on_button_mouseover", self, "set_ui_moused_over")
-	$Camera2D/CanvasLayer/RegionPanel.connect("on_button_exit", self, "set_ui_moused_exit")
-	$Camera2D/CanvasLayer/RegionPanel.connect("on_button_close", self, "disable_region_ui")
-	$Camera2D/CanvasLayer/UnitPanel.connect("on_button_exit", self, "set_ui_moused_exit")
 	$Camera2D/CanvasLayer/UnitPanel.connect("on_button_close", self, "disable_region_ui")
 
 func disable_ui():
@@ -101,7 +95,6 @@ func populate_unit_ui(unit_name, unit_attack, unit_defence, unit_health, unit_co
 	$Camera2D/CanvasLayer/UnitPanel.populate_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color)
 
 func moused_over(object):
-	print("moused over" + object.name)
 	var container = get_container_by_type(object.get_type()) 
 	if not container.empty():
 		if container.back() != selected:
@@ -131,19 +124,12 @@ func get_latest():
 		element = moused_ui.back()
 		deselect_all(moused_units)
 		deselect_all(moused_elements)
-	if not moused_units.empty():
+	elif not moused_units.empty():
 			element = moused_units.back()
 			deselect_all(moused_elements)
 	elif not moused_elements.empty():
 			element = moused_elements.back()
 	return element
-
-func set_ui_moused_over():
-	ui_moused_over = true
-
-func set_ui_moused_exit():
-	ui_moused_over = false
-	select_latest()
 
 func mouse_left(object):
 	var container = get_container_by_type(object.get_type()) 
@@ -173,6 +159,7 @@ func select_element():
 					selected_type = type
 				2:
 					selected.on_press()
+					selected_type = type
 
 func on_unit_selected(type):
 	selected.reset_move()
@@ -215,10 +202,8 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.is_action_pressed("lmb"):
-				if not ui_moused_over:
 					select_element()
 			if event.is_action_pressed("rmb") and not turn_over:
-				if not ui_moused_over:
 					if selected_type == 0:
 						var element = get_latest()
 						selected.move_command(element, $LineManager)
