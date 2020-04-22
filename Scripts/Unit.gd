@@ -20,6 +20,7 @@ export (int) var max_health
 export (int) var current_health
 export (String) var unit_name
 export (enums.SELECTION_TYPE) var selection_type
+export (NodePath) var start_region
 
 var current_region = null
 var destination = null
@@ -27,7 +28,6 @@ var elapsed = 0.0
 var line_manager = null
 var path = null
 var is_dead = false
-var init = false
 
 signal on_move_command(region, faction, unit)
 signal finished_move
@@ -39,6 +39,7 @@ func _ready():
 	world.connect("on_turn_ended", self, "register_position")
 	$UnitHealth.max_value = max_health
 	$UnitHealth.value = current_health
+	set_current_region(get_node(start_region))
 
 func get_type():
 	return selection_type
@@ -95,11 +96,6 @@ func _on_Area2D_mouse_entered():
 
 func _on_Area2D_mouse_exited():
 	get_parent().mouse_left(self)
-
-func _on_Unit_area_entered(area):
-	if not current_region and not init:
-		set_current_region(area)
-		init = true
 
 func move(dest):
 	destination = dest

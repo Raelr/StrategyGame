@@ -28,7 +28,7 @@
 resource_local_to_scene = true
 shader = ExtResource( 28 )
 shader_param/width = 1.0
-shader_param/outline_color = null
+shader_param/outline_color = Color( 0.290196, 0, 0.670588, 1 )
 shader_param/unit_color = Color( 1, 1, 1, 1 )
 shader_param/target_color = null
 shader_param/target_color_2 = null
@@ -39,7 +39,7 @@ shader_param/darken = false
 resource_local_to_scene = true
 shader = ExtResource( 28 )
 shader_param/width = 1.0
-shader_param/outline_color = null
+shader_param/outline_color = Color( 0.290196, 0, 0.670588, 1 )
 shader_param/unit_color = Color( 1, 1, 1, 1 )
 shader_param/target_color = null
 shader_param/target_color_2 = null
@@ -179,7 +179,7 @@ z_index = -1
 position = Vector2( 341.758, 288.962 )
 region_details = ExtResource( 2 )
 region_overlay = ExtResource( 4 )
-occupied_color = Color( 1, 1, 1, 0 )
+occupied_color = Color( 0.290196, 0, 0.670588, 0.5 )
 change_duration = 2.0
 neighbours = [ NodePath("../SouthRegion"), NodePath("../NorthRegion") ]
 selection_type = 1
@@ -192,7 +192,7 @@ scale = Vector2( 4, 4 )
 texture = ExtResource( 2 )
 
 [node name="Overlay" parent="WestRegion/Details" index="0"]
-modulate = Color( 0, 0, 0, 0 )
+modulate = Color( 0.290196, 0, 0.670588, 0.5 )
 texture = ExtResource( 4 )
 
 [node name="Area2D" parent="WestRegion/Details" index="1" instance=ExtResource( 1 )]
@@ -206,7 +206,7 @@ polygon = PoolVector2Array( -79.9742, 59.9441, -76.0089, 59.933, -75.9755, 63.92
 position = Vector2( 461.539, 328.885 )
 region_details = ExtResource( 6 )
 region_overlay = ExtResource( 7 )
-occupied_color = Color( 0, 0, 0, 0 )
+occupied_color = Color( 0.290196, 0, 0.670588, 0.5 )
 change_duration = 2.0
 region_type = 1
 neighbours = [ NodePath("../WestRegion"), NodePath("../NorthRegion"), NodePath("../SouthLakeRegion") ]
@@ -220,7 +220,7 @@ scale = Vector2( 4, 4 )
 texture = ExtResource( 6 )
 
 [node name="Overlay" parent="SouthRegion/Details" index="0"]
-modulate = Color( 0, 0, 0, 0 )
+modulate = Color( 0.290196, 0, 0.670588, 0.5 )
 texture = ExtResource( 7 )
 
 [node name="CollisionPolygon2D" parent="SouthRegion" index="1"]
@@ -231,7 +231,7 @@ polygon = PoolVector2Array( -43.9943, -55.9837, -40.0232, -55.9937, -40.0132, -6
 position = Vector2( 461.811, 225.09 )
 region_details = ExtResource( 9 )
 region_overlay = ExtResource( 10 )
-occupied_color = Color( 0, 0, 0, 0 )
+occupied_color = Color( 0, 0, 0, 0.5 )
 change_duration = 2.0
 region_type = 2
 neighbours = [ NodePath("../WestRegion"), NodePath("../SouthRegion"), NodePath("../EastRegion") ]
@@ -246,7 +246,7 @@ scale = Vector2( 4, 4 )
 texture = ExtResource( 9 )
 
 [node name="Overlay" parent="NorthRegion/Details" index="0"]
-modulate = Color( 0, 0, 0, 0 )
+modulate = Color( 0, 0, 0, 0.5 )
 texture = ExtResource( 10 )
 
 [node name="CollisionPolygon2D" parent="NorthRegion" index="1"]
@@ -364,13 +364,10 @@ position = Vector2( 341.425, 288.968 )
 unitColor = Color( 1, 1, 1, 1 )
 faction_color = Color( 0.290196, 0, 0.670588, 1 )
 move_speed = 0.4
+start_region = NodePath("../WestRegion")
 
 [node name="Unit" parent="Unit" index="0"]
 material = SubResource( 8 )
-frame = 0
-
-[node name="CollisionPolygon2D" parent="Unit" index="1"]
-polygon = PoolVector2Array( -16.2336, -7.89004, -16.2527, -11.0597, -13.5531, -11.0914, -13.7754, -16.84, -10.79, -16.8972, -10.9488, -25.5677, -8.96694, -25.6629, -9.15751, -29.2201, -5.79094, -29.3154, -5.88622, -32.4278, 8.85042, -32.269, 8.97746, -27.1874, 12.2487, -27.2509, 11.9947, -25.0913, 14.2814, -24.9642, 14.0591, -15.1186, 17.1398, -15.1186, 17.0763, -11.8791, 20.3158, -11.8537, 20.7604, 3.48639, 23.9682, 3.29583, 24.0952, 17.4036, 21.2368, 18.1976, 21.1416, 21.5324, 15.2723, 21.831, 15.285, 25.3246, 17.794, 25.5469, 17.8893, 34.8208, 21.1606, 34.9161, 20.9383, 39.0449, 18.2704, 39.2037, 17.9211, 44.0312, -1.22385, 44.2472, -18.1202, 44.1837, -18.0439, 26.7411, -15.2808, 26.6776, -15.23, 11.8901, -9.06855, 11.8901, -9.13207, 10.2386, -20.337, 10.391, -20.337, 7.37382, -29.3251, 7.3103, -29.3696, 0.00550079, -23.1573, -0.934597, -23.1891, -3.82476, -19.2826, -3.793, -19.3461, -7.85828 )
 
 [node name="LineManager" parent="." instance=ExtResource( 3 )]
 dot_spawn_duration = 0.075
@@ -380,26 +377,20 @@ default_line_color = Color( 0.811765, 0.792157, 0.247059, 1 )
 position = Vector2( 461.886, 224.997 )
 faction = 1
 move_speed = 0.5
+start_region = NodePath("../NorthRegion")
 
 [node name="Unit" parent="Unit2" index="0"]
 material = SubResource( 9 )
-frame = 0
-
-[node name="CollisionPolygon2D" parent="Unit2" index="1"]
-polygon = PoolVector2Array( -16.2336, -7.89004, -16.2527, -11.0597, -13.5531, -11.0914, -13.7754, -16.84, -10.79, -16.8972, -10.9488, -25.5677, -8.96694, -25.6629, -9.15751, -29.2201, -5.79094, -29.3154, -5.88622, -32.4278, 8.85042, -32.269, 8.97746, -27.1874, 12.2487, -27.2509, 11.9947, -25.0913, 14.2814, -24.9642, 14.0591, -15.1186, 17.1398, -15.1186, 17.0763, -11.8791, 20.3158, -11.8537, 20.7604, 3.48639, 23.9682, 3.29583, 24.0952, 17.4036, 21.2368, 18.1976, 21.1416, 21.5324, 15.2723, 21.831, 15.285, 25.3246, 17.794, 25.5469, 17.8893, 34.8208, 21.1606, 34.9161, 20.9383, 39.0449, 18.2704, 39.2037, 17.9211, 44.0312, -1.22385, 44.2472, -18.1202, 44.1837, -18.0439, 26.7411, -15.2808, 26.6776, -15.23, 11.8901, -9.06855, 11.8901, -9.13207, 10.2386, -20.337, 10.391, -20.337, 7.37382, -29.3251, 7.3103, -29.3696, 0.00550079, -23.1573, -0.934597, -23.1891, -3.82476, -19.2826, -3.793, -19.3461, -7.85828 )
 
 [node name="Unit3" parent="." instance=ExtResource( 27 )]
 position = Vector2( 461.365, 328.78 )
 unitColor = Color( 1, 1, 1, 1 )
 faction_color = Color( 0.290196, 0, 0.670588, 1 )
 move_speed = 0.5
+start_region = NodePath("../SouthRegion")
 
 [node name="Unit" parent="Unit3" index="0"]
 material = SubResource( 10 )
-frame = 0
-
-[node name="CollisionPolygon2D" parent="Unit3" index="1"]
-polygon = PoolVector2Array( -16.2336, -7.89004, -16.2527, -11.0597, -13.5531, -11.0914, -13.7754, -16.84, -10.79, -16.8972, -10.9488, -25.5677, -8.96694, -25.6629, -9.15751, -29.2201, -5.79094, -29.3154, -5.88622, -32.4278, 8.85042, -32.269, 8.97746, -27.1874, 12.2487, -27.2509, 11.9947, -25.0913, 14.2814, -24.9642, 14.0591, -15.1186, 17.1398, -15.1186, 17.0763, -11.8791, 20.3158, -11.8537, 20.7604, 3.48639, 23.9682, 3.29583, 24.0952, 17.4036, 21.2368, 18.1976, 21.1416, 21.5324, 15.2723, 21.831, 15.285, 25.3246, 17.794, 25.5469, 17.8893, 34.8208, 21.1606, 34.9161, 20.9383, 39.0449, 18.2704, 39.2037, 17.9211, 44.0312, -1.22385, 44.2472, -18.1202, 44.1837, -18.0439, 26.7411, -15.2808, 26.6776, -15.23, 11.8901, -9.06855, 11.8901, -9.13207, 10.2386, -20.337, 10.391, -20.337, 7.37382, -29.3251, 7.3103, -29.3696, 0.00550079, -23.1573, -0.934597, -23.1891, -3.82476, -19.2826, -3.793, -19.3461, -7.85828 )
 
 [editable path="Camera2D"]
 

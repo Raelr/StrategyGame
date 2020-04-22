@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Sprites/Popup.png" type="Texture" id=1]
 [ext_resource path="res://fonts/PixelArtFont.tres" type="DynamicFont" id=2]
@@ -23,6 +23,17 @@ shader_param/darken = true
 [sub_resource type="ShaderMaterial" id=2]
 resource_local_to_scene = true
 shader = ExtResource( 8 )
+shader_param/width = 0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 0.168627, 0.0980392, 0.14902, 1 )
+shader_param/target_color = Color( 1, 1, 1, 1 )
+shader_param/target_color_2 = null
+shader_param/tolerance = null
+shader_param/darken = true
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = ExtResource( 8 )
 shader_param/width = 1.0
 shader_param/outline_color = Color( 0.270588, 0.156863, 0.235294, 1 )
 shader_param/unit_color = Color( 0.152941, 0.0784314, 0.129412, 1 )
@@ -31,10 +42,20 @@ shader_param/target_color_2 = Color( 0, 0, 0, 1 )
 shader_param/tolerance = null
 shader_param/darken = true
 
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = ExtResource( 8 )
+shader_param/width = 0
+shader_param/outline_color = null
+shader_param/unit_color = Color( 0.168627, 0.0980392, 0.14902, 1 )
+shader_param/target_color = Color( 1, 1, 1, 1 )
+shader_param/target_color_2 = null
+shader_param/tolerance = null
+shader_param/darken = true
+
 [node name="Control" type="Control"]
 margin_right = 40.0
 margin_bottom = 40.0
-mouse_filter = 1
 script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -56,6 +77,9 @@ update = true
 [node name="ButtonSprite" parent="ConfirmButton" index="0"]
 material = SubResource( 1 )
 
+[node name="Icon" parent="ConfirmButton/ButtonSprite" index="0"]
+material = SubResource( 2 )
+
 [node name="CollisionPolygon2D" parent="ConfirmButton" index="1"]
 visible = false
 polygon = PoolVector2Array( -44.0259, 28.196, -40.0175, 28.1425, -40.0175, 31.8838, -36.0624, 31.9907, -36.009, 35.7853, 32.028, 35.8922, 32.0814, 32.151, 36.0365, 32.151, 36.0365, 28.0356, 39.8846, 28.0356, 39.8206, -31.9951, 36.1434, -32.102, 36.1328, -36.3243, 32.3487, -36.2708, 32.028, -40.012, -35.8486, -40.2258, -35.9021, -36.057, -40.0174, -36.1639, -40.0174, -32.102, -44.0793, -32.102 )
@@ -70,9 +94,10 @@ outline_active = Color( 0.952941, 1, 0, 1 )
 update = true
 
 [node name="ButtonSprite" parent="ExitButton" index="0"]
-material = SubResource( 2 )
+material = SubResource( 3 )
 
 [node name="Icon" parent="ExitButton/ButtonSprite" index="0"]
+material = SubResource( 4 )
 texture = ExtResource( 5 )
 
 [node name="CollisionPolygon2D" parent="ExitButton" index="1"]

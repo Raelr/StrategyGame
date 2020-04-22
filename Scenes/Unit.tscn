@@ -109,6 +109,7 @@ margin_top = 6.30026
 margin_right = 0.681137
 margin_bottom = 9.30026
 rect_scale = Vector2( 2, 2 )
+mouse_filter = 2
 max_value = 3.0
 value = 3.0
 rounded = true
