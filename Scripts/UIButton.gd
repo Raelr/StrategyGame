@@ -2,6 +2,8 @@ tool
 extends Area2D
 class_name UIButtonIcon
 
+# TODO: Create base SelectableUI class.
+
 const enums = preload('res://Scripts/FactionData.gd')
 
 export (Texture) var button

@@ -2,6 +2,7 @@ tool
 extends Area2D
 
 # TODO: Strip this class of specific functionality and make it more generic for reuse. 
+# TODO: Use Selectable to handle shared functionality in this class.
 # Possibly make it a class_name so that it can be used by multiple units. 
 
 # Probably inefficient to preload this onto every unit instance?????

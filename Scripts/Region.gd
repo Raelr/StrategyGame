@@ -1,6 +1,9 @@
 tool
 extends Node2D
 
+# TODO: Use Selectable to handle shared functionality in this class. 
+# TODO: Switch region to use signals instead of manually assigning values to worldmanager.
+
 enum REGIONTYPE { grassLand, hills, mountains }
 
 const enums = preload("res://Scripts/FactionData.gd")
@@ -57,14 +60,14 @@ func on_new_occupant(color):
 	elapsed = 0.0
 	update = true
 
+# Thought - maybe move this into the Selectable class?
 func transition_color(delta, ui, dest_color, border):
 	if elapsed < change_duration:
 		elapsed += delta
 		ui.modulate = ui.modulate.linear_interpolate(dest_color, elapsed / change_duration)
-		change_outline(current_outline_color.linear_interpolate(border, elapsed / change_duration))
+		#change_outline(current_outline_color.linear_interpolate(border, elapsed / change_duration))
 	elif elapsed >= change_duration:
 		ui.modulate = dest_color
-		change_outline(border)
 		elapsed = 0.0
 		update = false
 
@@ -73,14 +76,10 @@ func change_outline(color):
 	current_outline_color = color
 
 func set_selected():
-	outline_color = Color.yellow
-	elapsed = 0.0
-	update = true
+	change_outline(Color.yellow)
 
 func set_deselected():
-	outline_color = occupied_color
-	elapsed = 0.0
-	update = true
+	change_outline(occupied_color)
 
 func _on_Area2D_mouse_entered():
 	get_parent().moused_over(self)

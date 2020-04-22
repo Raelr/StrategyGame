@@ -3,7 +3,10 @@ extends Node2D
 class_name Selectable
 
 const enums = preload("res://Scripts/FactionData.gd")
+
 export (bool) var update = false
+export (Texture) var outlined_sprite
+
 var selection_type
 
 signal on_hover(selectable, type)
@@ -21,3 +24,5 @@ func set_selection_type(type):
 func get_type():
 	return selection_type
 
+func set_outline(color):
+	outlined_sprite.material.set_shader_param("outline_color", color)
