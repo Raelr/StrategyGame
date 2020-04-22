@@ -152,23 +152,20 @@ func select_element():
 			selected = element
 			selected.set_selected()
 			var type = selected.get_type()
+			if type == 0 || type == 1:
+				details = selected.get_details()
 			match type:
 				0:
-					details = selected.get_details()
-					on_unit_selected(type)
+					selected.reset_move()
+					selected.highlight_paths($LineManager)
+					selected_type = type
 					populate_unit_ui(details["name"], details["attack"], details["defence"], details["health"], details["color"])
 				1:
-					details = selected.get_details()
 					populate_region_ui(details["name"], details["wealth"], details["region type"])
 					selected_type = type
 				2:
 					selected.on_press()
 					selected_type = type
-
-func on_unit_selected(type):
-	selected.reset_move()
-	selected.highlight_paths($LineManager)
-	selected_type = type
 
 func deselect_all(container):
 	for element in container:
