@@ -58,7 +58,15 @@ func register_move_command(region, faction, unit):
 			region_details["moving"].push_back(unit)
 			if not region_details["factions"].has(faction):
 				region_details["factions"].push_back(faction)
-	#print(regions)
+	erase_occupation(unit)
+
+func erase_occupation(unit):
+	var region = unit.current_region
+	if regions.has(region):
+		if regions[region].occupying.has(unit):
+			regions[region].occupying.erase(unit)
+			if regions[region].occupying.empty():
+				regions[region].factions.erase(unit.faction)
 
 func register_unit_position(unit, faction, region):
 	#print("Registering unit: " + unit.name + " of faction: " + str(faction) + " in region: " + region.region_name)
@@ -176,6 +184,7 @@ func reset_selected():
 
 func process_turn():
 	turn_over = true
+	
 	emit_signal("on_turn_changed")
 	disable_ui()
 	$CommandManager.process_command(regions, types)

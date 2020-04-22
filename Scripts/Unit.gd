@@ -87,6 +87,7 @@ func reset_move():
 	var neighbours = get_possible_paths()
 	for neighbour in neighbours:
 		get_parent().deregister_move(neighbour, self)
+	register_position()
 
 func change_outline(color):
 	$Unit.material.set_shader_param("outline_color", color)
