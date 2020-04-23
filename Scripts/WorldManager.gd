@@ -98,8 +98,8 @@ func populate_region_ui(region_name, wealth, region_type):
 func populate_unit_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color):
 	$Camera2D/CanvasLayer/UnitPanel.populate_ui(unit_name, unit_attack, unit_defence, unit_health, unit_color)
 
-func moused_over(object):
-	var container = get_container_by_type(object.get_type()) 
+func moused_over(object, type):
+	var container = get_container_by_type(type) 
 	if not container.empty():
 		if container.back() != selected:
 			container.back().set_deselected()
@@ -135,8 +135,8 @@ func get_latest():
 			element = moused_elements.back()
 	return element
 
-func mouse_left(object):
-	var container = get_container_by_type(object.get_type()) 
+func mouse_left(object, type):
+	var container = get_container_by_type(type) 
 	if object != selected:
 		object.set_deselected()
 	container.erase(object)

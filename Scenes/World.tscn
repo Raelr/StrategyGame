@@ -182,7 +182,6 @@ region_overlay = ExtResource( 4 )
 occupied_color = Color( 0.290196, 0, 0.670588, 0.5 )
 change_duration = 2.0
 neighbours = [ NodePath("../SouthRegion"), NodePath("../NorthRegion") ]
-selection_type = 1
 region_name = "Weslund"
 wealth = 1
 
@@ -210,7 +209,6 @@ occupied_color = Color( 0.290196, 0, 0.670588, 0.5 )
 change_duration = 2.0
 region_type = 1
 neighbours = [ NodePath("../WestRegion"), NodePath("../NorthRegion"), NodePath("../SouthLakeRegion") ]
-selection_type = 1
 region_name = "Ososia"
 wealth = 2
 
@@ -235,7 +233,6 @@ occupied_color = Color( 0, 0, 0, 0.5 )
 change_duration = 2.0
 region_type = 2
 neighbours = [ NodePath("../WestRegion"), NodePath("../SouthRegion"), NodePath("../EastRegion") ]
-selection_type = 1
 region_name = "Emyn Dur"
 wealth = 1
 
@@ -260,7 +257,6 @@ region_overlay = ExtResource( 14 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 neighbours = [ NodePath("../NorthRegion"), NodePath("../EastLakeRegion") ]
-selection_type = 1
 region_name = "Tuzari"
 wealth = 3
 
@@ -285,7 +281,6 @@ region_overlay = ExtResource( 16 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 neighbours = [ NodePath("../SouthRegion"), NodePath("../SouthEastLakeRegion") ]
-selection_type = 1
 region_name = "Albus"
 wealth = 2
 
@@ -310,7 +305,6 @@ occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 region_type = 1
 neighbours = [ NodePath("../SouthLakeRegion"), NodePath("../EastLakeRegion") ]
-selection_type = 1
 region_name = "Duvej"
 wealth = 4
 
@@ -334,7 +328,6 @@ region_overlay = ExtResource( 23 )
 occupied_color = Color( 0, 0, 0, 0 )
 change_duration = 2.0
 neighbours = [ NodePath("../EastRegion"), NodePath("../SouthEastLakeRegion") ]
-selection_type = 1
 region_name = "Pietro"
 wealth = 1
 

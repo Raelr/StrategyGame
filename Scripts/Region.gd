@@ -1,23 +1,19 @@
 tool
-extends Node2D
+extends Selectable
 
 # TODO: Use Selectable to handle shared functionality in this class. 
 # TODO: Switch region to use signals instead of manually assigning values to worldmanager.
 
 enum REGIONTYPE { grassLand, hills, mountains }
 
-const enums = preload("res://Scripts/FactionData.gd")
-
 # Configuration Variables
 export (Texture) var region_details
 export (Texture) var region_overlay
-export (bool) var update = false
 export (Color) var occupied_color
 export (float) var change_duration
 export (float) var border_change_duration
 export (REGIONTYPE) var region_type
 export (Array) var neighbours
-export (enums.SELECTION_TYPE) var selection_type
 
 # Region Variables
 export (String) var region_name
@@ -28,14 +24,13 @@ onready var current_outline_color = Color(0,0,0,1)
 var elapsed = 0.0
 
 func _ready():
+	set_selection_type(enums.SELECTION_TYPE.region)
+	on_ready()
 	change_region_sprite()
-
-func get_type():
-	return selection_type
+	outlined_sprite = $Details
 
 func get_details():
 	return {
-		"type": "region",
 		"name": region_name,
 		"wealth": wealth,
 		"region type": region_type
@@ -71,21 +66,14 @@ func transition_color(delta, ui, dest_color, border):
 		elapsed = 0.0
 		update = false
 
-func change_outline(color):
-	$Details.material.set_shader_param("outline_color", color)
-	current_outline_color = color
-
-func set_selected():
-	change_outline(Color.yellow)
-
 func set_deselected():
-	change_outline(occupied_color)
+	set_outline(occupied_color)
 
 func _on_Area2D_mouse_entered():
-	get_parent().moused_over(self)
+	emit_signal("on_hover", self, get_type())
 
 func _on_Area2D_mouse_exited():
-	get_parent().mouse_left(self)
+	emit_signal("on_hover_exit", self, get_type())
 
 func get_neighbours():
 	var n = Array()

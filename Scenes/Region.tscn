@@ -18,6 +18,7 @@ shader_param/darken = false
 "region",
 ]]
 script = ExtResource( 4 )
+selected_color = Color( 0.992157, 1, 0, 1 )
 
 [node name="Details" type="Sprite" parent="."]
 material = SubResource( 1 )
