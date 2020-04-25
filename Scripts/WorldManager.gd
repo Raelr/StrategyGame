@@ -1,5 +1,8 @@
 extends Node2D
 
+# KNOWN BUGS:
+# 1. Units are moving BETWEEN different regions instead of only moving to a single region. 
+
 enum FACTIONS {player, neutral}
 var moused_elements = Array()
 var moused_units = Array()
@@ -46,6 +49,7 @@ func disable_panel(panel):
 # TODO: Add ability to modify command abilities based on given commands. 
 # I.e: A unit moving from one location to another is no longer 'occupying the original location'
 func register_move_command(region, faction, unit):
+	$WorldStateManager.add_region(region)
 	if not regions.has(region):
 		regions[region] = {
 			"factions" : [faction],
