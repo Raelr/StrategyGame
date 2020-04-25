@@ -46,6 +46,7 @@ func set_occupied(overlay_color, delta):
 func on_new_occupant(color):
 	occupied_color = Color(color.r, color.g, color.b, 0.5)
 	normal_color = occupied_color
+	set_outline(occupied_color)
 	elapsed = 0.0
 	update = true
 

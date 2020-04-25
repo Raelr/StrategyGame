@@ -45,10 +45,10 @@ func on_press():
 	emit_signal("on_press")
 
 func _on_UIButtonIcon_mouse_entered():
-	emit_signal("on_hover", self)
+	emit_signal("on_hover", self, get_type())
 
 func _on_UIButtonIcon_mouse_exited():
-	emit_signal("on_hover_exit", self)
+	emit_signal("on_hover_exit", self, get_type())
 
 func set_deselected():
 	$ButtonSprite.material.set_shader_param("outline_color", outline_idle)
