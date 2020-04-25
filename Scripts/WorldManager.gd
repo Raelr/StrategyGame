@@ -49,7 +49,7 @@ func disable_panel(panel):
 # TODO: Add ability to modify command abilities based on given commands. 
 # I.e: A unit moving from one location to another is no longer 'occupying the original location'
 func register_move_command(region, faction, unit):
-	$WorldStateManager.add_region(region)
+	$WorldStateManager.add_moving_units(unit.current_region, region, faction, unit)
 	if not regions.has(region):
 		regions[region] = {
 			"factions" : [faction],

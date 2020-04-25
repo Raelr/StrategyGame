@@ -26,11 +26,20 @@ func add_region(region):
 			"occupying" : Array(),
 			"moving" : {}
 		}
-	print("Region: " + region.region_name + " added to world_state!")
+		print("\nRegion: " + region.region_name + " added to world_state!")
 
 func add_moving_units(current_region, destination_region, faction, unit):
-	if world_state.has(region):
-		
+	add_region(destination_region)
+	if not world_state[destination_region].moving.has(unit):
+		world_state[destination_region].moving[unit] = {
+			"moving_from" : current_region,
+			"speed" : 0
+		}
+		print("Added " + unit.name + " as moving to region: " + destination_region.region_name +  " from: " + current_region.region_name)
+		print("With speed: " + str(0))
+
+func remove_previous_moves(unit, neighbours):
+	
 
 func remove_empty_regions(region):
 	if world_state.has(region):
