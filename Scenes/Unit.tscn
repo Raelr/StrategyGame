@@ -79,6 +79,7 @@ tracks/0/keys = {
 "Unit",
 ]]
 script = ExtResource( 3 )
+outlined_sprite = NodePath("Unit")
 selected_color = Color( 1, 0.960784, 0, 1 )
 defence = 1
 attack = 2

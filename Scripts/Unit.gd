@@ -7,7 +7,6 @@ extends Selectable
 
 export (enums.FACTION) var faction
 export (Color) var unitColor
-export (Color) var outline_color
 export (Color) var faction_color
 export (float) var move_speed
 
@@ -60,12 +59,12 @@ func _process(delta):
 				update = false
 
 func set_selected():
-	change_outline(Color.yellow)
+	.set_selected()
 	if not $Unit/AnimationPlayer.current_animation == "salute" and not $Unit/AnimationPlayer.current_animation == "":
 		$Unit/AnimationPlayer.play("salute")
 
 func set_deselected():
-	change_outline(Color.black)
+	.set_deselected()
 	$Unit/AnimationPlayer.play("desalute")
 	$Unit/AnimationPlayer.queue("idle")
 
@@ -86,9 +85,6 @@ func reset_move():
 	for neighbour in neighbours:
 		get_parent().deregister_move(neighbour, self)
 	register_position()
-
-func change_outline(color):
-	$Unit.material.set_shader_param("outline_color", color)
 
 func _on_Area2D_mouse_entered():
 	emit_signal("on_hover", self, get_type())
