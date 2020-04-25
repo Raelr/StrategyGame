@@ -1,18 +1,14 @@
 tool
-extends Area2D
+extends Selectable
 
 # TODO: Strip this class of specific functionality and make it more generic for reuse. 
 # TODO: Use Selectable to handle shared functionality in this class.
 # Possibly make it a class_name so that it can be used by multiple units. 
 
-# Probably inefficient to preload this onto every unit instance?????
-const enums = preload('res://Scripts/FactionData.gd')
-
 export (enums.FACTION) var faction
 export (Color) var unitColor
 export (Color) var outline_color
 export (Color) var faction_color
-export (bool) var update
 export (float) var move_speed
 
 export (int) var defence
@@ -20,7 +16,6 @@ export (int) var attack
 export (int) var max_health
 export (int) var current_health
 export (String) var unit_name
-export (enums.SELECTION_TYPE) var selection_type
 export (NodePath) var start_region
 
 var current_region = null
@@ -34,6 +29,8 @@ signal on_move_command(region, faction, unit)
 signal finished_move
 
 func _ready():
+	set_selection_type(enums.SELECTION_TYPE.unit)
+	on_ready()
 	$Unit.material.set_shader_param("unit_color", faction_color)
 	$Unit/AnimationPlayer.play("idle")
 	var world = get_tree().get_root().get_child(0)
@@ -94,10 +91,10 @@ func change_outline(color):
 	$Unit.material.set_shader_param("outline_color", color)
 
 func _on_Area2D_mouse_entered():
-	get_parent().moused_over(self)
+	emit_signal("on_hover", self, get_type())
 
 func _on_Area2D_mouse_exited():
-	get_parent().mouse_left(self)
+	emit_signal("on_hover_exit", self, get_type())
 
 func move(dest):
 	destination = dest
