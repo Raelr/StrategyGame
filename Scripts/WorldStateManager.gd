@@ -26,9 +26,10 @@ func add_region(region):
 			"occupying" : Array(),
 			"moving" : {}
 		}
-		print("\nRegion: " + region.region_name + " added to world_state!")
+		print("Region: " + region.region_name + " added to world_state!")
 
 func add_moving_units(current_region, destination_region, faction, unit):
+	remove_previous_moves(unit)
 	add_region(destination_region)
 	if not world_state[destination_region].moving.has(unit):
 		world_state[destination_region].moving[unit] = {
@@ -38,9 +39,14 @@ func add_moving_units(current_region, destination_region, faction, unit):
 		print("Added " + unit.name + " as moving to region: " + destination_region.region_name +  " from: " + current_region.region_name)
 		print("With speed: " + str(0))
 
-func remove_previous_moves(unit, neighbours):
+func remove_previous_moves(unit):
+	var neighbours = unit.get_possible_paths()
+	for neighbour in neighbours:
+		if world_state.has(neighbour):
+			if world_state[neighbour].moving.has(unit):
+				world_state[neighbour].moving.erase(unit)
+				print("\nRemoving move command for " + unit.name + " to move to: " + neighbour.region_name)
 	
-
 func remove_empty_regions(region):
 	if world_state.has(region):
 		if no_factions(world_state[region]):
