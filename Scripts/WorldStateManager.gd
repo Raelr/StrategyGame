@@ -16,9 +16,6 @@ var world_state = {}
 # 	 "speed" : 0
 # }
 
-func add_occupying_unit(unit):
-	pass
-
 func add_region(region):
 	if not world_state.has(region):
 		world_state[region] = {
@@ -53,7 +50,23 @@ func remove_previous_moves(unit, faction):
 					world_state[neighbour].factions.erase(faction)
 				if no_moving_units(world_state[neighbour]):
 					if no_occupations(world_state[neighbour]):
-						remove_empty_regions(world_state[neighbour])
+						remove_empty_regions(neighbour)
+
+func add_occupying_unit(unit, faction, region):
+	add_region(region)
+	if not world_state[region].occupying.has(unit):
+		world_state[region].occupying.push_back(unit)
+		if not world_state[region].factions.has(faction):
+			world_state[region].factions.push_back(faction)
+	print("Added " + unit.name + " as occupying region: " + region.region_name)
+
+func remove_previous_occupations(unit, faction, region):
+	if world_state.has(region):
+		if world_state[region].occupying.has(unit):
+			world_state[region].occupying.erase(unit)
+		if world_state[region].occupying.empty():
+			world_state[region].factions.erase(faction)
+		print("Removed unit: " + unit.name + " from occupying region: " + region.region_name)
 
 func faction_in_region(faction, region):
 	var has_faction = false
@@ -61,12 +74,14 @@ func faction_in_region(faction, region):
 		if unit.faction == faction:
 			has_faction = true
 			print("Faction: " + str(faction) + " still exists in region!")
+	print("Does faction still exist in region? " + str(has_faction))
 	return has_faction
 
 func remove_empty_regions(region):
 	if world_state.has(region):
 		if no_factions(world_state[region]):
 			world_state.erase(region)
+			print("Removing region: " + region.region_name + " from world state!")
 
 func no_factions(region_state):
 	return region_state.factions.empty()

@@ -62,15 +62,15 @@ func register_move_command(region, faction, unit):
 			region_details["moving"].push_back(unit)
 			if not region_details["factions"].has(faction):
 				region_details["factions"].push_back(faction)
-	erase_occupation(unit)
+	erase_occupation(unit, faction, unit.current_region)
 
-func erase_occupation(unit):
-	var region = unit.current_region
+func erase_occupation(unit, faction, region):
 	if regions.has(region):
 		if regions[region].occupying.has(unit):
 			regions[region].occupying.erase(unit)
 			if regions[region].occupying.empty():
-				regions[region].factions.erase(unit.faction)
+				regions[region].factions.erase(faction)
+	$WorldStateManager.remove_previous_occupations(unit, faction, region)
 
 func register_unit_position(unit, faction, region):
 	#print("Registering unit: " + unit.name + " of faction: " + str(faction) + " in region: " + region.region_name)
@@ -87,6 +87,7 @@ func register_unit_position(unit, faction, region):
 			if not region_details["factions"].has(faction):
 				region_details["factions"].push_back(faction)
 		regions[region] = region_details
+	$WorldStateManager.add_occupying_unit(unit, faction, region)
 	#print(region.region_name + " is now being occupied by: " + str(regions[region]["occupying"]))
 
 func deregister_move(region, unit):
