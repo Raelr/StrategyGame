@@ -23,7 +23,7 @@ func add_region(region):
 			"occupying" : Array(),
 			"moving" : {}
 		}
-		print("Region: " + region.region_name + " added to world_state!")
+		#print("Region: " + region.region_name + " added to world_state!")
 
 func add_moving_units(current_region, destination_region, faction, unit):
 	remove_previous_moves(unit, faction)
@@ -31,13 +31,29 @@ func add_moving_units(current_region, destination_region, faction, unit):
 	if not world_state[destination_region].moving.has(unit):
 		world_state[destination_region].moving[unit] = {
 			"moving_from" : current_region,
+			"moving_to" : null,
+			"speed" : 0
+		}
+		add_region(current_region)
+		world_state[current_region].moving[unit] = {
+			"moving_from" : null,
+			"moving_to" : destination_region,
 			"speed" : 0
 		}
 		if not world_state[destination_region].factions.has(faction):
 			world_state[destination_region].factions.push_back(faction)
 
-		print("Added " + unit.name + " as moving to region: " + destination_region.region_name +  " from: " + current_region.region_name)
-		print("With speed: " + str(0))
+		#print("Added " + unit.name + " as moving to region: " + destination_region.region_name +  " from: " + current_region.region_name)
+		#print("With speed: " + str(0))
+		
+		# Determine if a combat will happen based on this!
+		var state = world_state[destination_region]
+		if state.factions.size() > 1:
+			print("COMBAT WILL LIKELY OCCUR IN REGION: " + destination_region.region_name)
+			if not state.moving.keys().empty() and not state.occupying.empty():
+				print("LIKELY ASSAULT ON REGION")
+			elif state.occupying.empty() and state.moving.keys().size() > 1:
+				print("LIKELY TWO ENEMIES WALKING INTO SAME REGION")
 
 func remove_previous_moves(unit, faction):
 	var neighbours = unit.get_possible_paths()
@@ -45,7 +61,7 @@ func remove_previous_moves(unit, faction):
 		if world_state.has(neighbour):
 			if world_state[neighbour].moving.has(unit):
 				world_state[neighbour].moving.erase(unit)
-				print("\nRemoving move command for " + unit.name + " to move to: " + neighbour.region_name)
+				#print("\nRemoving move command for " + unit.name + " to move to: " + neighbour.region_name)
 				if not faction_in_region(faction, neighbour):
 					world_state[neighbour].factions.erase(faction)
 				if no_moving_units(world_state[neighbour]):
@@ -58,7 +74,7 @@ func add_occupying_unit(unit, faction, region):
 		world_state[region].occupying.push_back(unit)
 		if not world_state[region].factions.has(faction):
 			world_state[region].factions.push_back(faction)
-	print("Added " + unit.name + " as occupying region: " + region.region_name)
+	#print("Added " + unit.name + " as occupying region: " + region.region_name)
 
 func remove_previous_occupations(unit, faction, region):
 	if world_state.has(region):
@@ -66,22 +82,22 @@ func remove_previous_occupations(unit, faction, region):
 			world_state[region].occupying.erase(unit)
 		if world_state[region].occupying.empty():
 			world_state[region].factions.erase(faction)
-		print("Removed unit: " + unit.name + " from occupying region: " + region.region_name)
+		#print("Removed unit: " + unit.name + " from occupying region: " + region.region_name)
 
 func faction_in_region(faction, region):
 	var has_faction = false
 	for unit in world_state[region].moving.keys():
 		if unit.faction == faction:
 			has_faction = true
-			print("Faction: " + str(faction) + " still exists in region!")
-	print("Does faction still exist in region? " + str(has_faction))
-	return has_faction
+			#print("Faction: " + str(faction) + " still exists in region!")
+	#print("Does faction still exist in region? " + str(has_faction))
+	#return has_faction
 
 func remove_empty_regions(region):
 	if world_state.has(region):
 		if no_factions(world_state[region]):
 			world_state.erase(region)
-			print("Removing region: " + region.region_name + " from world state!")
+			#print("Removing region: " + region.region_name + " from world state!")
 
 func no_factions(region_state):
 	return region_state.factions.empty()
