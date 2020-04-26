@@ -164,10 +164,19 @@ func remove_first():
 	return first_item
 
 func sort_down(command, start_idx = 0):
+	var size : int = commands.size()
 	var child_idx_left: int = (start_idx * 2) + 1
 	var child_idx_right: int = (start_idx * 2) + 2
 	var swap_idx: int = 0
 	
+	if child_idx_left < size:
+		swap_idx = child_idx_left
+		if child_idx_right < size:
+			if commands[child_idx_left] < commands[child_idx_right]:
+				swap_idx = child_idx_right
+		if command.speed < commands[swap_idx]:
+			swap(command, start_idx, commands[swap_idx], swap_idx)
+			start_idx = swap_idx
 
 func swap(command_a, command_a_idx, command_b, command_b_idx):
 	commands[command_a_idx] = command_b
