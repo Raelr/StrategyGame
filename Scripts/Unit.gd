@@ -81,8 +81,6 @@ func get_details():
 
 func reset_move():
 	var neighbours = get_possible_paths()
-	for neighbour in neighbours:
-		get_parent().deregister_move(neighbour, self)
 	register_position()
 
 func _on_Area2D_mouse_entered():
@@ -112,7 +110,6 @@ func move_command(moused_element, line_manager):
 	var n = get_possible_paths()
 	for region in n:
 		if region == moused_element:
-			get_parent().deregister_move(destination, self)
 			if region == destination:
 				return
 			else:

@@ -50,52 +50,13 @@ func disable_panel(panel):
 # I.e: A unit moving from one location to another is no longer 'occupying the original location'
 func register_move_command(region, faction, unit):
 	$WorldStateManager.add_moving_units(unit.current_region, region, faction, unit)
-	if not regions.has(region):
-		regions[region] = {
-			"factions" : [faction],
-			"occupying" : Array(),
-			"moving" : [unit]
-		}
-	else:
-		var region_details = regions[region]
-		if not region_details["moving"].has(unit):
-			region_details["moving"].push_back(unit)
-			if not region_details["factions"].has(faction):
-				region_details["factions"].push_back(faction)
-	erase_occupation(unit, faction, unit.current_region)
 
 func erase_occupation(unit, faction, region):
-	if regions.has(region):
-		if regions[region].occupying.has(unit):
-			regions[region].occupying.erase(unit)
-			if regions[region].occupying.empty():
-				regions[region].factions.erase(faction)
 	$WorldStateManager.remove_previous_occupations(unit, faction, region)
 
 func register_unit_position(unit, faction, region):
-	#print("Registering unit: " + unit.name + " of faction: " + str(faction) + " in region: " + region.region_name)
-	if not regions.has(region):
-		regions[region] = {
-			"factions" : [faction],
-			"occupying" : [unit],
-			"moving" : Array()
-		}
-	else:
-		var region_details = regions[region]
-		if not region_details["occupying"].has(unit):
-			region_details["occupying"].push_back(unit)
-			if not region_details["factions"].has(faction):
-				region_details["factions"].push_back(faction)
-		regions[region] = region_details
 	$WorldStateManager.add_occupying_unit(unit, faction, region)
 	#print(region.region_name + " is now being occupied by: " + str(regions[region]["occupying"]))
-
-func deregister_move(region, unit):
-	if regions.has(region):
-		if regions[region]["moving"].has(unit):
-			regions[region]["moving"].erase(unit)
-			if regions[region]["moving"].empty() and regions[region]["occupying"].empty():
-				regions.erase(region)
 
 func populate_region_ui(region_name, wealth, region_type):
 	$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, types[region_type])

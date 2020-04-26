@@ -27,6 +27,7 @@ func add_region(region):
 
 func add_moving_units(current_region, destination_region, faction, unit):
 	remove_previous_moves(unit, faction)
+	remove_previous_occupations(unit, faction, current_region)
 	add_region(destination_region)
 	if not world_state[destination_region].moving.has(unit):
 		world_state[destination_region].moving[unit] = {
@@ -40,9 +41,12 @@ func add_moving_units(current_region, destination_region, faction, unit):
 			"moving_to" : destination_region,
 			"speed" : 0
 		}
+		if not world_state[current_region].factions.has(faction):
+			world_state[current_region].factions.push_back(faction)
 		if not world_state[destination_region].factions.has(faction):
 			world_state[destination_region].factions.push_back(faction)
-
+		
+		print(world_state[destination_region].factions)
 		#print("Added " + unit.name + " as moving to region: " + destination_region.region_name +  " from: " + current_region.region_name)
 		#print("With speed: " + str(0))
 		
@@ -53,7 +57,18 @@ func add_moving_units(current_region, destination_region, faction, unit):
 			if not state.moving.keys().empty() and not state.occupying.empty():
 				print("LIKELY ASSAULT ON REGION")
 			elif state.occupying.empty() and state.moving.keys().size() > 1:
-				print("LIKELY TWO ENEMIES WALKING INTO SAME REGION")
+				if occupier_is_moving(state):
+					print("A CHASE IS LIKELY GOING TO HAPPEN!")
+				else:
+					print("LIKELY TWO ENEMIES WALKING INTO SAME REGION")
+				
+
+func occupier_is_moving(state):
+	var is_moving = false
+	for unit in state.moving.keys():
+		if state.moving[unit].moving_to:
+			is_moving = true
+	return is_moving
 
 func remove_previous_moves(unit, faction):
 	var neighbours = unit.get_possible_paths()
@@ -74,13 +89,14 @@ func add_occupying_unit(unit, faction, region):
 		world_state[region].occupying.push_back(unit)
 		if not world_state[region].factions.has(faction):
 			world_state[region].factions.push_back(faction)
+	
 	#print("Added " + unit.name + " as occupying region: " + region.region_name)
 
 func remove_previous_occupations(unit, faction, region):
 	if world_state.has(region):
 		if world_state[region].occupying.has(unit):
 			world_state[region].occupying.erase(unit)
-		if world_state[region].occupying.empty():
+		if world_state[region].occupying.empty() and not faction_in_region(faction, region):
 			world_state[region].factions.erase(faction)
 		#print("Removed unit: " + unit.name + " from occupying region: " + region.region_name)
 
