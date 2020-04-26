@@ -13,6 +13,7 @@ export (int) var defence
 export (int) var attack
 export (int) var max_health
 export (int) var current_health
+export (int) var speed
 export (String) var unit_name
 export (NodePath) var start_region
 

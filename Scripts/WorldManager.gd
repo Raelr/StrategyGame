@@ -32,8 +32,6 @@ var types = [
 	}
 ]
 
-var regions = {}
-
 func _ready():
 	$Camera2D/CanvasLayer/UnitPanel.connect("on_button_close", self, "disable_region_ui")
 
@@ -49,7 +47,7 @@ func disable_panel(panel):
 # TODO: Add ability to modify command abilities based on given commands. 
 # I.e: A unit moving from one location to another is no longer 'occupying the original location'
 func register_move_command(region, faction, unit):
-	$WorldStateManager.add_moving_units(unit.current_region, region, faction, unit)
+	$WorldStateManager.add_moving_units(unit.current_region, region, faction, unit, types)
 
 func erase_occupation(unit, faction, region):
 	$WorldStateManager.remove_previous_occupations(unit, faction, region)
@@ -150,10 +148,10 @@ func process_turn():
 	
 	emit_signal("on_turn_changed")
 	disable_ui()
-	$CommandManager.process_command(regions, types)
+	#$CommandManager.process_command(regions, types)
 	yield($CommandManager,"combat_ended")
 	select_latest()
-	regions.clear()
+	#regions.clear()
 	turn_over = false
 	emit_signal("on_turn_ended")
 

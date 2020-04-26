@@ -25,7 +25,7 @@ func add_region(region):
 		}
 		#print("Region: " + region.region_name + " added to world_state!")
 
-func add_moving_units(current_region, destination_region, faction, unit):
+func add_moving_units(current_region, destination_region, faction, unit, types):
 	remove_previous_moves(unit, faction)
 	remove_previous_occupations(unit, faction, current_region)
 	add_region(destination_region)
@@ -33,20 +33,19 @@ func add_moving_units(current_region, destination_region, faction, unit):
 		world_state[destination_region].moving[unit] = {
 			"moving_from" : current_region,
 			"moving_to" : null,
-			"speed" : 0
+			"speed" : unit.speed
 		}
 		add_region(current_region)
 		world_state[current_region].moving[unit] = {
 			"moving_from" : null,
 			"moving_to" : destination_region,
-			"speed" : 0
+			"speed" : unit.speed + types[current_region.region_type].bonus
 		}
 		if not world_state[current_region].factions.has(faction):
 			world_state[current_region].factions.push_back(faction)
 		if not world_state[destination_region].factions.has(faction):
 			world_state[destination_region].factions.push_back(faction)
-		
-		print(world_state[destination_region].factions)
+	
 		#print("Added " + unit.name + " as moving to region: " + destination_region.region_name +  " from: " + current_region.region_name)
 		#print("With speed: " + str(0))
 		
@@ -59,9 +58,23 @@ func add_moving_units(current_region, destination_region, faction, unit):
 			elif state.occupying.empty() and state.moving.keys().size() > 1:
 				if occupier_is_moving(state):
 					print("A CHASE IS LIKELY GOING TO HAPPEN!")
+					var moving_enemies = get_moving_units(state, faction)
 				else:
 					print("LIKELY TWO ENEMIES WALKING INTO SAME REGION")
-				
+
+func get_units_moving_in(state, faction):
+	var units_moving_in = Array()
+	for unit in state.moving.keys():
+		if state.moving[unit].moving_from and unit.faction == faction:
+			units_moving_in.push_back(unit)
+	return units_moving_in
+
+func get_moving_units(state, faction):
+	var moving_enemy_units = Array()
+	for unit in state.moving.keys():
+		if state.moving[unit].moving_to and unit.faction != faction:
+			moving_enemy_units.push_back(unit)
+	return moving_enemy_units
 
 func occupier_is_moving(state):
 	var is_moving = false
