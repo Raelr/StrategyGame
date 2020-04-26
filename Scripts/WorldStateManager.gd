@@ -1,6 +1,7 @@
 extends Node2D
 
 var world_state = {}
+var commands := Array()
 
 # Outline of world_state storage variable.
 # var region_state = {
@@ -136,4 +137,38 @@ func no_occupations(region_state):
 
 func no_moving_units(region_state):
 	return region_state.moving.empty()
-		
+
+func add_element(command):
+	if not commands.empty():
+		var idx = commands.size()
+		commands.push_back(command)
+		sort_up(command, idx)
+
+func sort_up(command, start_idx):
+	var parent_idx : int = (start_idx - 1) / 2
+	
+	while true:
+		var parent = commands[parent_idx]
+		if command.speed > parent.speed:
+			swap(command, start_idx, parent, parent_idx)
+			start_idx = parent_idx
+		else:
+			break
+		parent_idx = (start_idx - 1) / 2
+
+func remove_first():
+	var first_item = commands.front()
+	commands[0] = commands.back()
+	commands.pop_back()
+	sort_down(commands.front())
+	return first_item
+
+func sort_down(command, start_idx = 0):
+	var child_idx_left: int = (start_idx * 2) + 1
+	var child_idx_right: int = (start_idx * 2) + 2
+	var swap_idx: int = 0
+	
+
+func swap(command_a, command_a_idx, command_b, command_b_idx):
+	commands[command_a_idx] = command_b
+	commands[command_b_idx] = command_a
