@@ -47,13 +47,15 @@ func disable_panel(panel):
 # TODO: Add ability to modify command abilities based on given commands. 
 # I.e: A unit moving from one location to another is no longer 'occupying the original location'
 func register_move_command(region, faction, unit):
-	$WorldStateManager.add_moving_units(unit.current_region, region, faction, unit, types)
+	#$WorldStateManager.add_moving_units(unit.current_region, region, faction, unit, types)
+	pass
 
 func erase_occupation(unit, faction, region):
-	$WorldStateManager.remove_previous_occupations(unit, faction, region)
+	#$WorldStateManager.remove_previous_occupations(unit, faction, region)
+	pass
 
-func register_unit_position(unit, faction, region):
-	$WorldStateManager.add_occupying_unit(unit, faction, region)
+func register_unit_position(unit, region):
+	$WorldStateManager.add_occupying_unit(unit, region)
 	#print(region.region_name + " is now being occupied by: " + str(regions[region]["occupying"]))
 
 func populate_region_ui(region_name, wealth, region_type):

@@ -128,7 +128,7 @@ func move_command(moused_element, line_manager):
 
 func register_position():
 	if not is_dead:
-		get_parent().register_unit_position(self, faction, current_region)
+		get_parent().register_unit_position(self, current_region)
 		if path:
 			path.queue_free()
 			path = null
