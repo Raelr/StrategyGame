@@ -123,7 +123,7 @@ func move_command(moused_element, line_manager):
 			if path:
 				add_child(path)
 			self.line_manager = line_manager
-			get_parent().register_move_command(region, faction, self)
+			get_parent().register_move_command(region, self)
 			break
 
 func register_position():

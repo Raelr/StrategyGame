@@ -1,43 +1,31 @@
 extends Node2D
 
 var world_state = {}
-var commands := Array()
+var move_commands = {}
+var hostile_move_commands := Array()
+var combat_commands := Array()
 
 var occupations = {
 	"unit" : null
 }
 
-func add_occupying_unit(unit, region):
-	if not world_state.has(region):
-		world_state[region] = unit.get_path()
-		print("Registering unit: " + unit.name + " as occupying: " + region.region_name)
+func add_occupying_unit(unit, region_name):
+	if not world_state.has(region_name):
+		world_state[region_name] = unit.get_path()
+		print("Registering unit: " + unit.name + " as occupying: " + region_name)
 
-# This will be the entry which deals with unit movement and prioritisation. 
+func erase_occupation(region):
+	if world_state.has(region.region_name):
+		world_state[region.region_name] = null
+		print("Removing any occupants to: " + region.region_name)
 
-# var move_command = {
-#	 "unit" : null,
-#	 "destination" : null,
-# 	 "speed" : 0
-# }
+func add_standard_move_command(unit, destination_region):
+	var command = {
+		"destination_path": destination_region.get_path()
+	}
+	if not move_commands.has(unit.get_path()):
+		move_commands[unit.get_path()] = command
+		print("Setting move command for " + unit.name + " to " + destination_region.region_name)
 
-# When registering a unit, add their details to the region_state table
-# This should provide details about the region's occupation details
-# Key should be the region's name (Weslund, Ososia...etc)
-
-# var region_state = {
-# 	region: NodePath (region)
-# 	occupier: NodePath (unit)
-#	occupying_faction: faction (enum)
-#	bonus : 0
-# }
-
-# TODO: Change setup to work with new plan.
-# TODO: Add region_state for every region (or at least those with units in them) to world_state.
-# TODO: Add move commands when right clicking units. 
-# TODO: Add ability to remove element from heap (for when a command is not fully set)
-
-func register_region(region, unit):
-	pass
-
-func add_standard_move(region, unit):
-	pass
+func remove_command(command):
+	move_commands.erase(command)
