@@ -109,22 +109,25 @@ func set_current_region(region):
 
 func move_command(moused_element, line_manager):
 	var n = get_possible_paths()
-	for region in n:
-		if region == moused_element:
-			if region == destination:
-				return
-			else:
+	if not (moused_element == current_region):
+		for region in n:
+			if region == moused_element:
+				if region == destination:
+					return
+				else:
+					if path:
+						path.queue_free()
+						path = null
+				if not path:
+					line_manager.draw_single_line(position, moused_element, Color.white)
+				path = line_manager.select_arrow(moused_element.region_name)
 				if path:
-					path.queue_free()
-					path = null
-			if not path:
-				line_manager.draw_single_line(position, moused_element, Color.white)
-			path = line_manager.select_arrow(moused_element.region_name)
-			if path:
-				add_child(path)
-			self.line_manager = line_manager
-			get_parent().register_move_command(region, self)
-			break
+					add_child(path)
+				self.line_manager = line_manager
+				get_parent().register_move_command(region, self)
+				break
+	else:
+		register_position()
 
 func register_position():
 	if not is_dead:

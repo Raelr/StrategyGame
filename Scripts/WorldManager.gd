@@ -119,6 +119,7 @@ func select_element():
 				details = selected.get_details()
 			match type:
 				0:
+					#Need to find a way to get paths to render even if unit is selected
 					selected.reset_move()
 					selected.highlight_paths($LineManager)
 					selected_type = type
