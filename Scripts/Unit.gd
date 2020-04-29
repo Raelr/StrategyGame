@@ -81,7 +81,6 @@ func get_details():
 	}
 
 func reset_move():
-	var neighbours = get_possible_paths()
 	register_position()
 
 func _on_Area2D_mouse_entered():
@@ -128,6 +127,7 @@ func move_command(moused_element, line_manager):
 				break
 	else:
 		register_position()
+		highlight_paths(line_manager)
 
 func register_position():
 	if not is_dead:

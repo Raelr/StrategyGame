@@ -10,9 +10,9 @@ var occupations = {
 }
 
 func add_occupying_unit(unit, region_name):
-	if not world_state.has(region_name):
+	if not world_state.has(region_name) or world_state[region_name] == null:
 		world_state[region_name] = unit.get_path()
-		print("Registering unit: " + unit.name + " as occupying: " + region_name)
+		print("Adding " + unit.name + " as occupying " + region_name)
 
 func erase_occupation(region):
 	if world_state.has(region.region_name):
