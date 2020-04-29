@@ -5,6 +5,8 @@ var move_commands = {}
 var hostile_move_commands := Array()
 var combat_commands := Array()
 
+signal turn_ended
+
 var occupations = {
 	"unit" : null
 }
@@ -33,3 +35,21 @@ func remove_command(unit):
 	var path = unit.get_path()
 	if move_commands.has(path):
 		move_commands.erase(path)
+
+func process_turn_sequence(types):
+	for unit_path in move_commands.keys():
+		var unit = get_node(unit_path)
+		var destination = get_node(move_commands[unit_path].destination_path)
+		if world_state.has(destination.region_name):
+			if world_state[destination.region_name]:
+				print("Region is occupied")
+				var opposing_unit = get_node(world_state[destination.region_name])
+				if opposing_unit.faction != unit.faction:
+					print("Region is occupied by hostile!")
+				else: 
+					print("Region is occupied by friendly!")
+			else:
+				print("Region is unoccupied")
+		else:
+			print("region is unoccupied - can move the unit now!")
+	call_deferred("emit_signal","turn_ended")

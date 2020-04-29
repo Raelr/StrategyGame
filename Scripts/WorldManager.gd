@@ -148,10 +148,9 @@ func process_turn():
 	
 	emit_signal("on_turn_changed")
 	disable_ui()
-	#$CommandManager.process_command(regions, types)
-	yield($CommandManager,"combat_ended")
+	$WorldStateManager.process_turn_sequence(types)
+	yield($WorldStateManager,"turn_ended")
 	select_latest()
-	#regions.clear()
 	turn_over = false
 	emit_signal("on_turn_ended")
 
