@@ -104,7 +104,7 @@ func set_current_region(region):
 	if line_manager:
 		line_manager.reset()
 	register_position()
-	emit_signal("finished_move")
+	call_deferred("emit_signal", "finished_move")
 
 func move_command(moused_element, line_manager):
 	var n = get_possible_paths()
@@ -131,7 +131,7 @@ func move_command(moused_element, line_manager):
 
 func register_position():
 	if not is_dead:
-		get_parent().register_unit_position(self, current_region)
+		get_parent().register_unit_position(self, current_region, faction)
 		if path:
 			path.queue_free()
 			path = null

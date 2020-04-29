@@ -52,8 +52,8 @@ func register_move_command(region, unit):
 func erase_occupation(region):
 	$WorldStateManager.erase_occupation(region)
 
-func register_unit_position(unit, region):
-	$WorldStateManager.add_occupying_unit(unit, region.region_name)
+func register_unit_position(unit, region, faction):
+	$WorldStateManager.add_occupying_unit(unit, region.region_name, faction)
 
 func populate_region_ui(region_name, wealth, region_type):
 	$Camera2D/CanvasLayer/RegionPanel.update_panel(region_name, wealth, types[region_type])

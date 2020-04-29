@@ -4,21 +4,30 @@ var world_state = {}
 var move_commands = {}
 var hostile_move_commands := Array()
 var combat_commands := Array()
+var moving_units := Array()
+var move_count = 0
+var move_size
 
 signal turn_ended
+signal all_moved
 
 var occupations = {
-	"unit" : null
+	"unit" : null,
+	"faction" : null
 }
 
-func add_occupying_unit(unit, region_name):
-	if not world_state.has(region_name) or world_state[region_name] == null:
-		world_state[region_name] = unit.get_path()
+func add_occupying_unit(unit, region_name, faction):
+	if not world_state.has(region_name):
+		var occupation = {
+			"unit" : unit.get_path(),
+			"faction" : faction
+		}
+		world_state[region_name] = occupation
 		print("Adding " + unit.name + " as occupying " + region_name)
 
 func erase_occupation(region):
 	if world_state.has(region.region_name):
-		world_state[region.region_name] = null
+		world_state[region.region_name].unit = null
 		print("Removing any occupants to: " + region.region_name)
 
 func add_standard_move_command(unit, destination_region):
@@ -37,19 +46,37 @@ func remove_command(unit):
 		move_commands.erase(path)
 
 func process_turn_sequence(types):
+	var units_to_move := Array()
+	move_count = 0
 	for unit_path in move_commands.keys():
 		var unit = get_node(unit_path)
 		var destination = get_node(move_commands[unit_path].destination_path)
 		if world_state.has(destination.region_name):
-			if world_state[destination.region_name]:
-				print("Region is occupied")
-				var opposing_unit = get_node(world_state[destination.region_name])
-				if opposing_unit.faction != unit.faction:
-					print("Region is occupied by hostile!")
-				else: 
-					print("Region is occupied by friendly!")
-			else:
-				print("Region is unoccupied")
+			var region_state = world_state[destination.region_name]
+			if region_state.faction != unit.faction:
+				print("Region is owned by a hostile!")
+				if region_state.unit:
+					print("Region is occupied by hostile unit - Commence combat!")
+				# In this case we'd log down that there needs to be combat in the destination region.
+			else: 
+				print("Region is occupied by friendly!")
+				units_to_move.push_back(unit)
+				# We can move safely.region_state
 		else:
-			print("region is unoccupied - can move the unit now!")
+			print("Region is unoccupied")
+	
+	if not units_to_move.empty():
+		move_size = units_to_move.size()
+		for unit in units_to_move:
+			print(unit.name)
+			unit.connect("finished_move", self, "on_confirmed_move")
+			var dest_node = get_node(move_commands[unit.get_path()].destination_path)
+			unit.move(dest_node)
+	yield(self, "all_moved")
 	call_deferred("emit_signal","turn_ended")
+
+func on_confirmed_move():
+	move_count += 1
+	if move_count == move_size:
+		print("All units have been moved!")
+		call_deferred("emit_signal", "all_moved")
