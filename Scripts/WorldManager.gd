@@ -150,6 +150,7 @@ func process_turn():
 	disable_ui()
 	$WorldStateManager.process_turn_sequence(types)
 	yield($WorldStateManager,"turn_ended")
+	$WorldStateManager.reset_commands()
 	select_latest()
 	turn_over = false
 	emit_signal("on_turn_ended")

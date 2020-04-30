@@ -45,6 +45,12 @@ func remove_command(unit):
 	if move_commands.has(path):
 		move_commands.erase(path)
 
+func reset_commands():
+	move_commands.clear()
+	world_state.clear()
+	hostile_move_commands.clear()
+	combat_commands.clear()
+
 func process_turn_sequence(types):
 	var units_to_move := Array()
 	move_count = 0
@@ -55,8 +61,7 @@ func process_turn_sequence(types):
 			var region_state = world_state[destination.region_name]
 			if region_state.faction != unit.faction:
 				print("Region is owned by a hostile!")
-				if region_state.unit:
-					print("Region is occupied by hostile unit - Commence combat!")
+				hostile_move_commands.push_back(move_commands[unit_path])
 				# In this case we'd log down that there needs to be combat in the destination region.
 			else: 
 				print("Region is occupied by friendly!")
@@ -64,16 +69,20 @@ func process_turn_sequence(types):
 				# We can move safely.region_state
 		else:
 			print("Region is unoccupied")
+			hostile_move_commands.push_back(move_commands[unit_path])
 	
-	if not units_to_move.empty():
-		move_size = units_to_move.size()
-		for unit in units_to_move:
+	move_units(units_to_move)
+	yield(self, "all_moved")
+	call_deferred("emit_signal","turn_ended")
+
+func move_units(units):
+	if not units.empty():
+		move_size = units.size()
+		for unit in units:
 			print(unit.name)
 			unit.connect("finished_move", self, "on_confirmed_move")
 			var dest_node = get_node(move_commands[unit.get_path()].destination_path)
 			unit.move(dest_node)
-	yield(self, "all_moved")
-	call_deferred("emit_signal","turn_ended")
 
 func on_confirmed_move():
 	move_count += 1
