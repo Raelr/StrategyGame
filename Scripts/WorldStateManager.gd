@@ -13,14 +13,16 @@ signal all_moved
 
 var occupations = {
 	"unit" : null,
-	"faction" : null
+	"faction" : null,
+	"moving_to" : null 
 }
 
 func add_occupying_unit(unit, region_name, faction):
 	if not world_state.has(region_name):
 		var occupation = {
 			"unit" : unit.get_path(),
-			"faction" : faction
+			"faction" : faction,
+			"moving_to": null
 		}
 		world_state[region_name] = occupation
 		print("Adding " + unit.name + " as occupying " + region_name)
@@ -28,6 +30,7 @@ func add_occupying_unit(unit, region_name, faction):
 func erase_occupation(region):
 	if world_state.has(region.region_name):
 		world_state[region.region_name].unit = null
+		world_state[region.region_name].moving_to = null
 		print("Removing any occupants to: " + region.region_name)
 
 func add_standard_move_command(unit, destination_region):
@@ -37,8 +40,8 @@ func add_standard_move_command(unit, destination_region):
 	}
 	if not move_commands.has(unit.get_path()):
 		move_commands[unit.get_path()] = command
+		world_state[unit.current_region.region_name].moving_to = destination_region.get_path()
 		print("Setting move command for " + unit.name + " to " + destination_region.region_name)
-		erase_occupation(unit.current_region)
 
 func remove_command(unit):
 	var path = unit.get_path()
@@ -51,6 +54,11 @@ func reset_commands():
 	hostile_move_commands.clear()
 	combat_commands.clear()
 
+# Turn sequence begins with friendly move actions. 
+# All movement between friendly regions happens first.
+# In this pass, we simple look over all commands and determine if there's going to be a move into a hostile region.
+# If there is, we add this to a list of hostile moves.
+# We then set a move command to all units who are moving into a friendly region. 
 func process_turn_sequence(types):
 	var units_to_move := Array()
 	move_count = 0
@@ -82,7 +90,14 @@ func process_hostile_moves(units):
 		if world_state.has(destination.region_name):
 			var region_state = world_state[destination.region_name]
 			if region_state.unit:
-				print("Combat is going to be happening!")
+				if region_state.moving_to:
+					if region_state.moving_to == unit.current_region.get_path():
+						print("Units moving into each others zones! COMBAT")
+						combat_commands.push_back(unit_path)
+					else: 
+						units_to_move.push_back(unit)
+				else:
+					print("Combat is going to be happening!")
 			else: 
 				units_to_move.push_back(unit)
 		else:
