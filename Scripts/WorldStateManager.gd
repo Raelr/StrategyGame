@@ -23,24 +23,13 @@ var occupations = {
 }
 
 func add_occupying_unit(unit, region_name, faction):
-	if not world_state.has(region_name):
-		var occupation = {
-			"unit" : unit.get_path(),
-			"faction" : faction,
-			"moving_to": null
-		}	
-		world_state[region_name] = occupation
-	else:
-		world_state[region_name].unit = unit.get_path()
-		world_state[region_name].faction = faction
-		world_state[region_name].moving_to = null
-	print("Adding " + unit.name + " as occupying " + region_name)
+	world_state[region_name] = {"unit" : unit.get_path(), "faction" : faction, "moving_to": null}	
 
 func erase_occupation(region, unit_path):
 	if world_state.has(region.region_name):
-		world_state[region.region_name].unit = null
-		world_state[region.region_name].moving_to = null
-		
+		if world_state[region.region_name].unit == unit_path:
+			world_state[region.region_name].unit = null
+			world_state[region.region_name].moving_to = null
 		#print("Removing any occupants to: " + region.region_name)
 
 func add_standard_move_command(unit, destination_region):
@@ -51,7 +40,6 @@ func add_standard_move_command(unit, destination_region):
 	if not move_commands.has(unit.get_path()):
 		move_commands[unit.get_path()] = command
 		world_state[unit.current_region.region_name].moving_to = destination_region.get_path()
-		print("Setting move command for " + unit.name + " to " + destination_region.region_name)
 
 func remove_command(unit):
 	var path = unit.get_path()
@@ -75,7 +63,6 @@ func process_turn_sequence(types):
 		var can_move = false
 		var unit = get_node(unit_path)
 		var destination = get_node(move_commands[unit_path].destination_path)
-		print("Move " + str(world_state.has(destination.region_name)))
 		if world_state.has(destination.region_name):
 			var region_state = world_state[destination.region_name]
 			if region_state.faction == unit.faction:
@@ -87,12 +74,10 @@ func process_turn_sequence(types):
 	
 	move_units(units_to_move)
 	yield(self, "all_moved")
-	print("Finished moving units to friendly zones")
 	print("World state after moves: " + str(world_state))
 	call_deferred("process_hostile_moves", hostile_move_commands)
 
 func process_hostile_moves(units):
-	print("Processing hostile moves")
 	move_count = 0
 	var units_to_move := Array()
 	for unit_path in units:
@@ -118,7 +103,6 @@ func process_hostile_moves(units):
 				combat_commands.push_back(combat)
 	move_units(units_to_move)
 	yield(self, "all_moved")
-	print("Finished moving hostile units")
 	print("World state after hostile moves: " + str(world_state))
 	call_deferred("emit_signal","turn_ended")
 
