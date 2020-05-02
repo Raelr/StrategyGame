@@ -90,12 +90,15 @@ func process_hostile_moves(units):
 		if world_state.has(destination.region_name):
 			var region_state = world_state[destination.region_name]
 			if region_state.unit:
+				# Need to determine if the unit can move at the present moment in time. 
 				if region_state.moving_to:
-					if region_state.moving_to == unit.current_region.get_path():
+					var moving_to = get_node(region_state.moving_to)
+					var not_blocked = not (moving_to.get_path() == unit.current_region.get_path()) and can_move(moving_to, destination)
+					if not_blocked:
+						units_to_move.push_back(unit)
+					else: 
 						print("Units moving into each others zones! COMBAT")
 						combat_commands.push_back(unit_path)
-					else: 
-						units_to_move.push_back(unit)
 				else:
 					print("Combat is going to be happening!")
 			else: 
@@ -106,6 +109,15 @@ func process_hostile_moves(units):
 		move_units(units_to_move)
 		yield(self, "all_moved")
 	call_deferred("emit_signal","turn_ended")
+
+func can_move(dest, curr_region):
+	var can_move = true
+	if world_state.has(dest.region_name):
+		var region_state = world_state[dest.region_name]
+		if region_state.unit and region_state.moving_to:
+			if region_state.moving_to == curr_region.get_path():
+				can_move = false
+	return can_move
 
 func move_units(units):
 	if not units.empty():
