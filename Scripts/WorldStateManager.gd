@@ -87,35 +87,24 @@ func process_hostile_moves(units):
 	move_count = 0
 	var units_to_move := Array()
 	for unit_path in units:
+		var can_move = true
+		var combat = { "type" : null, "attacker" : unit_path, "defender": null}
 		var unit = get_node(unit_path)
 		var destination = get_node(move_commands[unit_path].destination_path)
 		if world_state.has(destination.region_name):
 			var region_state = world_state[destination.region_name]
 			if region_state.unit:
+				combat.defender = region_state.unit
+				combat.type = COMBAT_TYPE.assault
+				can_move = false
 				# Need to determine if the unit can move at the present moment in time. 
 				if region_state.moving_to:
-					var moving_to = get_node(region_state.moving_to)
-					var not_blocked = not (moving_to.get_path() == unit.current_region.get_path()) and can_move(moving_to, destination)
-					if not_blocked:
-						units_to_move.push_back(unit)
-					else: 
-						print("Units moving into each others zones! COMBAT")
-						combat_commands.push_back({
-							"type" : COMBAT_TYPE.neutral,
-							"attacker" : unit_path,
-							"defender" : region_state.unit
-						})
-				else:
-					print("Combat is going to be happening!")
-					combat_commands.push_back({
-							"type" : COMBAT_TYPE.assault,
-							"attacker" : unit_path,
-							"defender" : region_state.unit
-						})
-			else: 
-				units_to_move.push_back(unit)
-		else:
+					can_move = (region_state.moving_to != unit.current_region.get_path()) \
+					and can_move(get_node(region_state.moving_to), destination)
+		if can_move:
 			units_to_move.push_back(unit)
+		else:
+			combat_commands.push_back(combat)
 	if not units_to_move.empty():
 		move_units(units_to_move)
 		yield(self, "all_moved")
@@ -127,6 +116,11 @@ func can_move(dest, curr_region):
 		var region_state = world_state[dest.region_name]
 		if region_state.unit and region_state.moving_to:
 			if region_state.moving_to == curr_region.get_path():
+				combat_commands.push_back({
+					"type" : COMBAT_TYPE.neutral,
+					"attacker" : world_state[curr_region.region_name].unit,
+					"defender" : region_state.unit
+				})
 				can_move = false
 	return can_move
 
