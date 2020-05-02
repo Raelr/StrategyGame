@@ -8,6 +8,11 @@ var moving_units := Array()
 var move_count = 0
 var move_size
 
+enum COMBAT_TYPE { 
+	assault,
+	neutral
+}
+
 signal turn_ended
 signal all_moved
 
@@ -68,14 +73,11 @@ func process_turn_sequence(types):
 		if world_state.has(destination.region_name):
 			var region_state = world_state[destination.region_name]
 			if region_state.faction != unit.faction:
-				hostile_move_commands.push_back(unit_path)
-				# In this case we'd log down that there needs to be combat in the destination region.
+				hostile_move_commands.push_back(unit_path) # Combat
 			else: 
 				units_to_move.push_back(unit)
-				# We can move safely.region_state
 		else:
 			hostile_move_commands.push_back(unit_path)
-	
 	if not units_to_move.empty():
 		move_units(units_to_move)
 		yield(self, "all_moved")
@@ -98,9 +100,18 @@ func process_hostile_moves(units):
 						units_to_move.push_back(unit)
 					else: 
 						print("Units moving into each others zones! COMBAT")
-						combat_commands.push_back(unit_path)
+						combat_commands.push_back({
+							"type" : COMBAT_TYPE.neutral,
+							"attacker" : unit_path,
+							"defender" : region_state.unit
+						})
 				else:
 					print("Combat is going to be happening!")
+					combat_commands.push_back({
+							"type" : COMBAT_TYPE.assault,
+							"attacker" : unit_path,
+							"defender" : region_state.unit
+						})
 			else: 
 				units_to_move.push_back(unit)
 		else:
