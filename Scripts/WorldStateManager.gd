@@ -28,15 +28,20 @@ func add_occupying_unit(unit, region_name, faction):
 			"unit" : unit.get_path(),
 			"faction" : faction,
 			"moving_to": null
-		}
+		}	
 		world_state[region_name] = occupation
-		print("Adding " + unit.name + " as occupying " + region_name)
+	else:
+		world_state[region_name].unit = unit.get_path()
+		world_state[region_name].faction = faction
+		world_state[region_name].moving_to = null
+	print("Adding " + unit.name + " as occupying " + region_name)
 
-func erase_occupation(region):
+func erase_occupation(region, unit_path):
 	if world_state.has(region.region_name):
 		world_state[region.region_name].unit = null
 		world_state[region.region_name].moving_to = null
-		print("Removing any occupants to: " + region.region_name)
+		
+		#print("Removing any occupants to: " + region.region_name)
 
 func add_standard_move_command(unit, destination_region):
 	remove_command(unit)
@@ -55,7 +60,6 @@ func remove_command(unit):
 
 func reset_commands():
 	move_commands.clear()
-	world_state.clear()
 	hostile_move_commands.clear()
 	combat_commands.clear()
 
@@ -71,20 +75,24 @@ func process_turn_sequence(types):
 		var can_move = false
 		var unit = get_node(unit_path)
 		var destination = get_node(move_commands[unit_path].destination_path)
+		print("Move " + str(world_state.has(destination.region_name)))
 		if world_state.has(destination.region_name):
 			var region_state = world_state[destination.region_name]
 			if region_state.faction == unit.faction:
 				can_move = true
 		if can_move:
-			units_to_move.push_back(unit_path)
+			units_to_move.push_back(unit)
 		else:
 			hostile_move_commands.push_back(unit_path)
-	if not units_to_move.empty():
-		move_units(units_to_move)
-		yield(self, "all_moved")
-	process_hostile_moves(hostile_move_commands)
+	
+	move_units(units_to_move)
+	yield(self, "all_moved")
+	print("Finished moving units to friendly zones")
+	print("World state after moves: " + str(world_state))
+	call_deferred("process_hostile_moves", hostile_move_commands)
 
 func process_hostile_moves(units):
+	print("Processing hostile moves")
 	move_count = 0
 	var units_to_move := Array()
 	for unit_path in units:
@@ -92,6 +100,7 @@ func process_hostile_moves(units):
 		var combat = { "type" : null, "attacker" : unit_path, "defender": null}
 		var unit = get_node(unit_path)
 		var destination = get_node(move_commands[unit_path].destination_path)
+		# What happens if two units move into an unoccupied region?
 		if world_state.has(destination.region_name):
 			var region_state = world_state[destination.region_name]
 			if region_state.unit:
@@ -105,11 +114,18 @@ func process_hostile_moves(units):
 		if can_move:
 			units_to_move.push_back(unit)
 		else:
-			combat_commands.push_back(combat)
-	if not units_to_move.empty():
-		move_units(units_to_move)
-		yield(self, "all_moved")
+			if not has_combat_command(combat):
+				combat_commands.push_back(combat)
+	move_units(units_to_move)
+	yield(self, "all_moved")
+	print("Finished moving hostile units")
+	print("World state after hostile moves: " + str(world_state))
 	call_deferred("emit_signal","turn_ended")
+
+# Going to implement combat one unit at a time to start.
+func process_combat(units):
+	for combat in combat_commands:
+		pass
 
 func can_move(dest, curr_region):
 	var can_move = true
@@ -125,17 +141,25 @@ func can_move(dest, curr_region):
 				can_move = false
 	return can_move
 
+func has_combat_command(combat):
+	var has_command = false
+	for command in combat_commands:
+		if (combat.type == command.type) and (combat.attacker == command.attacker) and (combat.defender == command.defender):
+			has_command = true
+	return has_command
+
 func move_units(units):
 	if not units.empty():
 		move_size = units.size()
 		for unit in units:
 			unit.connect("finished_move", self, "on_confirmed_move")
 			var dest_node = get_node(move_commands[unit.get_path()].destination_path)
-			erase_occupation(unit.current_region)
+			erase_occupation(unit.current_region, unit.get_path())
 			unit.move(dest_node)
+	else:
+		call_deferred("emit_signal", "all_moved")
 
 func on_confirmed_move():
 	move_count += 1
 	if move_count == move_size:
-		print("All units have been moved!")
 		call_deferred("emit_signal", "all_moved")

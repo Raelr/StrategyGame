@@ -145,7 +145,6 @@ func reset_selected():
 
 func process_turn():
 	turn_over = true
-	
 	emit_signal("on_turn_changed")
 	disable_ui()
 	$WorldStateManager.process_turn_sequence(types)

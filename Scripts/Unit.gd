@@ -104,7 +104,6 @@ func set_current_region(region):
 	if line_manager:
 		line_manager.reset()
 	register_position()
-	call_deferred("emit_signal", "finished_move")
 
 func move_command(moused_element, line_manager):
 	var n = get_possible_paths()
@@ -135,6 +134,7 @@ func register_position():
 		if path:
 			path.queue_free()
 			path = null
+	call_deferred("emit_signal", "finished_move")
 
 func get_possible_paths():
 	return current_region.get_neighbours()
