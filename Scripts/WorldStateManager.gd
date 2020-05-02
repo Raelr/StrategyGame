@@ -68,14 +68,15 @@ func process_turn_sequence(types):
 	var units_to_move := Array()
 	move_count = 0
 	for unit_path in move_commands.keys():
+		var can_move = false
 		var unit = get_node(unit_path)
 		var destination = get_node(move_commands[unit_path].destination_path)
 		if world_state.has(destination.region_name):
 			var region_state = world_state[destination.region_name]
-			if region_state.faction != unit.faction:
-				hostile_move_commands.push_back(unit_path) # Combat
-			else: 
-				units_to_move.push_back(unit)
+			if region_state.faction == unit.faction:
+				can_move = true
+		if can_move:
+			units_to_move.push_back(unit_path)
 		else:
 			hostile_move_commands.push_back(unit_path)
 	if not units_to_move.empty():
