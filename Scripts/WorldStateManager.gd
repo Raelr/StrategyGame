@@ -30,7 +30,7 @@ func erase_occupation(region, unit_path):
 		if world_state[region.region_name].unit == unit_path:
 			world_state[region.region_name].unit = null
 			world_state[region.region_name].moving_to = null
-		print("Removing any occupants to: " + region.region_name)
+		#print("Removing any occupants to: " + region.region_name)
 
 func add_standard_move_command(unit, destination_region):
 	remove_command(unit)
@@ -111,7 +111,6 @@ func process_hostile_moves(units):
 func process_combat():
 	var damaged_units := Array()
 	for combat in combat_commands:
-		print("Processing assault") 
 		var attacker_attk = get_node(combat.attacker).attack
 		var defender_attk = get_node(combat.defender).attack
 		add_damage(attacker_attk, combat.defender, damaged_units)
@@ -131,7 +130,13 @@ func process_combat():
 	var units_to_move := Array()
 	
 	for unit in live_units:
-		var unit_dest = get_node(move_commands[unit].destination_path)
+		if move_commands.has(unit):
+			var unit_dest = get_node(move_commands[unit].destination_path)
+			if not world_state[unit_dest.region_name].unit and not world_state[unit_dest.region_name].moving_to:
+				units_to_move.push_back(get_node(unit))
+	
+	move_units(units_to_move)
+	yield(self, "all_moved")
 	
 	call_deferred("emit_signal","turn_ended")
 
