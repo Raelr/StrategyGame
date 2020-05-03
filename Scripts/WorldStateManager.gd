@@ -111,14 +111,15 @@ func process_hostile_moves(units):
 func process_combat():
 	var damaged_units := Array()
 	for combat in combat_commands:
-		match combat.type :
-			0:
-				print("Processing assault") 
-				var attacker_attk = get_node(combat.attacker).attack
-				var defender_attk = get_node(combat.defender).attack
-				add_damage(attacker_attk, combat.defender, damaged_units)
-				add_damage(defender_attk, combat.attacker, damaged_units)
-				print(damaged_units)
+		print("Processing assault") 
+		var attacker_attk = get_node(combat.attacker).attack
+		var defender_attk = get_node(combat.defender).attack
+		add_damage(attacker_attk, combat.defender, damaged_units)
+		add_damage(defender_attk, combat.attacker, damaged_units)
+	
+	if not damaged_units.empty():
+		for unit in damaged_units:
+			get_node(unit.unit_p).on_damage_dealt(unit.damage)
 	
 	call_deferred("emit_signal","turn_ended")
 
