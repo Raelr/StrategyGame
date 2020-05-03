@@ -105,13 +105,19 @@ func process_hostile_moves(units):
 	move_units(units_to_move)
 	yield(self, "all_moved")
 	#print("World state after hostile moves: " + str(world_state))
-	print("MOVES ALL ENDED")
-	call_deferred("emit_signal","turn_ended")
+	process_combat()
 
 # Going to implement combat one unit at a time to start.
-func process_combat(units):
+func process_combat():
 	for combat in combat_commands:
-		pass
+		match combat.type :
+			0:
+				print("Processing assault") 
+				var attacker = get_node(combat.attacker)
+				var defender = get_node(combat.defender)
+			
+	
+	call_deferred("emit_signal","turn_ended")
 
 func can_move(dest, curr_region):
 	var can_move = true
