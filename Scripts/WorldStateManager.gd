@@ -74,7 +74,7 @@ func process_turn_sequence(types):
 	
 	move_units(units_to_move)
 	yield(self, "all_moved")
-	print("World state after moves: " + str(world_state))
+	#print("World state after moves: " + str(world_state))
 	call_deferred("process_hostile_moves", hostile_move_commands)
 
 func process_hostile_moves(units):
@@ -101,9 +101,11 @@ func process_hostile_moves(units):
 		else:
 			if not has_combat_command(combat):
 				combat_commands.push_back(combat)
+				
 	move_units(units_to_move)
 	yield(self, "all_moved")
-	print("World state after hostile moves: " + str(world_state))
+	#print("World state after hostile moves: " + str(world_state))
+	print("MOVES ALL ENDED")
 	call_deferred("emit_signal","turn_ended")
 
 # Going to implement combat one unit at a time to start.

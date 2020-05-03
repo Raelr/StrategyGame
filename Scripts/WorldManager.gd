@@ -152,7 +152,6 @@ func process_turn():
 	$WorldStateManager.reset_commands()
 	select_latest()
 	turn_over = false
-	emit_signal("on_turn_ended")
 
 func _input(event):
 	if event is InputEventKey:

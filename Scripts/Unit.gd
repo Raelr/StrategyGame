@@ -33,7 +33,6 @@ func _ready():
 	$Unit.material.set_shader_param("unit_color", faction_color)
 	$Unit/AnimationPlayer.play("idle")
 	var world = get_tree().get_root().get_child(0)
-	world.connect("on_turn_ended", self, "register_position")
 	$UnitHealth.max_value = max_health
 	$UnitHealth.value = current_health
 	set_current_region(get_node(start_region))
