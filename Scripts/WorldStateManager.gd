@@ -134,6 +134,8 @@ func process_combat():
 			var unit_dest = get_node(move_commands[unit].destination_path)
 			if not world_state[unit_dest.region_name].unit and not world_state[unit_dest.region_name].moving_to:
 				units_to_move.push_back(get_node(unit))
+			else:
+				get_node(unit).reset_move()
 	
 	move_units(units_to_move)
 	yield(self, "all_moved")
