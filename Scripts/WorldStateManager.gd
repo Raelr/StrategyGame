@@ -109,15 +109,37 @@ func process_hostile_moves(units):
 
 # Going to implement combat one unit at a time to start.
 func process_combat():
+	var damaged_units := Array()
 	for combat in combat_commands:
 		match combat.type :
 			0:
 				print("Processing assault") 
-				var attacker = get_node(combat.attacker)
-				var defender = get_node(combat.defender)
-			
+				var attacker_attk = get_node(combat.attacker).attack
+				var defender_attk = get_node(combat.defender).attack
+				add_damage(attacker_attk, combat.defender, damaged_units)
+				add_damage(defender_attk, combat.attacker, damaged_units)
+				print(damaged_units)
 	
 	call_deferred("emit_signal","turn_ended")
+
+func add_damage(damage, damaged_unit, damaged_units):
+	if has_unit(damaged_unit, damaged_units):
+		for unit in damaged_units:
+			if unit.unit_p == damaged_unit:
+				unit.damage += damage
+				break
+	else:
+		damaged_units.push_back({
+			"unit_p" : damaged_unit, 
+			"damage" : damage
+		})
+
+func has_unit(unit, damaged_units):
+	var has_unit = false
+	for current_unit in damaged_units:
+		if current_unit.unit_p == unit:
+			has_unit = true
+	return has_unit
 
 func can_move(dest, curr_region):
 	var can_move = true
