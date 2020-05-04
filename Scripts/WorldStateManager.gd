@@ -79,29 +79,31 @@ func process_turn_sequence(types):
 
 func process_hostile_moves(units):
 	move_count = 0
-	var units_to_move := Array()
+	var units_to_move = Array()
+	var processed = Array()
 	for unit_path in units:
-		var can_move = true
-		var combat = { "type" : null, "attacker" : unit_path, "defender": null}
-		var unit = get_node(unit_path)
-		var destination = get_node(move_commands[unit_path].destination_path)
-		# What happens if two units move into an unoccupied region?
-		if world_state.has(destination.region_name):
-			var region_state = world_state[destination.region_name]
-			if region_state.unit:
-				combat.defender = region_state.unit
-				combat.type = COMBAT_TYPE.assault
-				can_move = false
-				# Need to determine if the unit can move at the present moment in time. 
-				if region_state.moving_to:
-					can_move = (region_state.moving_to != unit.current_region.get_path()) \
-					and can_move(get_node(region_state.moving_to), destination)
-		if can_move:
-			units_to_move.push_back(unit)
-		else:
-			if not has_combat_command(combat):
-				combat_commands.push_back(combat)
-				
+		if not processed.has(unit_path):
+			var can_move = true
+			var combat = { "type" : null, "attacker" : unit_path, "defender": null}
+			var unit = get_node(unit_path)
+			var destination = get_node(move_commands[unit_path].destination_path)
+			# What happens if two units move into an unoccupied region?
+			if world_state.has(destination.region_name):
+				var region_state = world_state[destination.region_name]
+				if region_state.unit:
+					combat.defender = region_state.unit
+					combat.type = COMBAT_TYPE.assault
+					can_move = false
+					# Need to determine if the unit can move at the present moment in time. 
+					if region_state.moving_to:
+						can_move = can_move(get_node(region_state.moving_to), destination, processed) and (region_state.moving_to != unit.current_region.get_path())
+			if not processed.has(unit_path):
+				if can_move:
+					units_to_move.push_back(unit)
+				else:
+					if not has_combat_command(combat):
+						combat_commands.push_back(combat)
+
 	move_units(units_to_move)
 	yield(self, "all_moved")
 	#print("World state after hostile moves: " + str(world_state))
@@ -161,17 +163,20 @@ func has_unit(unit, damaged_units):
 			has_unit = true
 	return has_unit
 
-func can_move(dest, curr_region):
+func can_move(dest, curr_region, processed_units):
 	var can_move = true
 	if world_state.has(dest.region_name):
 		var region_state = world_state[dest.region_name]
 		if region_state.unit and region_state.moving_to:
 			if region_state.moving_to == curr_region.get_path():
-				combat_commands.push_back({
-					"type" : COMBAT_TYPE.neutral,
-					"attacker" : world_state[curr_region.region_name].unit,
-					"defender" : region_state.unit
-				})
+				if not processed_units.has(world_state[curr_region.region_name].unit) or not processed_units.has(region_state.unit):
+					combat_commands.push_back({
+						"type" : COMBAT_TYPE.neutral,
+						"attacker" : world_state[curr_region.region_name].unit,
+						"defender" : region_state.unit
+					})
+					processed_units.push_back(world_state[curr_region.region_name].unit)
+					processed_units.push_back(region_state.unit)
 				can_move = false
 	return can_move
 
