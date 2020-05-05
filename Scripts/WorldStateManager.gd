@@ -145,15 +145,16 @@ func process_combat():
 	call_deferred("emit_signal","turn_ended")
 
 func add_damage(damage, damaged_unit, damaged_units):
+	var u_damage = clamp((damage - get_node(damaged_unit).defence), 0, damage)
 	if has_unit(damaged_unit, damaged_units):
 		for unit in damaged_units:
 			if unit.unit_p == damaged_unit:
-				unit.damage += damage
+				unit.damage += u_damage
 				break
 	else:
 		damaged_units.push_back({
 			"unit_p" : damaged_unit, 
-			"damage" : damage
+			"damage" : u_damage
 		})
 
 func has_unit(unit, damaged_units):

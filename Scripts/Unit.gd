@@ -147,8 +147,7 @@ func highlight_paths(line_manager):
 
 func on_damage_dealt(damage, bonus = 0):
 	var unit_defence = defence + bonus
-	var damage_dealt = clamp(damage - unit_defence, 0, damage)
-	current_health -= damage_dealt
+	current_health -= damage
 	if current_health <= 0:
 		current_health = 0
 		on_death()
